@@ -2,7 +2,8 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#064e3b" />
   <title>PERSONAL HISAB MANAGER</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -12,22 +13,30 @@
   <style>
     body {
       font-family: 'Hind Siliguri', sans-serif;
-      background-color: #f1f5f9;
+      background-color: #eef2f6;
       color: #0f172a;
+      -webkit-tap-highlight-color: transparent;
     }
     .brand-font {
       font-family: 'Poppins', 'Hind Siliguri', sans-serif;
     }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+    }
+    .safe-bottom {
+      padding-bottom: env(safe-area-inset-bottom, 12px);
+    }
     ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
+      width: 5px;
+      height: 5px;
     }
     ::-webkit-scrollbar-track {
       background: #e2e8f0;
     }
     ::-webkit-scrollbar-thumb {
-      background: #94a3b8;
-      border-radius: 4px;
+      background: #64748b;
+      border-radius: 999px;
     }
     @media print {
       .no-print {
@@ -46,35 +55,35 @@
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col md:flex-row">
+<body class="min-h-screen flex flex-col md:flex-row pb-20 md:pb-0">
 
   <!-- ==================== GMAIL LOGIN GATE ==================== -->
-  <div id="loginScreen" class="fixed inset-0 z-50 bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-7 sm:p-8 text-center border border-slate-200">
-      <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white flex items-center justify-center text-3xl mx-auto shadow-lg mb-4">
-        <i class="fa-solid fa-shield-halved"></i>
+  <div id="loginScreen" class="fixed inset-0 z-50 bg-gradient-to-br from-slate-950 via-emerald-950 to-teal-950 flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 sm:p-8 text-center border border-emerald-100">
+      <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 via-teal-600 to-cyan-700 text-white flex items-center justify-center text-3xl mx-auto shadow-xl mb-4">
+        <i class="fa-solid fa-vault"></i>
       </div>
       <h1 class="brand-font text-2xl font-black text-slate-900 tracking-wide uppercase">PERSONAL HISAB MANAGER</h1>
-      <p class="text-sm text-slate-500 mt-1">Smart Cloud + Local Multi-Layer Protected Ledger</p>
+      <p class="text-xs sm:text-sm text-slate-500 mt-1">Mobile Smart Cloud + Local Multi-Layer Ledger</p>
 
-      <div class="mt-6 bg-slate-50 p-4 rounded-2xl border border-slate-200 text-left">
+      <div class="mt-5 bg-slate-50 p-4 rounded-2xl border border-slate-200 text-left">
         <p class="text-xs font-bold text-slate-700 mb-2 flex items-center gap-1.5">
-          <i class="fa-brands fa-google text-rose-500"></i> Gmail অ্যাকাউন্ট দিয়ে প্রবেশ করুন (যেকোনো ফোন থেকে একই ডাটা)
+          <i class="fa-brands fa-google text-rose-500"></i> যেকোনো ফোন থেকে একই ডাটা পেতে Gmail দিন
         </p>
 
         <div id="googleBtnWrapper" class="mb-3 flex justify-center"></div>
 
         <form onsubmit="handleGmailLogin(event)" class="space-y-3">
           <div>
-            <label class="block text-[11px] font-bold text-slate-600 mb-1">আপনার Gmail ঠিকানা</label>
+            <label class="block text-[11px] font-bold text-slate-600 mb-1">Gmail ঠিকানা</label>
             <input type="email" id="loginEmailInput" value="jesmulhasan69@gmail.com" required placeholder="jesmulhasan69@gmail.com" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-sm focus:outline-none focus:border-emerald-600" />
           </div>
           <div>
             <label class="block text-[11px] font-bold text-slate-600 mb-1">আপনার নাম</label>
-            <input type="text" id="loginNameInput" value="Jesmul" required placeholder="আপনার পূর্ণ নাম লিখুন" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-sm focus:outline-none focus:border-emerald-600" />
+            <input type="text" id="loginNameInput" value="Jesmul" required placeholder="আপনার নাম লিখুন" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-sm focus:outline-none focus:border-emerald-600" />
           </div>
-          <button type="submit" class="w-full bg-slate-900 hover:bg-emerald-600 text-white font-bold py-3 rounded-xl text-sm shadow-md transition flex items-center justify-center gap-2.5">
-            <i class="fa-brands fa-google text-amber-400"></i> Continue with Gmail
+          <button type="submit" class="w-full bg-gradient-to-r from-slate-900 to-emerald-800 hover:from-emerald-700 hover:to-teal-700 text-white font-bold py-3 rounded-xl text-sm shadow-lg transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-right-to-bracket text-emerald-300"></i> Continue & Sync
           </button>
         </form>
       </div>
@@ -82,56 +91,64 @@
   </div>
 
   <!-- ==================== MOBILE TOP HEADER ==================== -->
-  <header class="md:hidden bg-slate-900 text-white px-4 py-3.5 flex items-center justify-between sticky top-0 z-40 shadow-md no-print">
-    <div class="flex items-center gap-3">
-      <button onclick="toggleSidebar()" title="3-Dot Menu" class="text-white p-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700">
-        <i class="fa-solid fa-ellipsis-vertical text-lg w-5 text-center"></i>
+  <header class="md:hidden bg-gradient-to-r from-slate-950 via-slate-900 to-emerald-950 text-white px-3.5 py-3 flex items-center justify-between sticky top-0 z-40 shadow-lg border-b border-emerald-500/20 no-print">
+    <div class="flex items-center gap-2.5 min-w-0">
+      <button onclick="toggleSidebar()" title="3-Dot Menu" class="w-10 h-10 rounded-xl bg-white/10 active:scale-95 text-emerald-300 flex items-center justify-center border border-white/15 shrink-0">
+        <i class="fa-solid fa-ellipsis-vertical text-base"></i>
       </button>
-      <div>
-        <h1 class="brand-font text-base font-extrabold tracking-wide text-emerald-400 leading-tight uppercase">PERSONAL HISAB MANAGER</h1>
-        <p class="text-[11px] text-slate-400" id="mobileSubtitle">ড্যাশবোর্ড ও স্মার্ট লেজার</p>
+      <div class="min-w-0">
+        <h1 class="brand-font text-sm font-black tracking-wide text-white leading-tight truncate uppercase">HISAB <span class="text-emerald-400">MANAGER</span></h1>
+        <p class="text-[11px] text-emerald-200/80 truncate" id="mobileSubtitle">1. Dashboard</p>
       </div>
     </div>
-    <button onclick="manualSyncNow()" title="Sync Cloud" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs px-3 py-2 rounded-lg font-bold shadow">
-      <i class="fa-solid fa-rotate mr-1"></i> Sync
-    </button>
+    <div class="flex items-center gap-1.5 shrink-0">
+      <button onclick="openCashModal('credit')" title="জমা" class="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-sm shadow active:scale-95">
+        <i class="fa-solid fa-plus"></i>
+      </button>
+      <button onclick="openCashModal('debit')" title="খরচ" class="w-9 h-9 rounded-xl bg-rose-600 text-white flex items-center justify-center text-sm shadow active:scale-95">
+        <i class="fa-solid fa-minus"></i>
+      </button>
+      <button onclick="manualSyncNow()" title="Sync Cloud" class="bg-sky-600 text-white text-xs px-2.5 h-9 rounded-xl font-bold shadow flex items-center gap-1 active:scale-95">
+        <i class="fa-solid fa-cloud-arrow-up"></i>
+      </button>
+    </div>
   </header>
 
   <!-- Sidebar Overlay for Mobile -->
-  <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden no-print"></div>
+  <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-40 hidden md:hidden no-print"></div>
 
   <!-- ==================== 3-DOT SIDEBAR NAVIGATION ==================== -->
-  <aside id="sidebar" class="fixed md:sticky top-0 left-0 z-50 h-screen w-72 bg-slate-900 text-slate-200 flex flex-col transition-transform duration-300 -translate-x-full md:translate-x-0 shadow-xl no-print">
-    <div class="p-4 border-b border-slate-800 flex items-center justify-between bg-slate-950/60">
+  <aside id="sidebar" class="fixed md:sticky top-0 left-0 z-50 h-screen w-72 bg-slate-950 text-slate-200 flex flex-col transition-transform duration-300 -translate-x-full md:translate-x-0 shadow-2xl border-r border-slate-800/80 no-print">
+    <div class="p-4 border-b border-slate-800/90 flex items-center justify-between bg-gradient-to-r from-emerald-950/60 to-slate-900">
       <div class="flex items-center gap-2.5">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-black text-lg shadow-lg shrink-0">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-black text-base shadow-lg shrink-0">
           <i class="fa-solid fa-ellipsis-vertical"></i>
         </div>
         <div>
           <h1 class="brand-font text-sm font-extrabold text-white tracking-wider leading-snug uppercase">PERSONAL HISAB<br><span class="text-emerald-400">MANAGER</span></h1>
         </div>
       </div>
-      <button onclick="toggleSidebar()" class="md:hidden text-slate-400 hover:text-white">
-        <i class="fa-solid fa-xmark text-xl"></i>
+      <button onclick="toggleSidebar()" class="md:hidden w-8 h-8 rounded-lg bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center">
+        <i class="fa-solid fa-xmark text-base"></i>
       </button>
     </div>
 
     <!-- User Profile Card -->
-    <div id="sidebarUserCard" class="px-4 py-3 bg-slate-800/70 border-b border-slate-800 flex items-center justify-between gap-2">
+    <div id="sidebarUserCard" class="px-4 py-3 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between gap-2">
       <div class="flex items-center gap-2.5 min-w-0">
-        <img id="userAvatarImg" src="https://ui-avatars.com/api/?name=Jesmul&background=10b981&color=fff" class="w-8 h-8 rounded-full border border-emerald-400 shrink-0" alt="User" />
+        <img id="userAvatarImg" src="https://ui-avatars.com/api/?name=Jesmul&background=10b981&color=fff" class="w-9 h-9 rounded-full border-2 border-emerald-400 shrink-0" alt="User" />
         <div class="min-w-0">
           <p id="userNameDisplay" class="text-xs font-bold text-white truncate">Jesmul</p>
           <p id="userEmailDisplay" class="text-[10px] text-emerald-300 truncate">jesmulhasan69@gmail.com</p>
         </div>
       </div>
-      <button onclick="logoutUser()" title="Logout" class="text-xs bg-rose-500/20 hover:bg-rose-600 text-rose-300 hover:text-white px-2 py-1.5 rounded-lg transition shrink-0">
+      <button onclick="logoutUser()" title="Logout" class="text-xs bg-rose-500/20 hover:bg-rose-600 text-rose-300 hover:text-white px-2.5 py-1.5 rounded-lg transition shrink-0">
         <i class="fa-solid fa-right-from-bracket"></i>
       </button>
     </div>
 
     <!-- Smart Data Shield Status Bar -->
-    <div class="px-4 py-2 bg-slate-950 border-b border-slate-800 flex items-center justify-between text-[11px]">
+    <div class="px-4 py-2 bg-slate-900 border-b border-slate-800 flex items-center justify-between text-[11px]">
       <span id="cloudStatusText" class="text-amber-300 font-semibold flex items-center gap-1.5">
         <i class="fa-solid fa-shield-halved"></i> Local Shield Active
       </span>
@@ -141,45 +158,45 @@
     <!-- Navigation List + 3-Dot Dropdown -->
     <nav id="navMenu" class="flex-1 overflow-y-auto py-3 px-3 space-y-1"></nav>
 
-    <div class="p-3.5 border-t border-slate-800 bg-slate-950/60">
-      <button onclick="switchTab('settings')" class="w-full text-xs bg-slate-800 hover:bg-emerald-600 text-slate-200 hover:text-white py-2.5 rounded-xl transition flex items-center justify-center gap-2 font-bold">
-        <i class="fa-solid fa-sliders"></i> ৩-ডট মেনু ও Smart Data সেটিংস
+    <div class="p-3.5 border-t border-slate-800 bg-slate-950">
+      <button onclick="switchTab('settings')" class="w-full text-xs bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white py-2.5 rounded-xl transition flex items-center justify-center gap-2 font-bold shadow">
+        <i class="fa-solid fa-sliders"></i> ৩-ডট মেনু ও Cloud সেটিংস
       </button>
     </div>
   </aside>
 
   <!-- ==================== MAIN CONTENT AREA ==================== -->
-  <main class="flex-1 main-content min-w-0 p-4 md:p-7">
-    <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-emerald-950 text-white rounded-2xl p-5 md:p-6 mb-6 shadow-lg flex flex-col lg:flex-row lg:items-center justify-between gap-4 no-print">
-      <div class="flex items-start gap-3.5">
-        <button onclick="toggleSidebar()" title="৩-ডট মেনু খুলুন" class="hidden md:flex w-11 h-11 rounded-xl bg-white/10 hover:bg-emerald-600 text-white items-center justify-center text-lg border border-white/15 shrink-0 mt-1 transition">
+  <main class="flex-1 main-content min-w-0 p-3.5 sm:p-5 md:p-7">
+    <div class="bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 text-white rounded-3xl p-4 sm:p-6 mb-5 shadow-xl flex flex-col lg:flex-row lg:items-center justify-between gap-4 border border-emerald-500/20 no-print">
+      <div class="flex items-start gap-3">
+        <button onclick="toggleSidebar()" title="৩-ডট মেনু খুলুন" class="hidden md:flex w-11 h-11 rounded-2xl bg-white/10 hover:bg-emerald-600 text-white items-center justify-center text-lg border border-white/15 shrink-0 mt-0.5 transition">
           <i class="fa-solid fa-ellipsis-vertical"></i>
         </button>
         <div>
           <div class="flex flex-wrap items-center gap-2">
-            <span class="px-2.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 text-xs font-bold tracking-wider uppercase border border-emerald-500/30">Smart Multi-Layer Data Guard</span>
+            <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[11px] font-bold tracking-wide border border-emerald-400/30">Smart Mobile Guard</span>
             <span id="todayDateText" class="text-xs text-slate-300"></span>
           </div>
-          <h1 class="brand-font text-2xl sm:text-3xl md:text-4xl font-black tracking-wide text-white mt-1 uppercase">
+          <h1 class="brand-font text-xl sm:text-3xl font-black tracking-wide text-white mt-1 uppercase">
             PERSONAL HISAB MANAGER
           </h1>
-          <p class="text-sm text-slate-300 mt-1 flex items-center gap-2">
+          <p class="text-xs sm:text-sm text-slate-300 mt-0.5 flex items-center gap-1.5">
             <span class="text-emerald-400 font-semibold">বর্তমান পেজ:</span>
-            <span id="pageTitle" class="font-bold text-white">ড্যাশবোর্ড</span>
+            <span id="pageTitle" class="font-bold text-white">1. Dashboard</span>
           </p>
         </div>
       </div>
-      <div class="flex flex-wrap items-center gap-2.5">
-        <button onclick="openCashModal('credit')" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2.5 rounded-xl text-sm font-bold shadow-md flex items-center gap-2 transition">
-          <i class="fa-solid fa-plus-circle"></i> + ক্যাশ জমা (Cr)
+      <div class="flex flex-wrap items-center gap-2">
+        <button onclick="openCashModal('credit')" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold shadow-md flex items-center gap-1.5 transition active:scale-95">
+          <i class="fa-solid fa-plus-circle"></i> + জমা (Cr)
         </button>
-        <button onclick="openCashModal('debit')" class="bg-rose-600 hover:bg-rose-500 text-white px-4 py-2.5 rounded-xl text-sm font-bold shadow-md flex items-center gap-2 transition">
-          <i class="fa-solid fa-minus-circle"></i> - ক্যাশ খরচ (Dr)
+        <button onclick="openCashModal('debit')" class="bg-rose-600 hover:bg-rose-500 text-white px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold shadow-md flex items-center gap-1.5 transition active:scale-95">
+          <i class="fa-solid fa-minus-circle"></i> - খরচ (Dr)
         </button>
-        <button onclick="manualSyncNow()" class="bg-sky-600 hover:bg-sky-500 text-white px-4 py-2.5 rounded-xl text-sm font-bold shadow-md flex items-center gap-2 transition">
-          <i class="fa-solid fa-cloud-arrow-up"></i> Cloud Sync
+        <button onclick="manualSyncNow()" class="bg-sky-600 hover:bg-sky-500 text-white px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold shadow-md flex items-center gap-1.5 transition active:scale-95">
+          <i class="fa-solid fa-cloud-arrow-up"></i> Sync
         </button>
-        <button onclick="window.print()" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-4 py-2.5 rounded-xl text-sm font-semibold flex items-center gap-2 transition">
+        <button onclick="window.print()" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition active:scale-95">
           <i class="fa-solid fa-print"></i> প্রিন্ট
         </button>
       </div>
@@ -193,12 +210,35 @@
     <div id="appContainer"></div>
   </main>
 
+  <!-- ==================== MOBILE FLOATING BOTTOM BAR ==================== -->
+  <nav class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-slate-950/95 backdrop-blur-md border-t border-slate-800 px-2 py-1.5 flex items-center justify-around text-slate-300 safe-bottom no-print">
+    <button onclick="switchTab('dashboard')" id="bnav_dashboard" class="flex flex-col items-center py-1 px-2 rounded-xl text-[11px] font-bold">
+      <i class="fa-solid fa-chart-pie text-base mb-0.5"></i>
+      <span>হোম</span>
+    </button>
+    <button onclick="switchTab('cashbook')" id="bnav_cashbook" class="flex flex-col items-center py-1 px-2 rounded-xl text-[11px] font-bold">
+      <i class="fa-solid fa-book-open text-base mb-0.5"></i>
+      <span>ক্যাশ বুক</span>
+    </button>
+    <button onclick="openCashModal('debit')" class="flex flex-col items-center justify-center w-12 h-12 -mt-5 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-lg border-4 border-slate-950 active:scale-95">
+      <i class="fa-solid fa-plus text-lg"></i>
+    </button>
+    <button onclick="switchTab('bank')" id="bnav_bank" class="flex flex-col items-center py-1 px-2 rounded-xl text-[11px] font-bold">
+      <i class="fa-solid fa-building-columns text-base mb-0.5"></i>
+      <span>ব্যাংক</span>
+    </button>
+    <button onclick="toggleSidebar()" class="flex flex-col items-center py-1 px-2 rounded-xl text-[11px] font-bold text-emerald-400">
+      <i class="fa-solid fa-ellipsis-vertical text-base mb-0.5"></i>
+      <span>মেনু</span>
+    </button>
+  </nav>
+
   <!-- Universal Modal -->
-  <div id="modalBackdrop" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 hidden items-center justify-center p-4 no-print">
-    <div id="modalBox" class="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto border border-slate-200">
+  <div id="modalBackdrop" class="fixed inset-0 bg-slate-950/70 backdrop-blur-xs z-50 hidden items-end sm:items-center justify-center p-0 sm:p-4 no-print">
+    <div id="modalBox" class="bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto border border-slate-200">
       <div class="px-5 py-4 border-b border-slate-200 flex items-center justify-between sticky top-0 bg-white z-10">
-        <h3 id="modalTitle" class="text-lg font-bold text-slate-800">নতুন এন্ট্রি</h3>
-        <button onclick="closeModal()" class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600">
+        <h3 id="modalTitle" class="text-base sm:text-lg font-extrabold text-slate-900">নতুন এন্ট্রি</h3>
+        <button onclick="closeModal()" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
@@ -207,7 +247,7 @@
   </div>
 
   <!-- Toast Notification -->
-  <div id="toast" class="fixed bottom-5 right-5 z-50 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl text-sm font-medium flex items-center gap-2.5 transform translate-y-20 opacity-0 transition-all duration-300 no-print">
+  <div id="toast" class="fixed bottom-20 md:bottom-5 right-4 z-50 bg-slate-900 text-emerald-300 border border-emerald-500/30 px-4 py-2.5 rounded-2xl shadow-2xl text-xs sm:text-sm font-semibold flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 no-print">
     <i class="fa-solid fa-circle-check text-emerald-400"></i>
     <span id="toastMsg">সফলভাবে সংরক্ষিত হয়েছে</span>
   </div>
@@ -546,7 +586,7 @@
       const toast = document.getElementById('toast');
       document.getElementById('toastMsg').innerText = msg;
       toast.classList.remove('translate-y-20', 'opacity-0');
-      setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 2600);
+      setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 2500);
     }
 
     // ==================== GMAIL AUTHENTICATION ====================
@@ -599,7 +639,7 @@
         }
       });
       google.accounts.id.renderButton(document.getElementById('googleBtnWrapper'), {
-        theme: 'outline', size: 'large', width: 300
+        theme: 'outline', size: 'large', width: 280
       });
     }
 
@@ -635,6 +675,18 @@
 
     function toggleCustomDropdown() { isDropdownOpen = !isDropdownOpen; renderSidebar(); }
 
+    function updateBottomNavActive() {
+      ['dashboard', 'cashbook', 'bank'].forEach(id => {
+        const btn = document.getElementById('bnav_' + id);
+        if (!btn) return;
+        if (currentTab === id) {
+          btn.className = 'flex flex-col items-center py-1 px-2 rounded-xl text-[11px] font-bold text-emerald-400 bg-emerald-500/15';
+        } else {
+          btn.className = 'flex flex-col items-center py-1 px-2 rounded-xl text-[11px] font-bold text-slate-400';
+        }
+      });
+    }
+
     function renderSidebar() {
       const nav = document.getElementById('navMenu');
       const customTabs = appData.settings.customTabs || [];
@@ -644,7 +696,7 @@
         return `
           <button onclick="switchTab('${tab.id}')"
             class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition ${
-              active ? 'bg-emerald-600 text-white shadow-md' : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+              active ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md' : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
             }">
             <span class="flex items-center gap-3 truncate">
               <i class="fa-solid ${tab.icon} w-4 text-center ${active ? 'text-white' : 'text-emerald-400'}"></i>
@@ -657,7 +709,7 @@
       const dropdownHtml = `
         <div class="pt-2 mt-2 border-t border-slate-800">
           <button onclick="toggleCustomDropdown()"
-            class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-extrabold uppercase tracking-wider bg-slate-800/80 text-emerald-300 hover:bg-slate-800 transition">
+            class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-extrabold uppercase tracking-wider bg-slate-900 text-emerald-300 hover:bg-slate-800 transition">
             <span class="flex items-center gap-2">
               <i class="fa-solid fa-ellipsis-vertical"></i> কাস্টম অপশন (Dropdown)
             </span>
@@ -694,6 +746,7 @@
       `;
 
       nav.innerHTML = coreHtml + dropdownHtml;
+      updateBottomNavActive();
     }
 
     function toggleSidebar() {
@@ -713,6 +766,7 @@
         document.getElementById('sidebar').classList.add('-translate-x-full');
         document.getElementById('sidebarOverlay').classList.add('hidden');
       }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function openAddThreeDotOptionModal() {
@@ -822,99 +876,99 @@
       const { cb, mk, jg, am, wf, totalBank } = getAllAccountSummaries();
 
       container.innerHTML = `
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          <div onclick="switchTab('cashbook')" class="cursor-pointer bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-slate-500 uppercase">Personal Cash Book</span>
-              <span class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center"><i class="fa-solid fa-wallet"></i></span>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4 mb-6">
+          <div onclick="switchTab('cashbook')" class="cursor-pointer glass-card p-4 sm:p-5 rounded-3xl border border-emerald-200/70 shadow-sm hover:shadow-md active:scale-[0.99] transition">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-[11px] sm:text-xs font-extrabold text-emerald-800 uppercase">Cash Book</span>
+              <span class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-sm"><i class="fa-solid fa-wallet"></i></span>
             </div>
-            <p class="text-2xl font-extrabold text-emerald-700">${formatBDT(cb.closingBal)}</p>
-            <p class="text-xs text-slate-500 mt-1">Cr: ${formatBDT(cb.totalCr)} | Dr: ${formatBDT(cb.totalDr)}</p>
+            <p class="text-lg sm:text-2xl font-black text-emerald-700">${formatBDT(cb.closingBal)}</p>
+            <p class="text-[11px] text-slate-500 mt-1 truncate">Cr: ${formatBDT(cb.totalCr)} • Dr: ${formatBDT(cb.totalDr)}</p>
           </div>
 
-          <div onclick="switchTab('mokul')" class="cursor-pointer bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-slate-500 uppercase">Mokul Vai AC (Ledger)</span>
-              <span class="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center"><i class="fa-solid fa-user-tie"></i></span>
+          <div onclick="switchTab('bank')" class="cursor-pointer glass-card p-4 sm:p-5 rounded-3xl border border-blue-200/70 shadow-sm hover:shadow-md active:scale-[0.99] transition">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-[11px] sm:text-xs font-extrabold text-blue-800 uppercase">Bank Accounts</span>
+              <span class="w-8 h-8 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center text-sm"><i class="fa-solid fa-building-columns"></i></span>
             </div>
-            <p class="text-2xl font-extrabold text-indigo-700">${formatBDT(mk.closingBal)}</p>
-            <p class="text-xs text-slate-500 mt-1">Dr: ${formatBDT(mk.totalDr)} | Cr: ${formatBDT(mk.totalCr)}</p>
+            <p class="text-lg sm:text-2xl font-black text-blue-700">${formatBDT(totalBank)}</p>
+            <p class="text-[11px] text-slate-500 mt-1 truncate">DPS / FDR / Savings (${appData.banks.length})</p>
           </div>
 
-          <div onclick="switchTab('jaiga')" class="cursor-pointer bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-slate-500 uppercase">Jaigar Hisab (Ledger)</span>
-              <span class="w-9 h-9 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center"><i class="fa-solid fa-map-location-dot"></i></span>
+          <div onclick="switchTab('mokul')" class="cursor-pointer glass-card p-4 sm:p-5 rounded-3xl border border-indigo-200/70 shadow-sm hover:shadow-md active:scale-[0.99] transition">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-[11px] sm:text-xs font-extrabold text-indigo-800 uppercase">Mokul Vai AC</span>
+              <span class="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-sm"><i class="fa-solid fa-user-tie"></i></span>
             </div>
-            <p class="text-2xl font-extrabold text-teal-700">${formatBDT(jg.totalCr)}</p>
-            <p class="text-xs text-slate-500 mt-1">Dr: ${formatBDT(jg.totalDr)} | বকেয়া: ${formatBDT(jg.closingBal)}</p>
+            <p class="text-lg sm:text-2xl font-black text-indigo-700">${formatBDT(mk.closingBal)}</p>
+            <p class="text-[11px] text-slate-500 mt-1 truncate">Dr: ${formatBDT(mk.totalDr)} • Cr: ${formatBDT(mk.totalCr)}</p>
           </div>
 
-          <div onclick="switchTab('bank')" class="cursor-pointer bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-slate-500 uppercase">Bank (DPS/FDR/Savings)</span>
-              <span class="w-9 h-9 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center"><i class="fa-solid fa-building-columns"></i></span>
+          <div onclick="switchTab('jaiga')" class="cursor-pointer glass-card p-4 sm:p-5 rounded-3xl border border-teal-200/70 shadow-sm hover:shadow-md active:scale-[0.99] transition">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-[11px] sm:text-xs font-extrabold text-teal-800 uppercase">Jaigar Hisab</span>
+              <span class="w-8 h-8 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center text-sm"><i class="fa-solid fa-map-location-dot"></i></span>
             </div>
-            <p class="text-2xl font-extrabold text-blue-700">${formatBDT(totalBank)}</p>
-            <p class="text-xs text-slate-500 mt-1">অ্যাকাউন্ট: ${appData.banks.length} টি (Smart Ledger)</p>
+            <p class="text-lg sm:text-2xl font-black text-teal-700">${formatBDT(jg.totalCr)}</p>
+            <p class="text-[11px] text-slate-500 mt-1 truncate">বকেয়া: ${formatBDT(jg.closingBal)}</p>
           </div>
 
-          <div onclick="switchTab('documents')" class="cursor-pointer bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-slate-500 uppercase">Land Documents</span>
-              <span class="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center"><i class="fa-solid fa-folder-open"></i></span>
+          <div onclick="switchTab('documents')" class="cursor-pointer glass-card p-4 sm:p-5 rounded-3xl border border-amber-200/70 shadow-sm hover:shadow-md active:scale-[0.99] transition">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-[11px] sm:text-xs font-extrabold text-amber-800 uppercase">Land Docs</span>
+              <span class="w-8 h-8 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-sm"><i class="fa-solid fa-folder-open"></i></span>
             </div>
-            <p class="text-2xl font-extrabold text-amber-700">${appData.documents.length} টি ফাইল</p>
-            <p class="text-xs text-slate-500 mt-1">ফোল্ডার: ${appData.docFolders.length} টি (BS/RS/Dalil)</p>
+            <p class="text-lg sm:text-2xl font-black text-amber-700">${appData.documents.length} টি ফাইল</p>
+            <p class="text-[11px] text-slate-500 mt-1 truncate">BS / RS / Dalil Folders</p>
           </div>
 
-          <div onclick="switchTab('ammu')" class="cursor-pointer bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-slate-500 uppercase">Ammor Medicine Ledger</span>
-              <span class="w-9 h-9 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center"><i class="fa-solid fa-pills"></i></span>
+          <div onclick="switchTab('ammu')" class="cursor-pointer glass-card p-4 sm:p-5 rounded-3xl border border-rose-200/70 shadow-sm hover:shadow-md active:scale-[0.99] transition">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-[11px] sm:text-xs font-extrabold text-rose-800 uppercase">Ammor Medicine</span>
+              <span class="w-8 h-8 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center text-sm"><i class="fa-solid fa-pills"></i></span>
             </div>
-            <p class="text-2xl font-extrabold text-rose-700">${formatBDT(am.totalDr)}</p>
-            <p class="text-xs text-slate-500 mt-1">তহবিল: ${formatBDT(am.totalCr)} | ব্যালেন্স: ${formatBDT(am.closingBal)}</p>
+            <p class="text-lg sm:text-2xl font-black text-rose-700">${formatBDT(am.totalDr)}</p>
+            <p class="text-[11px] text-slate-500 mt-1 truncate">তহবিল ব্যালেন্স: ${formatBDT(am.closingBal)}</p>
           </div>
 
-          <div onclick="switchTab('wife')" class="cursor-pointer bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-slate-500 uppercase">Wife AC (Ledger)</span>
-              <span class="w-9 h-9 rounded-xl bg-pink-100 text-pink-700 flex items-center justify-center"><i class="fa-solid fa-heart"></i></span>
+          <div onclick="switchTab('wife')" class="cursor-pointer glass-card p-4 sm:p-5 rounded-3xl border border-pink-200/70 shadow-sm hover:shadow-md active:scale-[0.99] transition">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-[11px] sm:text-xs font-extrabold text-pink-800 uppercase">Wife AC</span>
+              <span class="w-8 h-8 rounded-xl bg-pink-100 text-pink-700 flex items-center justify-center text-sm"><i class="fa-solid fa-heart"></i></span>
             </div>
-            <p class="text-2xl font-extrabold text-pink-700">${formatBDT(wf.closingBal)}</p>
-            <p class="text-xs text-slate-500 mt-1">Dr: ${formatBDT(wf.totalDr)} | Cr: ${formatBDT(wf.totalCr)}</p>
+            <p class="text-lg sm:text-2xl font-black text-pink-700">${formatBDT(wf.closingBal)}</p>
+            <p class="text-[11px] text-slate-500 mt-1 truncate">Dr: ${formatBDT(wf.totalDr)} • Cr: ${formatBDT(wf.totalCr)}</p>
           </div>
 
-          <div onclick="switchTab('settings')" class="cursor-pointer bg-slate-900 text-white p-5 rounded-2xl shadow-xs hover:bg-slate-800 transition">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-emerald-400 uppercase">Smart Cloud & Menu</span>
-              <span class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center"><i class="fa-solid fa-shield-halved"></i></span>
+          <div onclick="switchTab('settings')" class="cursor-pointer bg-gradient-to-br from-slate-900 to-emerald-950 text-white p-4 sm:p-5 rounded-3xl shadow-sm hover:shadow-md active:scale-[0.99] transition">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-[11px] sm:text-xs font-extrabold text-emerald-400 uppercase">Cloud & Menu</span>
+              <span class="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm"><i class="fa-solid fa-shield-halved"></i></span>
             </div>
-            <p class="text-lg font-bold">ডাটা সুরক্ষা ও মেনু</p>
-            <p class="text-xs text-slate-400 mt-1">Firebase + Local Snapshot + JSON</p>
+            <p class="text-base sm:text-lg font-extrabold">সেটিংস ও ব্যাকআপ</p>
+            <p class="text-[11px] text-slate-300 mt-1 truncate">Firebase + Local + JSON</p>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div class="lg:col-span-2 bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="font-bold text-slate-800">Personal Cash Book — ক্যাটাগরি ভিত্তিক খরচ</h3>
-              <button onclick="switchTab('cashbook')" class="text-xs text-emerald-600 font-bold hover:underline">পূর্ণ লেজার দেখুন →</button>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          <div class="lg:col-span-2 glass-card p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-sm">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="font-extrabold text-slate-800 text-sm sm:text-base">ক্যাটাগরি ভিত্তিক খরচ চার্ট</h3>
+              <button onclick="switchTab('cashbook')" class="text-xs text-emerald-600 font-bold hover:underline">ক্যাশ বুক →</button>
             </div>
-            <div class="h-64"><canvas id="cashChartCanvas"></canvas></div>
+            <div class="h-56 sm:h-64"><canvas id="cashChartCanvas"></canvas></div>
           </div>
 
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
-            <h3 class="font-bold text-slate-800 mb-3">সাম্প্রতিক ক্যাশ বুক লেনদেন</h3>
+          <div class="glass-card p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-sm">
+            <h3 class="font-extrabold text-slate-800 text-sm sm:text-base mb-3">সাম্প্রতিক লেনদেন</h3>
             <div class="space-y-2.5">
               ${cb.rows.slice(-5).reverse().map(item => `
-                <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+                <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50/90 border border-slate-200/70">
                   <div class="min-w-0 pr-2">
-                    <p class="text-sm font-semibold text-slate-800 truncate">${item.desc}</p>
-                    <p class="text-xs text-slate-500">${item.date} • ${item.method}</p>
+                    <p class="text-xs sm:text-sm font-bold text-slate-800 truncate">${item.desc}</p>
+                    <p class="text-[11px] text-slate-500">${item.date} • ${item.method}</p>
                   </div>
-                  <span class="text-sm font-bold shrink-0 ${item.type === 'credit' ? 'text-emerald-600' : 'text-rose-600'}">
+                  <span class="text-xs sm:text-sm font-black shrink-0 ${item.type === 'credit' ? 'text-emerald-600' : 'text-rose-600'}">
                     ${item.type === 'credit' ? '+' : '-'}${formatBDT(item.amount)}
                   </span>
                 </div>
@@ -937,10 +991,10 @@
           data: {
             labels: Object.keys(catMap),
             datasets: [{
-              label: 'খরচের পরিমাণ (৳)',
+              label: 'খরচ (৳)',
               data: Object.values(catMap),
-              backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'],
-              borderRadius: 8
+              backgroundColor: ['#10b981', '#0ea5e9', '#f59e0b', '#f43f5e', '#8b5cf6', '#ec4899'],
+              borderRadius: 10
             }]
           },
           options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
@@ -989,59 +1043,84 @@
       });
 
       container.innerHTML = `
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs mb-5">
-          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+        <div class="glass-card p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-sm mb-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
             <div>
-              <h2 class="text-xl font-extrabold text-slate-900">Personal Cash Book — Smart Double-Entry Ledger</h2>
-              <p class="text-xs text-slate-500">তারিখ অনুযায়ী জমা (Cr +), খরচ (Dr -) ও চলমান ব্যালেন্স (Bal)</p>
+              <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Personal Cash Book</h2>
+              <p class="text-xs text-slate-500">জমা (Cr +), খরচ (Dr -) ও চলমান ব্যালেন্স</p>
             </div>
-            <div class="flex flex-wrap gap-2 no-print">
-              <button onclick="openCashModal('credit')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-sm font-bold shadow">+ জমা (Cr)</button>
-              <button onclick="openCashModal('debit')" class="bg-rose-600 hover:bg-rose-700 text-white px-4 py-2.5 rounded-xl text-sm font-bold shadow">- খরচ (Dr)</button>
+            <div class="flex gap-2 no-print">
+              <button onclick="openCashModal('credit')" class="flex-1 sm:flex-none bg-emerald-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow">+ জমা (Cr)</button>
+              <button onclick="openCashModal('debit')" class="flex-1 sm:flex-none bg-rose-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow">- খরচ (Dr)</button>
             </div>
           </div>
 
-          <form onsubmit="handleQuickCashEntry(event)" class="mt-4 bg-slate-50 p-3.5 rounded-xl border border-slate-200 no-print">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2.5">
-              <input type="date" id="qDate" value="${todayStr}" required class="px-3 py-2 rounded-lg border border-slate-300 bg-white text-sm" />
-              <select id="qType" class="px-3 py-2 rounded-lg border border-slate-300 bg-white text-sm font-bold">
+          <form onsubmit="handleQuickCashEntry(event)" class="mt-3.5 bg-slate-50 p-3 rounded-2xl border border-slate-200 no-print">
+            <div class="grid grid-cols-2 sm:grid-cols-6 gap-2">
+              <input type="date" id="qDate" value="${todayStr}" required class="px-2.5 py-2 rounded-xl border border-slate-300 bg-white text-xs sm:text-sm" />
+              <select id="qType" class="px-2.5 py-2 rounded-xl border border-slate-300 bg-white text-xs sm:text-sm font-bold">
                 <option value="credit">+ জমা (Cr)</option>
                 <option value="debit" selected>- খরচ (Dr)</option>
               </select>
-              <input type="text" id="qDesc" placeholder="বিবরণ লিখুন..." required class="lg:col-span-2 px-3 py-2 rounded-lg border border-slate-300 bg-white text-sm" />
-              <input type="number" id="qAmount" placeholder="টাকা" min="1" step="any" required class="px-3 py-2 rounded-lg border border-slate-300 bg-white text-sm font-bold" />
-              <button type="submit" class="bg-slate-900 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg text-sm shadow">Entry</button>
+              <input type="text" id="qDesc" placeholder="বিবরণ লিখুন..." required class="col-span-2 px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs sm:text-sm" />
+              <input type="number" id="qAmount" placeholder="টাকা" min="1" step="any" required class="px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs sm:text-sm font-bold" />
+              <button type="submit" class="bg-slate-900 hover:bg-emerald-600 text-white font-bold py-2 px-3 rounded-xl text-xs sm:text-sm shadow">Add</button>
             </div>
           </form>
         </div>
 
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5 mb-5">
-          <div class="bg-white p-4 rounded-xl border border-slate-200"><p class="text-xs text-slate-500 font-semibold">পূর্বের জের (Opening)</p><p class="text-lg font-extrabold text-slate-700 mt-1">${formatBDT(openingBalance)}</p></div>
-          <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200"><p class="text-xs text-emerald-700 font-semibold">মোট জমা (Cr +)</p><p class="text-lg font-extrabold text-emerald-700 mt-1">${formatBDT(periodCr)}</p></div>
-          <div class="bg-rose-50 p-4 rounded-xl border border-rose-200"><p class="text-xs text-rose-700 font-semibold">মোট খরচ (Dr -)</p><p class="text-lg font-extrabold text-rose-700 mt-1">${formatBDT(periodDr)}</p></div>
-          <div class="bg-slate-900 text-white p-4 rounded-xl"><p class="text-xs text-emerald-300 font-semibold">বর্তমান ব্যালেন্স (Bal)</p><p class="text-lg font-extrabold mt-1">${formatBDT(running)}</p></div>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+          <div class="glass-card p-3.5 rounded-2xl border border-slate-200"><p class="text-[11px] text-slate-500 font-bold">পূর্বের জের</p><p class="text-base sm:text-lg font-black text-slate-700 mt-0.5">${formatBDT(openingBalance)}</p></div>
+          <div class="bg-emerald-50/90 p-3.5 rounded-2xl border border-emerald-200"><p class="text-[11px] text-emerald-700 font-bold">মোট জমা (Cr +)</p><p class="text-base sm:text-lg font-black text-emerald-700 mt-0.5">${formatBDT(periodCr)}</p></div>
+          <div class="bg-rose-50/90 p-3.5 rounded-2xl border border-rose-200"><p class="text-[11px] text-rose-700 font-bold">মোট খরচ (Dr -)</p><p class="text-base sm:text-lg font-black text-rose-700 mt-0.5">${formatBDT(periodDr)}</p></div>
+          <div class="bg-slate-900 text-white p-3.5 rounded-2xl"><p class="text-[11px] text-emerald-300 font-bold">বর্তমান ব্যালেন্স</p><p class="text-base sm:text-lg font-black mt-0.5">${formatBDT(running)}</p></div>
         </div>
 
-        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs mb-5 no-print">
-          <div class="flex flex-wrap items-center gap-2 mb-3">
-            <button onclick="appData.cashFilter.mode='all';renderCurrentView()" class="px-3 py-1.5 rounded-lg text-xs font-bold ${f.mode === 'all' ? 'bg-emerald-600 text-white' : 'bg-slate-100'}">সব তারিখ</button>
-            <button onclick="appData.cashFilter.mode='today';renderCurrentView()" class="px-3 py-1.5 rounded-lg text-xs font-bold ${f.mode === 'today' ? 'bg-emerald-600 text-white' : 'bg-slate-100'}">আজকের হিসাব</button>
-            <button onclick="appData.cashFilter.mode='single';renderCurrentView()" class="px-3 py-1.5 rounded-lg text-xs font-bold ${f.mode === 'single' ? 'bg-emerald-600 text-white' : 'bg-slate-100'}">নির্দিষ্ট তারিখ</button>
-            <button onclick="appData.cashFilter.mode='range';renderCurrentView()" class="px-3 py-1.5 rounded-lg text-xs font-bold ${f.mode === 'range' ? 'bg-emerald-600 text-white' : 'bg-slate-100'}">তারিখ রেঞ্জ</button>
-            <button onclick="appData.cashFilter.mode='month';renderCurrentView()" class="px-3 py-1.5 rounded-lg text-xs font-bold ${f.mode === 'month' ? 'bg-emerald-600 text-white' : 'bg-slate-100'}">মাস অনুযায়ী</button>
+        <div class="glass-card p-3.5 rounded-2xl border border-slate-200 shadow-sm mb-4 no-print">
+          <div class="flex items-center gap-1.5 overflow-x-auto pb-2 mb-2.5">
+            <button onclick="appData.cashFilter.mode='all';renderCurrentView()" class="px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 ${f.mode === 'all' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'}">সব তারিখ</button>
+            <button onclick="appData.cashFilter.mode='today';renderCurrentView()" class="px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 ${f.mode === 'today' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'}">আজকের</button>
+            <button onclick="appData.cashFilter.mode='single';renderCurrentView()" class="px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 ${f.mode === 'single' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'}">নির্দিষ্ট তারিখ</button>
+            <button onclick="appData.cashFilter.mode='range';renderCurrentView()" class="px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 ${f.mode === 'range' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'}">তারিখ রেঞ্জ</button>
+            <button onclick="appData.cashFilter.mode='month';renderCurrentView()" class="px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 ${f.mode === 'month' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'}">মাস অনুযায়ী</button>
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            ${f.mode === 'single' ? `<input type="date" value="${f.singleDate}" onchange="appData.cashFilter.singleDate=this.value;renderCurrentView()" class="px-3 py-2 rounded-lg border border-slate-300 text-sm" />` : ''}
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            ${f.mode === 'single' ? `<input type="date" value="${f.singleDate}" onchange="appData.cashFilter.singleDate=this.value;renderCurrentView()" class="px-3 py-2 rounded-xl border border-slate-300 text-sm" />` : ''}
             ${f.mode === 'range' ? `
-              <input type="date" value="${f.fromDate}" onchange="appData.cashFilter.fromDate=this.value;renderCurrentView()" class="px-3 py-2 rounded-lg border border-slate-300 text-sm" />
-              <input type="date" value="${f.toDate}" onchange="appData.cashFilter.toDate=this.value;renderCurrentView()" class="px-3 py-2 rounded-lg border border-slate-300 text-sm" />
+              <input type="date" value="${f.fromDate}" onchange="appData.cashFilter.fromDate=this.value;renderCurrentView()" class="px-3 py-2 rounded-xl border border-slate-300 text-sm" />
+              <input type="date" value="${f.toDate}" onchange="appData.cashFilter.toDate=this.value;renderCurrentView()" class="px-3 py-2 rounded-xl border border-slate-300 text-sm" />
             ` : ''}
-            ${f.mode === 'month' ? `<input type="month" value="${f.month}" onchange="appData.cashFilter.month=this.value;renderCurrentView()" class="px-3 py-2 rounded-lg border border-slate-300 text-sm" />` : ''}
-            <input type="text" value="${f.search}" oninput="appData.cashFilter.search=this.value;renderCurrentView()" placeholder="সার্চ করুন..." class="px-3 py-2 rounded-lg border border-slate-300 text-sm" />
+            ${f.mode === 'month' ? `<input type="month" value="${f.month}" onchange="appData.cashFilter.month=this.value;renderCurrentView()" class="px-3 py-2 rounded-xl border border-slate-300 text-sm" />` : ''}
+            <input type="text" value="${f.search}" oninput="appData.cashFilter.search=this.value;renderCurrentView()" placeholder="সার্চ করুন..." class="px-3 py-2 rounded-xl border border-slate-300 text-sm" />
           </div>
         </div>
 
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+        <!-- Mobile Smart Cards -->
+        <div class="md:hidden space-y-2.5 mb-4">
+          ${rows.map(r => `
+            <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs">
+              <div class="flex items-start justify-between gap-2">
+                <div class="min-w-0">
+                  <p class="text-sm font-extrabold text-slate-900 truncate">${r.desc}</p>
+                  <p class="text-[11px] text-slate-500 mt-0.5">${r.date} • ${r.category} • ${r.method}</p>
+                </div>
+                <span class="text-sm font-black shrink-0 ${r.cr > 0 ? 'text-emerald-600' : 'text-rose-600'}">
+                  ${r.cr > 0 ? '+' + formatBDT(r.cr) : '-' + formatBDT(r.dr)}
+                </span>
+              </div>
+              <div class="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
+                <span class="font-bold text-slate-700">Bal: <span class="text-slate-900 font-black">${formatBDT(r.bal)}</span></span>
+                <div class="flex gap-1.5 no-print">
+                  <button onclick="openCashModal('${r.type}', '${r.id}')" class="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-600 font-bold">Edit</button>
+                  <button onclick="deleteCashEntry('${r.id}')" class="px-2.5 py-1 rounded-lg bg-rose-50 text-rose-600 font-bold">Del</button>
+                </div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+
+        <!-- Desktop Table -->
+        <div class="hidden md:block bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
           <div class="overflow-x-auto">
             <table class="w-full text-sm text-left">
               <thead class="bg-slate-900 text-white text-xs uppercase">
@@ -1151,24 +1230,24 @@
     function renderDocuments(container) {
       const docs = selectedDocFolder === 'all' ? appData.documents : appData.documents.filter(d => d.folderId === selectedDocFolder);
       container.innerHTML = `
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs mb-5">
+        <div class="glass-card p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-sm mb-5">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-            <div><h2 class="text-xl font-extrabold text-slate-900">Land Documents (BS / RS / Dalil)</h2><p class="text-xs text-slate-500">ফোল্ডার অনুযায়ী ডকুমেন্ট সংরক্ষণ ও Google Drive লিংক</p></div>
+            <div><h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Land Documents (BS / RS / Dalil)</h2><p class="text-xs text-slate-500">ফোল্ডার অনুযায়ী ডকুমেন্ট সংরক্ষণ ও Google Drive লিংক</p></div>
             <div class="flex gap-2 no-print">
-              <button onclick="openNewFolderModal()" class="bg-slate-800 text-white px-3.5 py-2 rounded-xl text-xs font-bold">+ নতুন ফোল্ডার</button>
-              <button onclick="openUploadDocModal()" class="bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-bold">+ ফাইল আপলোড</button>
+              <button onclick="openNewFolderModal()" class="flex-1 sm:flex-none bg-slate-800 text-white px-3.5 py-2 rounded-xl text-xs font-bold">+ ফোল্ডার</button>
+              <button onclick="openUploadDocModal()" class="flex-1 sm:flex-none bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-bold">+ আপলোড</button>
             </div>
           </div>
-          <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
-            <button onclick="selectedDocFolder='all';renderCurrentView()" class="p-3 rounded-xl border text-left ${selectedDocFolder === 'all' ? 'bg-amber-50 border-amber-400' : 'bg-slate-50'}"><p class="font-bold text-sm">সকল ফাইল</p><p class="text-xs text-slate-500">${appData.documents.length} টি</p></button>
-            ${appData.docFolders.map(f => `<button onclick="selectedDocFolder='${f.id}';renderCurrentView()" class="p-3 rounded-xl border text-left ${selectedDocFolder === f.id ? 'bg-emerald-50 border-emerald-500' : 'bg-slate-50'}"><p class="font-bold text-sm truncate">${f.name}</p><p class="text-xs text-slate-500">${appData.documents.filter(d => d.folderId === f.id).length} টি</p></button>`).join('')}
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
+            <button onclick="selectedDocFolder='all';renderCurrentView()" class="p-3 rounded-2xl border text-left ${selectedDocFolder === 'all' ? 'bg-amber-50 border-amber-400' : 'bg-slate-50'}"><p class="font-bold text-xs sm:text-sm">সকল ফাইল</p><p class="text-[11px] text-slate-500">${appData.documents.length} টি</p></button>
+            ${appData.docFolders.map(f => `<button onclick="selectedDocFolder='${f.id}';renderCurrentView()" class="p-3 rounded-2xl border text-left ${selectedDocFolder === f.id ? 'bg-emerald-50 border-emerald-500' : 'bg-slate-50'}"><p class="font-bold text-xs sm:text-sm truncate">${f.name}</p><p class="text-[11px] text-slate-500">${appData.documents.filter(d => d.folderId === f.id).length} টি</p></button>`).join('')}
           </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           ${docs.map(doc => {
             const folder = appData.docFolders.find(f => f.id === doc.folderId);
             return `
-              <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+              <div class="glass-card p-4 rounded-2xl border border-slate-200 shadow-xs">
                 <div class="flex justify-between items-start mb-2">
                   <span class="px-2.5 py-1 rounded-lg bg-amber-100 text-amber-800 text-xs font-bold">${folder ? folder.name : 'Doc'}</span>
                   <button onclick="deleteDoc('${doc.id}')" class="text-slate-400 hover:text-rose-600 text-xs no-print"><i class="fa-solid fa-trash"></i></button>
@@ -1240,52 +1319,98 @@
       saveData(); renderCurrentView();
     }
 
-    function renderMokulLedger(container) {
-      const f = ledgerFilters.mokul;
-      const res = computeDoubleEntry(appData.mokulLedger, f, { positiveType: 'dr' });
+    function renderLedgerTemplate(container, cfg) {
+      const { title, subtitle, positiveType, accentBtnDr, accentBtnCr, openModalFn, deleteFn, filterObj } = cfg;
+      const res = computeDoubleEntry(cfg.items, filterObj, { positiveType });
+
       container.innerHTML = `
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs mb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div><h2 class="text-xl font-extrabold text-slate-900">Mokul Vai AC — Smart Double-Entry Ledger</h2><p class="text-xs text-slate-500">দিয়েছি (Dr +), পেয়েছি (Cr -), চলমান ব্যালেন্স (Bal), Edit ও Delete</p></div>
+        <div class="glass-card p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-sm mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">${title}</h2>
+            <p class="text-xs text-slate-500">${subtitle}</p>
+          </div>
           <div class="flex gap-2 no-print">
-            <button onclick="openMokulModal('dr')" class="bg-indigo-600 text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow">+ দিয়েছি (Dr +)</button>
-            <button onclick="openMokulModal('cr')" class="bg-emerald-600 text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow">- পেয়েছি (Cr -)</button>
+            <button onclick="${openModalFn}('dr')" class="flex-1 sm:flex-none ${accentBtnDr} text-white px-3.5 py-2.5 rounded-xl text-xs font-bold shadow">+ Dr</button>
+            <button onclick="${openModalFn}('cr')" class="flex-1 sm:flex-none ${accentBtnCr} text-white px-3.5 py-2.5 rounded-xl text-xs font-bold shadow">- Cr</button>
           </div>
         </div>
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5 mb-5">
-          <div class="bg-white p-4 rounded-xl border border-slate-200"><p class="text-xs text-slate-500 font-bold">পূর্বের জের</p><p class="text-lg font-extrabold text-slate-700">${formatBDT(res.openingBal)}</p></div>
-          <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-200"><p class="text-xs text-indigo-700 font-bold">মোট দিয়েছি (Dr +)</p><p class="text-lg font-extrabold text-indigo-800">${formatBDT(res.totalDr)}</p></div>
-          <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200"><p class="text-xs text-emerald-700 font-bold">মোট পেয়েছি (Cr -)</p><p class="text-lg font-extrabold text-emerald-800">${formatBDT(res.totalCr)}</p></div>
-          <div class="bg-slate-900 text-white p-4 rounded-xl"><p class="text-xs text-amber-300 font-bold">বর্তমান ব্যালেন্স (Bal)</p><p class="text-lg font-extrabold">${formatBDT(res.closingBal)}</p></div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+          <div class="glass-card p-3.5 rounded-2xl border border-slate-200"><p class="text-[11px] text-slate-500 font-bold">পূর্বের জের</p><p class="text-base sm:text-lg font-black text-slate-700">${formatBDT(res.openingBal)}</p></div>
+          <div class="bg-indigo-50/90 p-3.5 rounded-2xl border border-indigo-200"><p class="text-[11px] text-indigo-700 font-bold">মোট Dr +</p><p class="text-base sm:text-lg font-black text-indigo-800">${formatBDT(res.totalDr)}</p></div>
+          <div class="bg-emerald-50/90 p-3.5 rounded-2xl border border-emerald-200"><p class="text-[11px] text-emerald-700 font-bold">মোট Cr -</p><p class="text-base sm:text-lg font-black text-emerald-800">${formatBDT(res.totalCr)}</p></div>
+          <div class="bg-slate-900 text-white p-3.5 rounded-2xl"><p class="text-[11px] text-amber-300 font-bold">বর্তমান ব্যালেন্স</p><p class="text-base sm:text-lg font-black">${formatBDT(res.closingBal)}</p></div>
         </div>
-        <div class="bg-white p-4 rounded-2xl border border-slate-200 mb-5 grid grid-cols-1 sm:grid-cols-3 gap-3 no-print">
-          <input type="date" value="${f.from}" onchange="ledgerFilters.mokul.from=this.value;renderCurrentView()" class="px-3 py-2 rounded-lg border text-sm" />
-          <input type="date" value="${f.to}" onchange="ledgerFilters.mokul.to=this.value;renderCurrentView()" class="px-3 py-2 rounded-lg border text-sm" />
-          <input type="text" value="${f.search}" oninput="ledgerFilters.mokul.search=this.value;renderCurrentView()" placeholder="বিবরণ খুঁজুন..." class="px-3 py-2 rounded-lg border text-sm" />
+
+        <div class="md:hidden space-y-2.5 mb-4">
+          ${res.rows.map(r => `
+            <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs">
+              <div class="flex items-start justify-between gap-2">
+                <div class="min-w-0">
+                  <p class="text-sm font-extrabold text-slate-900">${r.landTitle ? `${r.landTitle} — ` : ''}${r.desc || r.medicine || ''}</p>
+                  <p class="text-[11px] text-slate-500 mt-0.5">${r.date} ${r.method ? `• ${r.method}` : ''} ${r.doctor ? `• ${r.doctor}` : ''}</p>
+                </div>
+                <span class="text-xs sm:text-sm font-black shrink-0 ${r.dr > 0 ? 'text-indigo-600' : 'text-emerald-600'}">
+                  ${r.dr > 0 ? 'Dr ' + formatBDT(r.dr) : 'Cr ' + formatBDT(r.cr)}
+                </span>
+              </div>
+              <div class="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
+                <span class="font-bold text-slate-700">Bal: <span class="font-black text-slate-900">${formatBDT(r.bal)}</span></span>
+                <div class="flex gap-1.5 no-print">
+                  <button onclick="${openModalFn}('${r.type}', '${r.id}')" class="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-600 font-bold">Edit</button>
+                  <button onclick="${deleteFn}('${r.id}')" class="px-2.5 py-1 rounded-lg bg-rose-50 text-rose-600 font-bold">Del</button>
+                </div>
+              </div>
+            </div>
+          `).join('')}
         </div>
-        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
+
+        <div class="hidden md:block bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
           <div class="overflow-x-auto">
             <table class="w-full text-sm text-left">
-              <thead class="bg-slate-900 text-white text-xs uppercase"><tr><th class="py-3 px-4">তারিখ</th><th class="py-3 px-4">বিবরণ ও মাধ্যম</th><th class="py-3 px-4 text-right text-indigo-300">দিয়েছি (Dr +)</th><th class="py-3 px-4 text-right text-emerald-300">পেয়েছি (Cr -)</th><th class="py-3 px-4 text-right text-amber-300">ব্যালেন্স (Bal)</th><th class="py-3 px-4 text-center no-print">Action</th></tr></thead>
+              <thead class="bg-slate-900 text-white text-xs uppercase">
+                <tr>
+                  <th class="py-3 px-4">তারিখ</th>
+                  <th class="py-3 px-4">বিবরণ</th>
+                  <th class="py-3 px-4 text-right text-indigo-300">Dr +</th>
+                  <th class="py-3 px-4 text-right text-emerald-300">Cr -</th>
+                  <th class="py-3 px-4 text-right text-amber-300">ব্যালেন্স</th>
+                  <th class="py-3 px-4 text-center no-print">Action</th>
+                </tr>
+              </thead>
               <tbody class="divide-y divide-slate-200">
                 ${res.rows.map(r => `
                   <tr class="hover:bg-slate-50">
                     <td class="py-3 px-4 whitespace-nowrap">${r.date}</td>
-                    <td class="py-3 px-4 font-semibold">${r.desc} <span class="text-[11px] bg-slate-100 px-2 py-0.5 rounded ml-1">${r.method || 'Cash'}</span></td>
+                    <td class="py-3 px-4 font-semibold">${r.landTitle ? `<b>${r.landTitle}</b> — ` : ''}${r.desc || r.medicine || ''} <span class="text-[11px] text-slate-500">${r.method || r.doctor || ''}</span></td>
                     <td class="py-3 px-4 text-right font-bold text-indigo-600">${r.dr > 0 ? formatBDT(r.dr) : '-'}</td>
                     <td class="py-3 px-4 text-right font-bold text-emerald-600">${r.cr > 0 ? formatBDT(r.cr) : '-'}</td>
                     <td class="py-3 px-4 text-right font-extrabold">${formatBDT(r.bal)}</td>
                     <td class="py-3 px-4 text-center whitespace-nowrap no-print">
-                      <button onclick="openMokulModal('${r.type}', '${r.id}')" class="p-1.5 rounded-lg bg-blue-50 text-blue-600 mr-1"><i class="fa-solid fa-pen-to-square"></i></button>
-                      <button onclick="deleteMokulItem('${r.id}')" class="p-1.5 rounded-lg bg-rose-50 text-rose-600"><i class="fa-solid fa-trash"></i></button>
+                      <button onclick="${openModalFn}('${r.type}', '${r.id}')" class="p-1.5 rounded-lg bg-blue-50 text-blue-600 mr-1"><i class="fa-solid fa-pen-to-square"></i></button>
+                      <button onclick="${deleteFn}('${r.id}')" class="p-1.5 rounded-lg bg-rose-50 text-rose-600"><i class="fa-solid fa-trash"></i></button>
                     </td>
                   </tr>
                 `).join('')}
               </tbody>
-              <tfoot class="bg-slate-100 font-extrabold border-t-2 border-slate-300"><tr><td colspan="2" class="py-3 px-4 text-right">মোট হিসাব:</td><td class="py-3 px-4 text-right text-indigo-700">${formatBDT(res.totalDr)}</td><td class="py-3 px-4 text-right text-emerald-700">${formatBDT(res.totalCr)}</td><td class="py-3 px-4 text-right">${formatBDT(res.closingBal)}</td><td class="no-print"></td></tr></tfoot>
             </table>
           </div>
         </div>
       `;
+    }
+
+    function renderMokulLedger(container) {
+      renderLedgerTemplate(container, {
+        title: 'Mokul Vai AC — Smart Ledger',
+        subtitle: 'দিয়েছি (Dr +), পেয়েছি (Cr -), ব্যালেন্স',
+        items: appData.mokulLedger,
+        positiveType: 'dr',
+        accentBtnDr: 'bg-indigo-600',
+        accentBtnCr: 'bg-emerald-600',
+        openModalFn: 'openMokulModal',
+        deleteFn: 'deleteMokulItem',
+        filterObj: ledgerFilters.mokul
+      });
     }
 
     function openMokulModal(defaultType = 'dr', editId = null) {
@@ -1319,51 +1444,17 @@
     function deleteMokulItem(id) { if (!confirm('মুছে ফেলতে চান?')) return; appData.mokulLedger = appData.mokulLedger.filter(x => x.id !== id); saveData(); renderCurrentView(); }
 
     function renderJaigaLedger(container) {
-      const f = ledgerFilters.jaiga;
-      const res = computeDoubleEntry(appData.jaigaLedger, f, { positiveType: 'dr' });
-      container.innerHTML = `
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs mb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div><h2 class="text-xl font-extrabold text-slate-900">Jaigar Hisab — Smart Double-Entry Ledger</h2><p class="text-xs text-slate-500">মূল্য/খরচ (Dr +), পরিশোধ (Cr -), বকেয়া ব্যালেন্স (Bal), Edit ও Delete</p></div>
-          <div class="flex gap-2 no-print">
-            <button onclick="openJaigaLedgerModal('dr')" class="bg-amber-600 text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow">+ মূল্য/খরচ (Dr +)</button>
-            <button onclick="openJaigaLedgerModal('cr')" class="bg-teal-600 text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow">- পরিশোধ (Cr -)</button>
-          </div>
-        </div>
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5 mb-5">
-          <div class="bg-white p-4 rounded-xl border border-slate-200"><p class="text-xs text-slate-500 font-bold">পূর্বের জের</p><p class="text-lg font-extrabold text-slate-700">${formatBDT(res.openingBal)}</p></div>
-          <div class="bg-amber-50 p-4 rounded-xl border border-amber-200"><p class="text-xs text-amber-800 font-bold">মোট মূল্য/খরচ (Dr +)</p><p class="text-lg font-extrabold text-amber-900">${formatBDT(res.totalDr)}</p></div>
-          <div class="bg-teal-50 p-4 rounded-xl border border-teal-200"><p class="text-xs text-teal-800 font-bold">মোট পরিশোধ (Cr -)</p><p class="text-lg font-extrabold text-teal-900">${formatBDT(res.totalCr)}</p></div>
-          <div class="bg-slate-900 text-white p-4 rounded-xl"><p class="text-xs text-rose-300 font-bold">অবশিষ্ট বকেয়া (Bal)</p><p class="text-lg font-extrabold">${formatBDT(res.closingBal)}</p></div>
-        </div>
-        <div class="bg-white p-4 rounded-2xl border border-slate-200 mb-5 grid grid-cols-1 sm:grid-cols-3 gap-3 no-print">
-          <input type="date" value="${f.from}" onchange="ledgerFilters.jaiga.from=this.value;renderCurrentView()" class="px-3 py-2 rounded-lg border text-sm" />
-          <input type="date" value="${f.to}" onchange="ledgerFilters.jaiga.to=this.value;renderCurrentView()" class="px-3 py-2 rounded-lg border text-sm" />
-          <input type="text" value="${f.search}" oninput="ledgerFilters.jaiga.search=this.value;renderCurrentView()" placeholder="জমির নাম / খতিয়ান / বিবরণ খুঁজুন..." class="px-3 py-2 rounded-lg border text-sm" />
-        </div>
-        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
-          <div class="overflow-x-auto">
-            <table class="w-full text-sm text-left">
-              <thead class="bg-slate-900 text-white text-xs uppercase"><tr><th class="py-3 px-4">তারিখ</th><th class="py-3 px-4">জমি, খতিয়ান ও বিবরণ</th><th class="py-3 px-4 text-right text-amber-300">মূল্য/খরচ (Dr +)</th><th class="py-3 px-4 text-right text-emerald-300">পরিশোধ (Cr -)</th><th class="py-3 px-4 text-right text-rose-300">বকেয়া (Bal)</th><th class="py-3 px-4 text-center no-print">Action</th></tr></thead>
-              <tbody class="divide-y divide-slate-200">
-                ${res.rows.map(r => `
-                  <tr class="hover:bg-slate-50">
-                    <td class="py-3 px-4 whitespace-nowrap">${r.date}</td>
-                    <td class="py-3 px-4"><p class="font-bold text-slate-900">${r.landTitle}</p><p class="text-xs text-slate-600">${r.desc} ${r.khatian ? `• <span class="text-teal-700 font-semibold">${r.khatian}</span>` : ''}</p></td>
-                    <td class="py-3 px-4 text-right font-bold text-amber-700">${r.dr > 0 ? formatBDT(r.dr) : '-'}</td>
-                    <td class="py-3 px-4 text-right font-bold text-teal-700">${r.cr > 0 ? formatBDT(r.cr) : '-'}</td>
-                    <td class="py-3 px-4 text-right font-extrabold">${formatBDT(r.bal)}</td>
-                    <td class="py-3 px-4 text-center whitespace-nowrap no-print">
-                      <button onclick="openJaigaLedgerModal('${r.type}', '${r.id}')" class="p-1.5 rounded-lg bg-blue-50 text-blue-600 mr-1"><i class="fa-solid fa-pen-to-square"></i></button>
-                      <button onclick="deleteJaigaLedgerItem('${r.id}')" class="p-1.5 rounded-lg bg-rose-50 text-rose-600"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                  </tr>
-                `).join('')}
-              </tbody>
-              <tfoot class="bg-slate-100 font-extrabold border-t-2 border-slate-300"><tr><td colspan="2" class="py-3 px-4 text-right">মোট হিসাব:</td><td class="py-3 px-4 text-right text-amber-800">${formatBDT(res.totalDr)}</td><td class="py-3 px-4 text-right text-teal-800">${formatBDT(res.totalCr)}</td><td class="py-3 px-4 text-right text-rose-700">${formatBDT(res.closingBal)}</td><td class="no-print"></td></tr></tfoot>
-            </table>
-          </div>
-        </div>
-      `;
+      renderLedgerTemplate(container, {
+        title: 'Jaigar Hisab — Smart Ledger',
+        subtitle: 'মূল্য/খরচ (Dr +), পরিশোধ (Cr -), বকেয়া ব্যালেন্স',
+        items: appData.jaigaLedger,
+        positiveType: 'dr',
+        accentBtnDr: 'bg-amber-600',
+        accentBtnCr: 'bg-teal-600',
+        openModalFn: 'openJaigaLedgerModal',
+        deleteFn: 'deleteJaigaLedgerItem',
+        filterObj: ledgerFilters.jaiga
+      });
     }
 
     function openJaigaLedgerModal(defaultType = 'cr', editId = null) {
@@ -1401,48 +1492,41 @@
       const f = ledgerFilters.ammu;
       const res = computeDoubleEntry(appData.ammuMedicines, f, { positiveType: 'cr' });
       container.innerHTML = `
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs mb-5 flex flex-wrap justify-between items-center gap-3">
-          <div><h2 class="text-xl font-extrabold text-slate-900">Ammor Medicine Hisab — Smart Double-Entry Ledger</h2><p class="text-xs text-slate-500">তহবিল জমা (Cr +), ওষুধ খরচ (Dr -), চলমান ব্যালেন্স (Bal), Edit ও Delete</p></div>
+        <div class="glass-card p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-sm mb-4 flex flex-wrap justify-between items-center gap-3">
+          <div><h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Ammor Medicine Hisab</h2><p class="text-xs text-slate-500">তহবিল জমা (Cr +), ওষুধ খরচ (Dr -) ও প্রেসক্রিপশন</p></div>
           <div class="flex flex-wrap gap-2 no-print">
-            <button onclick="openAmmuMedModal('cr')" class="bg-emerald-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow">+ তহবিল জমা (Cr +)</button>
-            <button onclick="openAmmuMedModal('dr')" class="bg-rose-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow">- ওষুধ খরচ (Dr -)</button>
-            <button onclick="openPrescriptionModal()" class="bg-slate-900 text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow">+ প্রেসক্রিপশন আপলোড</button>
+            <button onclick="openAmmuMedModal('cr')" class="bg-emerald-600 text-white px-3 py-2 rounded-xl text-xs font-bold shadow">+ তহবিল</button>
+            <button onclick="openAmmuMedModal('dr')" class="bg-rose-600 text-white px-3 py-2 rounded-xl text-xs font-bold shadow">- ওষুধ</button>
+            <button onclick="openPrescriptionModal()" class="bg-slate-900 text-white px-3 py-2 rounded-xl text-xs font-bold shadow">+ প্রেসক্রিপশন</button>
           </div>
         </div>
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5 mb-5">
-          <div class="bg-white p-4 rounded-xl border border-slate-200"><p class="text-xs text-slate-500 font-bold">পূর্বের জের</p><p class="text-lg font-extrabold text-slate-700">${formatBDT(res.openingBal)}</p></div>
-          <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200"><p class="text-xs text-emerald-700 font-bold">মোট তহবিল জমা (Cr +)</p><p class="text-lg font-extrabold text-emerald-800">${formatBDT(res.totalCr)}</p></div>
-          <div class="bg-rose-50 p-4 rounded-xl border border-rose-200"><p class="text-xs text-rose-700 font-bold">মোট ওষুধ খরচ (Dr -)</p><p class="text-lg font-extrabold text-rose-800">${formatBDT(res.totalDr)}</p></div>
-          <div class="bg-slate-900 text-white p-4 rounded-xl"><p class="text-xs text-amber-300 font-bold">বর্তমান তহবিল ব্যালেন্স</p><p class="text-lg font-extrabold">${formatBDT(res.closingBal)}</p></div>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+          <div class="glass-card p-3.5 rounded-2xl border border-slate-200"><p class="text-[11px] text-slate-500 font-bold">পূর্বের জের</p><p class="text-base sm:text-lg font-black">${formatBDT(res.openingBal)}</p></div>
+          <div class="bg-emerald-50 p-3.5 rounded-2xl border border-emerald-200"><p class="text-[11px] text-emerald-700 font-bold">মোট জমা</p><p class="text-base sm:text-lg font-black text-emerald-800">${formatBDT(res.totalCr)}</p></div>
+          <div class="bg-rose-50 p-3.5 rounded-2xl border border-rose-200"><p class="text-[11px] text-rose-700 font-bold">মোট খরচ</p><p class="text-base sm:text-lg font-black text-rose-800">${formatBDT(res.totalDr)}</p></div>
+          <div class="bg-slate-900 text-white p-3.5 rounded-2xl"><p class="text-[11px] text-amber-300 font-bold">ব্যালেন্স</p><p class="text-base sm:text-lg font-black">${formatBDT(res.closingBal)}</p></div>
         </div>
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
-            <div class="overflow-x-auto">
-              <table class="w-full text-sm text-left">
-                <thead class="bg-slate-900 text-white text-xs uppercase"><tr><th class="py-3 px-4">তারিখ</th><th class="py-3 px-4">বিবরণ / ওষুধ</th><th class="py-3 px-4 text-right text-emerald-300">জমা (Cr +)</th><th class="py-3 px-4 text-right text-rose-300">খরচ (Dr -)</th><th class="py-3 px-4 text-right text-amber-300">ব্যালেন্স</th><th class="py-3 px-4 text-center no-print">Action</th></tr></thead>
-                <tbody class="divide-y divide-slate-200">
-                  ${res.rows.map(m => `
-                    <tr class="hover:bg-slate-50">
-                      <td class="py-3 px-4 whitespace-nowrap">${m.date}</td>
-                      <td class="py-3 px-4"><p class="font-bold text-slate-800">${m.medicine}</p><p class="text-xs text-slate-500">${m.doctor || ''}</p></td>
-                      <td class="py-3 px-4 text-right text-emerald-600 font-bold">${m.cr > 0 ? formatBDT(m.cr) : '-'}</td>
-                      <td class="py-3 px-4 text-right text-rose-600 font-bold">${m.dr > 0 ? formatBDT(m.dr) : '-'}</td>
-                      <td class="py-3 px-4 text-right font-extrabold">${formatBDT(m.bal)}</td>
-                      <td class="py-3 px-4 text-center whitespace-nowrap no-print">
-                        <button onclick="openAmmuMedModal('${m.type}', '${m.id}')" class="p-1.5 rounded-lg bg-blue-50 text-blue-600 mr-1"><i class="fa-solid fa-pen-to-square"></i></button>
-                        <button onclick="deleteAmmuMed('${m.id}')" class="p-1.5 rounded-lg bg-rose-50 text-rose-600"><i class="fa-solid fa-trash"></i></button>
-                      </td>
-                    </tr>
-                  `).join('')}
-                </tbody>
-              </table>
-            </div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          <div class="lg:col-span-2 space-y-2.5">
+            ${res.rows.map(m => `
+              <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between gap-2">
+                <div class="min-w-0">
+                  <p class="text-sm font-extrabold text-slate-900 truncate">${m.medicine}</p>
+                  <p class="text-[11px] text-slate-500">${m.date} ${m.doctor ? `• ${m.doctor}` : ''} • Bal: ${formatBDT(m.bal)}</p>
+                </div>
+                <div class="flex items-center gap-2 shrink-0 no-print">
+                  <span class="text-sm font-black ${m.cr > 0 ? 'text-emerald-600' : 'text-rose-600'}">${m.cr > 0 ? '+' : '-'}${formatBDT(m.amount)}</span>
+                  <button onclick="openAmmuMedModal('${m.type}', '${m.id}')" class="p-1.5 rounded-lg bg-blue-50 text-blue-600 text-xs"><i class="fa-solid fa-pen"></i></button>
+                  <button onclick="deleteAmmuMed('${m.id}')" class="p-1.5 rounded-lg bg-rose-50 text-rose-600 text-xs"><i class="fa-solid fa-trash"></i></button>
+                </div>
+              </div>
+            `).join('')}
           </div>
-          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs space-y-3">
-            <h3 class="font-bold text-slate-800 flex items-center gap-2"><i class="fa-solid fa-file-prescription text-emerald-600"></i> প্রেসক্রিপশন (${appData.ammuPrescriptions.length})</h3>
+          <div class="glass-card p-4 rounded-2xl border border-slate-200 shadow-xs space-y-2.5">
+            <h3 class="font-bold text-slate-800 text-sm">প্রেসক্রিপশন (${appData.ammuPrescriptions.length})</h3>
             ${appData.ammuPrescriptions.map(p => `
               <div class="p-3 rounded-xl bg-slate-50 border flex justify-between items-center gap-2">
-                <div class="min-w-0"><p class="font-bold text-sm truncate">${p.title}</p><p class="text-xs text-slate-500">${p.doctor || ''} • ${p.date}</p></div>
+                <div class="min-w-0"><p class="font-bold text-xs sm:text-sm truncate">${p.title}</p><p class="text-[11px] text-slate-500">${p.doctor || ''} • ${p.date}</p></div>
                 <div class="flex items-center gap-1.5 shrink-0 no-print">
                   ${p.fileData ? `<button onclick="previewFile('${p.fileData}', '${p.title}')" class="text-xs bg-emerald-600 text-white px-2.5 py-1 rounded-lg font-bold">দেখুন</button>` : ''}
                   <button onclick="deletePrescription('${p.id}')" class="text-rose-500 p-1"><i class="fa-solid fa-trash"></i></button>
@@ -1502,45 +1586,17 @@
     function deletePrescription(id) { if (!confirm('মুছে ফেলতে চান?')) return; appData.ammuPrescriptions = appData.ammuPrescriptions.filter(x => x.id !== id); saveData(); renderCurrentView(); }
 
     function renderWifeLedger(container) {
-      const f = ledgerFilters.wife;
-      const res = computeDoubleEntry(appData.wifeLedger, f, { positiveType: 'dr' });
-      container.innerHTML = `
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs mb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div><h2 class="text-xl font-extrabold text-slate-900">Wife AC — Smart Double-Entry Ledger</h2><p class="text-xs text-slate-500">দিয়েছি (Dr +), পেয়েছি/ফেরত (Cr -), চলমান ব্যালেন্স (Bal), Edit ও Delete</p></div>
-          <div class="flex gap-2 no-print">
-            <button onclick="openWifeModal('dr')" class="bg-pink-600 text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow">+ দিয়েছি (Dr +)</button>
-            <button onclick="openWifeModal('cr')" class="bg-emerald-600 text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow">- পেয়েছি (Cr -)</button>
-          </div>
-        </div>
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5 mb-5">
-          <div class="bg-white p-4 rounded-xl border border-slate-200"><p class="text-xs text-slate-500 font-bold">পূর্বের জের</p><p class="text-lg font-extrabold text-slate-700">${formatBDT(res.openingBal)}</p></div>
-          <div class="bg-pink-50 p-4 rounded-xl border border-pink-200"><p class="text-xs text-pink-700 font-bold">মোট দিয়েছি (Dr +)</p><p class="text-lg font-extrabold text-pink-800">${formatBDT(res.totalDr)}</p></div>
-          <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200"><p class="text-xs text-emerald-700 font-bold">মোট পেয়েছি (Cr -)</p><p class="text-lg font-extrabold text-emerald-800">${formatBDT(res.totalCr)}</p></div>
-          <div class="bg-slate-900 text-white p-4 rounded-xl"><p class="text-xs text-amber-300 font-bold">বর্তমান ব্যালেন্স (Bal)</p><p class="text-lg font-extrabold">${formatBDT(res.closingBal)}</p></div>
-        </div>
-        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
-          <div class="overflow-x-auto">
-            <table class="w-full text-sm text-left">
-              <thead class="bg-slate-900 text-white text-xs uppercase"><tr><th class="py-3 px-4">তারিখ</th><th class="py-3 px-4">বিবরণ ও মাধ্যম</th><th class="py-3 px-4 text-right text-pink-300">দিয়েছি (Dr +)</th><th class="py-3 px-4 text-right text-emerald-300">পেয়েছি (Cr -)</th><th class="py-3 px-4 text-right text-amber-300">ব্যালেন্স (Bal)</th><th class="py-3 px-4 text-center no-print">Action</th></tr></thead>
-              <tbody class="divide-y divide-slate-200">
-                ${res.rows.map(r => `
-                  <tr class="hover:bg-slate-50">
-                    <td class="py-3 px-4 whitespace-nowrap">${r.date}</td>
-                    <td class="py-3 px-4 font-semibold">${r.desc} <span class="text-[11px] bg-slate-100 px-2 py-0.5 rounded ml-1">${r.method || 'Cash'}</span></td>
-                    <td class="py-3 px-4 text-right font-bold text-pink-600">${r.dr > 0 ? formatBDT(r.dr) : '-'}</td>
-                    <td class="py-3 px-4 text-right font-bold text-emerald-600">${r.cr > 0 ? formatBDT(r.cr) : '-'}</td>
-                    <td class="py-3 px-4 text-right font-extrabold">${formatBDT(r.bal)}</td>
-                    <td class="py-3 px-4 text-center whitespace-nowrap no-print">
-                      <button onclick="openWifeModal('${r.type}', '${r.id}')" class="p-1.5 rounded-lg bg-blue-50 text-blue-600 mr-1"><i class="fa-solid fa-pen-to-square"></i></button>
-                      <button onclick="deleteWifeItem('${r.id}')" class="p-1.5 rounded-lg bg-rose-50 text-rose-600"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                  </tr>
-                `).join('')}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      `;
+      renderLedgerTemplate(container, {
+        title: 'Wife AC — Smart Ledger',
+        subtitle: 'দিয়েছি (Dr +), পেয়েছি/ফেরত (Cr -), ব্যালেন্স',
+        items: appData.wifeLedger,
+        positiveType: 'dr',
+        accentBtnDr: 'bg-pink-600',
+        accentBtnCr: 'bg-emerald-600',
+        openModalFn: 'openWifeModal',
+        deleteFn: 'deleteWifeItem',
+        filterObj: ledgerFilters.wife
+      });
     }
 
     function openWifeModal(defaultType = 'dr', editId = null) {
@@ -1575,48 +1631,41 @@
       const bankItems = selectedBankFilter === 'all' ? appData.bankLedger : appData.bankLedger.filter(x => x.bankId === selectedBankFilter);
       const res = computeDoubleEntry(bankItems, f, { positiveType: 'cr' });
       container.innerHTML = `
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs mb-5 flex flex-wrap justify-between items-center gap-3">
-          <div><h2 class="text-xl font-extrabold text-slate-900">Bank (DPS / FDR / SAVINGS) — Smart Double-Entry Ledger</h2><p class="text-xs text-slate-500">ব্যাংকে জমা (Cr +), উত্তোলন (Dr -) ও চলমান ব্যালেন্স লেজার</p></div>
+        <div class="glass-card p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-sm mb-4 flex flex-wrap justify-between items-center gap-3">
+          <div><h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Bank (DPS / FDR / SAVINGS)</h2><p class="text-xs text-slate-500">জমা (Cr +), উত্তোলন (Dr -) ও ব্যালেন্স</p></div>
           <div class="flex flex-wrap gap-2 no-print">
-            <button onclick="openBankModal()" class="bg-slate-800 text-white px-3.5 py-2 rounded-xl text-xs font-bold">+ নতুন ব্যাংক অ্যাকাউন্ট</button>
-            <button onclick="openBankLedgerModal('cr')" class="bg-emerald-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold">+ ব্যাংকে জমা (Cr +)</button>
-            <button onclick="openBankLedgerModal('dr')" class="bg-rose-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold">- উত্তোলন/চার্জ (Dr -)</button>
+            <button onclick="openBankModal()" class="bg-slate-800 text-white px-3 py-2 rounded-xl text-xs font-bold">+ অ্যাকাউন্ট</button>
+            <button onclick="openBankLedgerModal('cr')" class="bg-emerald-600 text-white px-3 py-2 rounded-xl text-xs font-bold">+ জমা (Cr)</button>
+            <button onclick="openBankLedgerModal('dr')" class="bg-rose-600 text-white px-3 py-2 rounded-xl text-xs font-bold">- উত্তোলন (Dr)</button>
           </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 mb-5">
           ${appData.banks.map(b => `
-            <div onclick="selectedBankFilter='${b.id}';renderCurrentView()" class="cursor-pointer bg-white p-5 rounded-2xl border shadow-xs transition ${selectedBankFilter === b.id ? 'border-blue-600 ring-2 ring-blue-100' : 'border-slate-200'}">
+            <div onclick="selectedBankFilter='${b.id}';renderCurrentView()" class="cursor-pointer glass-card p-4 sm:p-5 rounded-2xl border shadow-xs transition ${selectedBankFilter === b.id ? 'border-blue-600 ring-2 ring-blue-100' : 'border-slate-200'}">
               <div class="flex justify-between items-center"><span class="px-2.5 py-0.5 rounded bg-blue-100 text-blue-800 text-xs font-extrabold">${b.type}</span><button onclick="event.stopPropagation();deleteBank('${b.id}')" class="text-slate-400 hover:text-rose-600 text-xs no-print"><i class="fa-solid fa-trash"></i></button></div>
-              <h3 class="font-extrabold text-base mt-2">${b.bankName}</h3>
+              <h3 class="font-extrabold text-sm sm:text-base mt-2">${b.bankName}</h3>
               <p class="text-xs text-slate-500">A/C: ${b.accountNo}</p>
-              <p class="text-2xl font-black text-blue-700 mt-3">${formatBDT(b.balance)}</p>
+              <p class="text-xl sm:text-2xl font-black text-blue-700 mt-2.5">${formatBDT(b.balance)}</p>
             </div>
           `).join('')}
         </div>
-        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
-          <div class="overflow-x-auto">
-            <table class="w-full text-sm text-left">
-              <thead class="bg-slate-900 text-white text-xs uppercase"><tr><th class="py-3 px-4">তারিখ</th><th class="py-3 px-4">ব্যাংক ও বিবরণ</th><th class="py-3 px-4 text-right text-emerald-300">জমা (Cr +)</th><th class="py-3 px-4 text-right text-rose-300">উত্তোলন (Dr -)</th><th class="py-3 px-4 text-right text-amber-300">ব্যালেন্স (Bal)</th><th class="py-3 px-4 text-center no-print">Action</th></tr></thead>
-              <tbody class="divide-y divide-slate-200">
-                ${res.rows.map(r => {
-                  const bank = appData.banks.find(b => b.id === r.bankId);
-                  return `
-                    <tr class="hover:bg-slate-50">
-                      <td class="py-3 px-4 whitespace-nowrap">${r.date}</td>
-                      <td class="py-3 px-4 font-semibold">${r.desc} <span class="text-[11px] bg-blue-50 text-blue-800 px-2 py-0.5 rounded ml-1">${bank ? `${bank.bankName} (${bank.type})` : ''}</span></td>
-                      <td class="py-3 px-4 text-right font-bold text-emerald-600">${r.cr > 0 ? formatBDT(r.cr) : '-'}</td>
-                      <td class="py-3 px-4 text-right font-bold text-rose-600">${r.dr > 0 ? formatBDT(r.dr) : '-'}</td>
-                      <td class="py-3 px-4 text-right font-extrabold">${formatBDT(r.bal)}</td>
-                      <td class="py-3 px-4 text-center whitespace-nowrap no-print">
-                        <button onclick="openBankLedgerModal('${r.type}', '${r.id}')" class="p-1.5 rounded-lg bg-blue-50 text-blue-600 mr-1"><i class="fa-solid fa-pen-to-square"></i></button>
-                        <button onclick="deleteBankLedgerItem('${r.id}')" class="p-1.5 rounded-lg bg-rose-50 text-rose-600"><i class="fa-solid fa-trash"></i></button>
-                      </td>
-                    </tr>
-                  `;
-                }).join('')}
-              </tbody>
-            </table>
-          </div>
+        <div class="space-y-2.5">
+          ${res.rows.map(r => {
+            const bank = appData.banks.find(b => b.id === r.bankId);
+            return `
+              <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between gap-2">
+                <div class="min-w-0">
+                  <p class="text-sm font-extrabold text-slate-900 truncate">${r.desc}</p>
+                  <p class="text-[11px] text-slate-500">${r.date} • ${bank ? `${bank.bankName} (${bank.type})` : ''} • Bal: ${formatBDT(r.bal)}</p>
+                </div>
+                <div class="flex items-center gap-2 shrink-0 no-print">
+                  <span class="text-sm font-black ${r.cr > 0 ? 'text-emerald-600' : 'text-rose-600'}">${r.cr > 0 ? '+' : '-'}${formatBDT(r.amount)}</span>
+                  <button onclick="openBankLedgerModal('${r.type}', '${r.id}')" class="p-1.5 rounded-lg bg-blue-50 text-blue-600 text-xs"><i class="fa-solid fa-pen"></i></button>
+                  <button onclick="deleteBankLedgerItem('${r.id}')" class="p-1.5 rounded-lg bg-rose-50 text-rose-600 text-xs"><i class="fa-solid fa-trash"></i></button>
+                </div>
+              </div>
+            `;
+          }).join('')}
         </div>
       `;
     }
@@ -1675,10 +1724,10 @@
     function renderSettings(container) {
       const fb = getActiveFirebaseConfig();
       container.innerHTML = `
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div class="bg-white p-5 rounded-2xl border shadow-xs">
-            <h2 class="text-lg font-extrabold mb-1">৩-ডট মেনুতে যোগ করুন / ডিলিট করুন</h2>
-            <p class="text-xs text-slate-500 mb-4">নতুন অপশন যোগ করুন বা বিদ্যমান কাস্টম অপশন ডিলিট করুন</p>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <div class="glass-card p-5 rounded-3xl border shadow-xs">
+            <h2 class="text-lg font-extrabold mb-1">৩-ডট মেনু কাস্টমাইজেশন</h2>
+            <p class="text-xs text-slate-500 mb-4">নতুন অপশন যোগ করুন বা ডিলিট করুন</p>
             <form onsubmit="addCustomTabFromForm(event)" class="flex gap-2 mb-4">
               <input type="text" id="customOptionName" required placeholder="নতুন অপশনের নাম..." class="flex-1 px-3.5 py-2.5 rounded-xl border text-sm" />
               <button type="submit" class="bg-emerald-600 text-white px-4 py-2.5 rounded-xl text-sm font-bold">+ যোগ</button>
@@ -1687,16 +1736,16 @@
               ${appData.settings.customTabs.map(t => `<div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border"><span class="text-sm font-bold">${t.name}</span><button onclick="deleteCustomTab('${t.id}')" class="text-xs bg-rose-100 text-rose-700 px-2.5 py-1 rounded-lg font-bold">Delete</button></div>`).join('')}
             </div>
           </div>
-          <div class="bg-white p-5 rounded-2xl border shadow-xs space-y-3">
+          <div class="glass-card p-5 rounded-3xl border shadow-xs space-y-3">
             <h2 class="text-lg font-extrabold">Smart Cloud Sync (Firebase) & Backup</h2>
-            <p class="text-xs text-slate-500">ডিফল্ট অ্যাকাউন্ট: <b>${DEFAULT_USER_EMAIL}</b> • প্রজেক্ট: <b>${fb.projectId}</b></p>
+            <p class="text-xs text-slate-500">Gmail: <b>${DEFAULT_USER_EMAIL}</b> • Project: <b>${fb.projectId}</b></p>
             <input type="text" id="fbApiKey" value="${fb.apiKey || ''}" placeholder="Firebase apiKey" class="w-full px-3 py-2 rounded-xl border text-xs" />
             <input type="text" id="fbAuthDomain" value="${fb.authDomain || ''}" placeholder="Firebase authDomain" class="w-full px-3 py-2 rounded-xl border text-xs" />
             <input type="text" id="fbProjectId" value="${fb.projectId || ''}" placeholder="Firebase projectId" class="w-full px-3 py-2 rounded-xl border text-xs" />
             <input type="text" id="fbAppId" value="${fb.appId || ''}" placeholder="Firebase appId" class="w-full px-3 py-2 rounded-xl border text-xs" />
             <button onclick="saveFirebaseConfig()" class="w-full bg-slate-900 hover:bg-emerald-600 text-white py-2.5 rounded-xl text-xs font-bold">Firebase সেভ ও সিঙ্ক করুন</button>
             <div class="pt-3 border-t flex flex-wrap gap-2">
-              <button onclick="exportBackupJSON()" class="bg-emerald-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold">JSON ব্যাকআপ ডাউনলোড</button>
+              <button onclick="exportBackupJSON()" class="bg-emerald-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold">JSON ব্যাকআপ</button>
               <label class="bg-slate-200 text-slate-800 px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer">JSON রিস্টোর <input type="file" accept=".json" onchange="importBackupJSON(event)" class="hidden" /></label>
             </div>
           </div>
@@ -1711,42 +1760,20 @@
     function renderCustomTab(container, customId) {
       const tab = appData.settings.customTabs.find(t => t.id === customId);
       if (!tab) return switchTab('dashboard');
-      const f = ledgerFilters.custom;
-      const res = computeDoubleEntry(tab.entries || [], f, { positiveType: 'cr' });
-      container.innerHTML = `
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs mb-5 flex flex-wrap justify-between items-center gap-3">
-          <div><h2 class="text-xl font-extrabold text-slate-900">${tab.name} — Smart Double-Entry Ledger</h2><p class="text-xs text-slate-500">জমা (Cr +), খরচ (Dr -), চলমান ব্যালেন্স (Bal), Edit ও Delete</p></div>
-          <div class="flex gap-2 no-print">
-            <button onclick="openCustomEntryModal('${customId}', 'cr')" class="bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-bold shadow">+ জমা (Cr +)</button>
-            <button onclick="openCustomEntryModal('${customId}', 'dr')" class="bg-rose-600 text-white px-4 py-2 rounded-xl text-xs font-bold shadow">- খরচ (Dr -)</button>
-          </div>
-        </div>
-        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
-          <div class="overflow-x-auto">
-            <table class="w-full text-sm text-left">
-              <thead class="bg-slate-900 text-white text-xs uppercase"><tr><th class="py-3 px-4">তারিখ</th><th class="py-3 px-4">বিবরণ</th><th class="py-3 px-4 text-right text-emerald-300">জমা (Cr +)</th><th class="py-3 px-4 text-right text-rose-300">খরচ (Dr -)</th><th class="py-3 px-4 text-right text-amber-300">ব্যালেন্স (Bal)</th><th class="py-3 px-4 text-center no-print">Action</th></tr></thead>
-              <tbody class="divide-y divide-slate-200">
-                ${res.rows.map(r => `
-                  <tr class="hover:bg-slate-50">
-                    <td class="py-3 px-4 whitespace-nowrap">${r.date}</td>
-                    <td class="py-3 px-4 font-semibold">${r.desc}</td>
-                    <td class="py-3 px-4 text-right text-emerald-600 font-bold">${r.cr > 0 ? formatBDT(r.cr) : '-'}</td>
-                    <td class="py-3 px-4 text-right text-rose-600 font-bold">${r.dr > 0 ? formatBDT(r.dr) : '-'}</td>
-                    <td class="py-3 px-4 text-right font-extrabold">${formatBDT(r.bal)}</td>
-                    <td class="py-3 px-4 text-center whitespace-nowrap no-print">
-                      <button onclick="openCustomEntryModal('${customId}', '${r.type}', '${r.id}')" class="p-1.5 rounded-lg bg-blue-50 text-blue-600 mr-1"><i class="fa-solid fa-pen-to-square"></i></button>
-                      <button onclick="deleteCustomEntry('${customId}', '${r.id}')" class="p-1.5 rounded-lg bg-rose-50 text-rose-600"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                  </tr>
-                `).join('')}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      `;
+      renderLedgerTemplate(container, {
+        title: `${tab.name} — Smart Ledger`,
+        subtitle: 'জমা (Cr +), খরচ (Dr -) ও চলমান ব্যালেন্স',
+        items: tab.entries || [],
+        positiveType: 'cr',
+        accentBtnDr: 'bg-rose-600',
+        accentBtnCr: 'bg-emerald-600',
+        openModalFn: `openCustomEntryModalWithId_${customId}`,
+        deleteFn: `deleteCustomEntryWithId_${customId}`,
+        filterObj: ledgerFilters.custom
+      });
     }
 
-    function openCustomEntryModal(customId, defaultType = 'cr', editId = null) {
+    window.openCustomEntryModal = function(customId, defaultType = 'cr', editId = null) {
       const tab = appData.settings.customTabs.find(t => t.id === customId);
       const existing = (tab && editId) ? tab.entries.find(x => x.id === editId) : null;
       const type = existing ? existing.type : defaultType;
@@ -1754,7 +1781,16 @@
       document.getElementById('modalTitle').innerText = existing ? 'এন্ট্রি এডিট' : 'নতুন এন্ট্রি';
       document.getElementById('modalBody').innerHTML = `<form onsubmit="saveCustomEntry(event, '${customId}', '${editId || ''}')" class="space-y-3"><div class="grid grid-cols-2 gap-3"><input type="date" id="ceDate" value="${existing ? existing.date : today}" required class="px-3 py-2 rounded-xl border text-sm" /><select id="ceType" class="px-3 py-2 rounded-xl border text-sm font-bold"><option value="cr" ${type === 'cr' ? 'selected' : ''}>জমা (Cr +)</option><option value="dr" ${type === 'dr' ? 'selected' : ''}>খরচ (Dr -)</option></select></div><input type="text" id="ceDesc" value="${existing ? existing.desc : ''}" required placeholder="বিবরণ" class="w-full px-3 py-2 rounded-xl border text-sm" /><input type="number" id="ceAmt" value="${existing ? existing.amount : ''}" required min="1" step="any" placeholder="টাকা" class="w-full px-3 py-2.5 rounded-xl border text-lg font-bold" /><button type="submit" class="w-full bg-emerald-600 text-white font-bold py-2.5 rounded-xl">সংরক্ষণ</button></form>`;
       openModal();
-    }
+    };
+
+    (function bindCustomTabHelpers() {
+      const origRenderCustom = renderCustomTab;
+      renderCustomTab = function(container, customId) {
+        window[`openCustomEntryModalWithId_${customId}`] = (type, id) => openCustomEntryModal(customId, type, id || null);
+        window[`deleteCustomEntryWithId_${customId}`] = (entryId) => deleteCustomEntry(customId, entryId);
+        origRenderCustom(container, customId);
+      };
+    })();
 
     function saveCustomEntry(e, customId, editId) {
       e.preventDefault();
