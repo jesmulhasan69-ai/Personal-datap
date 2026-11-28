@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -8,19 +8,16 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     body {
-      font-family: 'Hind Siliguri', sans-serif;
+      font-family: 'Poppins', sans-serif;
       background-color: #eef2f6;
       color: #0f172a;
       -webkit-tap-highlight-color: transparent;
     }
-    .brand-font {
-      font-family: 'Poppins', 'Hind Siliguri', sans-serif;
-    }
     .glass-card {
-      background: rgba(255, 255, 255, 0.94);
+      background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(12px);
     }
     .safe-bottom {
@@ -62,23 +59,23 @@
       <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 via-teal-600 to-cyan-700 text-white flex items-center justify-center text-2xl mx-auto shadow-xl mb-3">
         <i class="fa-solid fa-vault"></i>
       </div>
-      <h1 class="brand-font text-xl sm:text-2xl font-black text-slate-900 tracking-wide uppercase">PERSONAL HISAB MANAGER</h1>
-      <p class="text-xs text-slate-500 mt-0.5">Personal Gmail Sign Up & Sign In • Private UID Vault</p>
+      <h1 class="text-xl sm:text-2xl font-black text-slate-900 tracking-wide uppercase">PERSONAL HISAB MANAGER</h1>
+      <p class="text-xs text-slate-500 mt-1">Sign Up & Sign In • Private UID Vault</p>
 
       <div class="mt-4 bg-slate-50 p-4 rounded-2xl border border-slate-200 text-left space-y-3.5">
         <div id="authLoadingState" class="py-3 text-xs font-bold text-emerald-700 flex items-center justify-center gap-2">
-          <i class="fa-solid fa-spinner fa-spin"></i> Session check hocche...
+          <i class="fa-solid fa-spinner fa-spin"></i> Checking session...
         </div>
 
         <div id="authFormContainer" class="hidden space-y-3">
-          <button id="googleSignInBtn" type="button" onclick="triggerGoogleSignIn()" class="w-full bg-white hover:bg-slate-50 active:scale-[0.99] text-slate-800 font-bold py-3 px-4 rounded-xl text-sm shadow-xs border border-slate-300 transition flex items-center justify-center gap-2.5">
+          <button id="googleSignInBtn" type="button" onclick="triggerGoogleSignIn()" class="w-full bg-white hover:bg-slate-50 active:scale-[0.99] text-slate-800 font-bold py-3 px-4 rounded-xl text-xs sm:text-sm shadow-xs border border-slate-300 transition flex items-center justify-center gap-2.5">
             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5 h-5" alt="Google" />
             <span>Continue with Personal Gmail</span>
           </button>
 
-          <div class="flex items-center gap-2 text-[11px] text-slate-400 font-bold">
+          <div class="flex items-center gap-2 text-[10px] text-slate-400 font-bold">
             <span class="flex-1 h-px bg-slate-200"></span>
-            <span>ATHABA GMAIL + PASSWORD</span>
+            <span>OR GMAIL + PASSWORD</span>
             <span class="flex-1 h-px bg-slate-200"></span>
           </div>
 
@@ -89,18 +86,18 @@
 
           <form id="emailAuthForm" onsubmit="handleEmailPasswordAuth(event)" class="space-y-2.5">
             <div id="signupNameField" class="hidden">
-              <label class="block text-[11px] font-bold text-slate-600 mb-1">Apnar Naam</label>
-              <input type="text" id="authNameInput" placeholder="Apnar naam likhun" class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-sm focus:outline-none focus:border-emerald-600" />
+              <label class="block text-[11px] font-bold text-slate-600 mb-1">Full Name</label>
+              <input type="text" id="authNameInput" placeholder="Enter your name" class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs sm:text-sm focus:outline-none focus:border-emerald-600" />
             </div>
             <div>
-              <label class="block text-[11px] font-bold text-slate-600 mb-1">Personal Gmail</label>
-              <input type="email" id="authEmailInput" required placeholder="example@gmail.com" class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-sm focus:outline-none focus:border-emerald-600" />
+              <label class="block text-[11px] font-bold text-slate-600 mb-1">Gmail Address</label>
+              <input type="email" id="authEmailInput" required placeholder="example@gmail.com" class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs sm:text-sm focus:outline-none focus:border-emerald-600" />
             </div>
             <div>
-              <label class="block text-[11px] font-bold text-slate-600 mb-1">Password (kompokkhe 6 okkhor)</label>
-              <input type="password" id="authPasswordInput" required minlength="6" placeholder="••••••••" class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-sm focus:outline-none focus:border-emerald-600" />
+              <label class="block text-[11px] font-bold text-slate-600 mb-1">Password (min 6 chars)</label>
+              <input type="password" id="authPasswordInput" required minlength="6" placeholder="••••••••" class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs sm:text-sm focus:outline-none focus:border-emerald-600" />
             </div>
-            <button type="submit" id="emailSubmitBtn" class="w-full bg-gradient-to-r from-slate-900 to-emerald-800 hover:from-emerald-700 hover:to-teal-700 text-white font-bold py-2.5 rounded-xl text-sm shadow-md transition flex items-center justify-center gap-2">
+            <button type="submit" id="emailSubmitBtn" class="w-full bg-gradient-to-r from-slate-900 to-emerald-800 hover:from-emerald-700 hover:to-teal-700 text-white font-bold py-2.5 rounded-xl text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2">
               <i class="fa-solid fa-right-to-bracket text-emerald-300"></i>
               <span id="emailSubmitLabel">Sign In</span>
             </button>
@@ -113,24 +110,24 @@
   </div>
 
   <!-- ==================== MOBILE TOP HEADER ==================== -->
-  <header class="md:hidden bg-gradient-to-r from-slate-950 via-slate-900 to-emerald-950 text-white px-3.5 py-3 flex items-center justify-between sticky top-0 z-40 shadow-lg border-b border-emerald-500/20 no-print">
-    <div class="flex items-center gap-2.5 min-w-0">
-      <button onclick="toggleSidebar()" title="3-Dot Menu" class="w-10 h-10 rounded-xl bg-white/10 active:scale-95 text-emerald-300 flex items-center justify-center border border-white/15 shrink-0">
-        <i class="fa-solid fa-ellipsis-vertical text-base"></i>
+  <header class="md:hidden bg-gradient-to-r from-slate-950 via-slate-900 to-emerald-950 text-white px-3 py-2.5 flex items-center justify-between sticky top-0 z-40 shadow-lg border-b border-emerald-500/20 no-print">
+    <div class="flex items-center gap-2 min-w-0">
+      <button onclick="toggleSidebar()" title="Menu" class="w-9 h-9 rounded-xl bg-white/10 active:scale-95 text-emerald-300 flex items-center justify-center border border-white/15 shrink-0">
+        <i class="fa-solid fa-ellipsis-vertical text-sm"></i>
       </button>
       <div class="min-w-0">
-        <h1 class="brand-font text-sm font-black tracking-wide text-white leading-tight truncate uppercase">HISAB <span class="text-emerald-400">MANAGER</span></h1>
-        <p class="text-[11px] text-emerald-200/80 truncate" id="mobileSubtitle">1. Dashboard</p>
+        <h1 class="text-xs font-black tracking-wide text-white leading-tight truncate uppercase">HISAB <span class="text-emerald-400">MANAGER</span></h1>
+        <p class="text-[10px] text-emerald-200/80 truncate" id="mobileSubtitle">1. Dashboard</p>
       </div>
     </div>
-    <div class="flex items-center gap-1.5 shrink-0">
-      <button onclick="openCashModal('credit')" title="Joma" class="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-sm shadow active:scale-95">
-        <i class="fa-solid fa-plus"></i>
+    <div class="flex items-center gap-1 shrink-0">
+      <button onclick="openCashModal('dr')" class="bg-rose-600 text-white text-[11px] px-2.5 h-8 rounded-lg font-bold shadow flex items-center gap-1 active:scale-95">
+        <i class="fa-solid fa-plus text-[10px]"></i> Add Dr
       </button>
-      <button onclick="openCashModal('debit')" title="Khoroch" class="w-9 h-9 rounded-xl bg-rose-600 text-white flex items-center justify-center text-sm shadow active:scale-95">
-        <i class="fa-solid fa-minus"></i>
+      <button onclick="openCashModal('cr')" class="bg-emerald-600 text-white text-[11px] px-2.5 h-8 rounded-lg font-bold shadow flex items-center gap-1 active:scale-95">
+        <i class="fa-solid fa-plus text-[10px]"></i> Add Cr
       </button>
-      <button onclick="manualSyncNow()" title="Sync Cloud" class="bg-sky-600 text-white text-xs px-2.5 h-9 rounded-xl font-bold shadow flex items-center gap-1 active:scale-95">
+      <button onclick="manualSyncNow()" title="Sync" class="bg-sky-600 text-white text-[11px] px-2 h-8 rounded-lg font-bold shadow flex items-center active:scale-95">
         <i class="fa-solid fa-cloud-arrow-up"></i>
       </button>
     </div>
@@ -147,7 +144,7 @@
           <i class="fa-solid fa-ellipsis-vertical"></i>
         </div>
         <div>
-          <h1 class="brand-font text-sm font-extrabold text-white tracking-wider leading-snug uppercase">PERSONAL HISAB<br><span class="text-emerald-400">MANAGER</span></h1>
+          <h1 class="text-xs font-extrabold text-white tracking-wider leading-snug uppercase">PERSONAL HISAB<br><span class="text-emerald-400">MANAGER</span></h1>
         </div>
       </div>
       <button onclick="toggleSidebar()" class="md:hidden w-8 h-8 rounded-lg bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center">
@@ -174,7 +171,7 @@
       <span id="cloudStatusText" class="text-amber-300 font-semibold flex items-center gap-1.5">
         <i class="fa-solid fa-shield-halved"></i> UID Vault Ready
       </span>
-      <button onclick="manualSyncNow()" class="text-emerald-400 hover:underline font-bold">Sync Now</button>
+      <button onclick="manualSyncNow()" class="text-emerald-400 hover:underline font-bold">Sync</button>
     </div>
 
     <!-- Universal 3-Dot Navigation List -->
@@ -182,75 +179,75 @@
 
     <div class="p-3.5 border-t border-slate-800 bg-slate-950">
       <button onclick="switchTab('settings')" class="w-full text-xs bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white py-2.5 rounded-xl transition flex items-center justify-center gap-2 font-bold shadow">
-        <i class="fa-solid fa-sliders"></i> Setting & Custom Hisab
+        <i class="fa-solid fa-sliders"></i> Settings & Custom Hisab
       </button>
     </div>
   </aside>
 
   <!-- ==================== MAIN CONTENT AREA ==================== -->
-  <main class="flex-1 main-content min-w-0 p-3.5 sm:p-5 md:p-7">
-    <div class="bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 text-white rounded-3xl p-4 sm:p-6 mb-5 shadow-xl flex flex-col lg:flex-row lg:items-center justify-between gap-4 border border-emerald-500/20 no-print">
-      <div class="flex items-start gap-3">
-        <button onclick="toggleSidebar()" title="3-Dot Menu khulun" class="hidden md:flex w-11 h-11 rounded-2xl bg-white/10 hover:bg-emerald-600 text-white items-center justify-center text-lg border border-white/15 shrink-0 mt-0.5 transition">
+  <main class="flex-1 main-content min-w-0 p-3 sm:p-5 md:p-7">
+    <div class="bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 text-white rounded-3xl p-3.5 sm:p-6 mb-4 sm:mb-5 shadow-xl flex flex-col lg:flex-row lg:items-center justify-between gap-3 border border-emerald-500/20 no-print">
+      <div class="flex items-start gap-2.5">
+        <button onclick="toggleSidebar()" title="Menu" class="hidden md:flex w-11 h-11 rounded-2xl bg-white/10 hover:bg-emerald-600 text-white items-center justify-center text-lg border border-white/15 shrink-0 mt-0.5 transition">
           <i class="fa-solid fa-ellipsis-vertical"></i>
         </button>
-        <div>
+        <div class="min-w-0">
           <div class="flex flex-wrap items-center gap-2">
-            <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[11px] font-bold tracking-wide border border-emerald-400/30">Universal UID Vault</span>
-            <span id="todayDateText" class="text-xs text-slate-300"></span>
+            <span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-bold tracking-wide border border-emerald-400/30">UID Cloud Vault</span>
+            <span id="todayDateText" class="text-[11px] text-slate-300"></span>
           </div>
-          <h1 class="brand-font text-xl sm:text-3xl font-black tracking-wide text-white mt-1 uppercase">
+          <h1 class="text-lg sm:text-2xl font-black tracking-wide text-white mt-1 uppercase truncate">
             PERSONAL HISAB MANAGER
           </h1>
-          <p class="text-xs sm:text-sm text-slate-300 mt-0.5 flex items-center gap-1.5">
-            <span class="text-emerald-400 font-semibold">Bortoman page:</span>
-            <span id="pageTitle" class="font-bold text-white">1. Dashboard</span>
+          <p class="text-xs text-slate-300 mt-0.5 flex items-center gap-1.5">
+            <span class="text-emerald-400 font-semibold">Current View:</span>
+            <span id="pageTitle" class="font-bold text-white truncate">1. Dashboard</span>
           </p>
         </div>
       </div>
-      <div class="flex flex-wrap items-center gap-2">
-        <button onclick="openCashModal('credit')" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold shadow-md flex items-center gap-1.5 transition active:scale-95">
-          <i class="fa-solid fa-plus-circle"></i> + Joma (Cr)
+      <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+        <button onclick="openCashModal('dr')" class="bg-rose-600 hover:bg-rose-500 text-white px-3 py-2 rounded-xl text-xs font-bold shadow-md flex items-center gap-1 transition active:scale-95">
+          <i class="fa-solid fa-plus"></i> Add Dr
         </button>
-        <button onclick="openCashModal('debit')" class="bg-rose-600 hover:bg-rose-500 text-white px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold shadow-md flex items-center gap-1.5 transition active:scale-95">
-          <i class="fa-solid fa-minus-circle"></i> - Khoroch (Dr)
+        <button onclick="openCashModal('cr')" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-2 rounded-xl text-xs font-bold shadow-md flex items-center gap-1 transition active:scale-95">
+          <i class="fa-solid fa-plus"></i> Add Cr
         </button>
-        <button onclick="manualSyncNow()" class="bg-sky-600 hover:bg-sky-500 text-white px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold shadow-md flex items-center gap-1.5 transition active:scale-95">
+        <button onclick="manualSyncNow()" class="bg-sky-600 hover:bg-sky-500 text-white px-3 py-2 rounded-xl text-xs font-bold shadow-md flex items-center gap-1 transition active:scale-95">
           <i class="fa-solid fa-cloud-arrow-up"></i> Sync
         </button>
-        <button onclick="window.print()" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition active:scale-95">
+        <button onclick="window.print()" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-1 transition active:scale-95">
           <i class="fa-solid fa-print"></i> Print
         </button>
       </div>
     </div>
 
     <div class="hidden print-only border-b-2 border-slate-800 pb-3 mb-5 text-center">
-      <h1 class="brand-font text-2xl font-black uppercase">PERSONAL HISAB MANAGER</h1>
-      <p class="text-sm text-slate-600" id="printHeaderSubtitle">Arthik Biboroni o Ledger Report</p>
+      <h1 class="text-2xl font-black uppercase">PERSONAL HISAB MANAGER</h1>
+      <p class="text-sm text-slate-600" id="printHeaderSubtitle">Ledger & Vault Report</p>
     </div>
 
     <div id="appContainer"></div>
   </main>
 
   <!-- ==================== MOBILE FLOATING BOTTOM BAR ==================== -->
-  <nav class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-slate-950/95 backdrop-blur-md border-t border-slate-800 px-2 py-1.5 flex items-center justify-around text-slate-300 safe-bottom no-print">
-    <button onclick="switchTab('dashboard')" id="bnav_dashboard" class="flex flex-col items-center py-1 px-2 rounded-xl text-[11px] font-bold">
-      <i class="fa-solid fa-chart-pie text-base mb-0.5"></i>
+  <nav class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-slate-950/95 backdrop-blur-md border-t border-slate-800 px-1.5 py-1 flex items-center justify-around text-slate-300 safe-bottom no-print">
+    <button onclick="switchTab('dashboard')" id="bnav_dashboard" class="flex flex-col items-center py-1 px-2 rounded-xl text-[10px] font-bold">
+      <i class="fa-solid fa-chart-pie text-sm mb-0.5"></i>
       <span>Home</span>
     </button>
-    <button onclick="switchTab('cashbook')" id="bnav_cashbook" class="flex flex-col items-center py-1 px-2 rounded-xl text-[11px] font-bold">
-      <i class="fa-solid fa-book-open text-base mb-0.5"></i>
+    <button onclick="switchTab('cashbook')" id="bnav_cashbook" class="flex flex-col items-center py-1 px-2 rounded-xl text-[10px] font-bold">
+      <i class="fa-solid fa-book-open text-sm mb-0.5"></i>
       <span>Cash Book</span>
     </button>
-    <button onclick="openCashModal('debit')" class="flex flex-col items-center justify-center w-12 h-12 -mt-5 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-lg border-4 border-slate-950 active:scale-95">
-      <i class="fa-solid fa-plus text-lg"></i>
+    <button onclick="openCashModal('dr')" class="flex flex-col items-center justify-center w-11 h-11 -mt-4 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-lg border-4 border-slate-950 active:scale-95">
+      <i class="fa-solid fa-plus text-base"></i>
     </button>
-    <button onclick="switchTab('others')" id="bnav_others" class="flex flex-col items-center py-1 px-2 rounded-xl text-[11px] font-bold">
-      <i class="fa-solid fa-layer-group text-base mb-0.5"></i>
+    <button onclick="switchTab('others')" id="bnav_others" class="flex flex-col items-center py-1 px-2 rounded-xl text-[10px] font-bold">
+      <i class="fa-solid fa-layer-group text-sm mb-0.5"></i>
       <span>Others</span>
     </button>
-    <button onclick="toggleSidebar()" class="flex flex-col items-center py-1 px-2 rounded-xl text-[11px] font-bold text-emerald-400">
-      <i class="fa-solid fa-ellipsis-vertical text-base mb-0.5"></i>
+    <button onclick="toggleSidebar()" class="flex flex-col items-center py-1 px-2 rounded-xl text-[10px] font-bold text-emerald-400">
+      <i class="fa-solid fa-ellipsis-vertical text-sm mb-0.5"></i>
       <span>Menu</span>
     </button>
   </nav>
@@ -259,19 +256,19 @@
   <div id="modalBackdrop" class="fixed inset-0 bg-slate-950/70 backdrop-blur-xs z-50 hidden items-end sm:items-center justify-center p-0 sm:p-4 no-print">
     <div id="modalBox" class="bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto border border-slate-200">
       <div class="px-5 py-4 border-b border-slate-200 flex items-center justify-between sticky top-0 bg-white z-10">
-        <h3 id="modalTitle" class="text-base sm:text-lg font-extrabold text-slate-900">Notun Entry</h3>
+        <h3 id="modalTitle" class="text-sm sm:text-base font-extrabold text-slate-900">Add Entry</h3>
         <button onclick="closeModal()" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
-      <div id="modalBody" class="p-5"></div>
+      <div id="modalBody" class="p-4 sm:p-5"></div>
     </div>
   </div>
 
   <!-- Toast Notification -->
-  <div id="toast" class="fixed bottom-20 md:bottom-5 right-4 z-50 bg-slate-900 text-emerald-300 border border-emerald-500/30 px-4 py-2.5 rounded-2xl shadow-2xl text-xs sm:text-sm font-semibold flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 no-print">
+  <div id="toast" class="fixed bottom-20 md:bottom-5 right-4 z-50 bg-slate-900 text-emerald-300 border border-emerald-500/30 px-4 py-2.5 rounded-2xl shadow-2xl text-xs font-semibold flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 no-print">
     <i class="fa-solid fa-circle-check text-emerald-400"></i>
-    <span id="toastMsg">Sofolbhabe songrokkhito hoyeche</span>
+    <span id="toastMsg">Saved successfully</span>
   </div>
 
   <!-- ==================== FIREBASE AUTH (GOOGLE + EMAIL/PASS) & UID FIRESTORE ==================== -->
@@ -331,7 +328,7 @@
             window.showAuthError(redirErr.message);
           }
         } else {
-          window.showAuthError(err.message || 'Google Sign-In hoyni.');
+          window.showAuthError(err.message || 'Google Sign-In failed.');
         }
       }
     };
@@ -393,7 +390,7 @@
   </script>
 
   <script>
-    // ==================== AUTH MODE TOGGLE (SIGN IN / SIGN UP) ====================
+    // ==================== AUTH MODE TOGGLE ====================
     let currentAuthMode = 'signin';
 
     function setAuthMode(mode) {
@@ -410,7 +407,7 @@
         btnUp.className = 'py-1.5 rounded-lg text-xs font-extrabold bg-white text-slate-900 shadow-2xs transition';
         btnIn.className = 'py-1.5 rounded-lg text-xs font-bold text-slate-600 transition';
         nameField.classList.remove('hidden');
-        submitLabel.innerText = 'Create Account & Sign Up';
+        submitLabel.innerText = 'Sign Up';
       } else {
         btnIn.className = 'py-1.5 rounded-lg text-xs font-extrabold bg-white text-slate-900 shadow-2xs transition';
         btnUp.className = 'py-1.5 rounded-lg text-xs font-bold text-slate-600 transition';
@@ -431,36 +428,36 @@
       try {
         if (currentAuthMode === 'signup') {
           await window.firebaseEmailSignUp(name, email, password);
-          showToast('Notun account toiri hoyeche! Ekhon pore oi Gmail dea Sign In korte parben.');
+          showToast('Account created successfully!');
         } else {
           await window.firebaseEmailSignIn(email, password);
-          showToast('Safolbhabe Sign In hoyeche!');
+          showToast('Signed in successfully!');
         }
       } catch (err) {
-        let friendly = err.message || 'Authentication hoyni.';
-        if (err.code === 'auth/email-already-in-use') friendly = 'Ei Gmail dea agei account ache. Sign In tab-e giye login korun.';
-        else if (err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential') friendly = 'Gmail ba Password thik nei. Age Sign Up kore thakle password check korun.';
-        else if (err.code === 'auth/wrong-password') friendly = 'Password bhul hoyeche.';
-        else if (err.code === 'auth/weak-password') friendly = 'Password kompokkhe 6 okkhorer hote hobe.';
+        let friendly = err.message || 'Authentication failed.';
+        if (err.code === 'auth/email-already-in-use') friendly = 'This email is already registered. Please switch to Sign In.';
+        else if (err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential') friendly = 'Invalid Gmail or Password.';
+        else if (err.code === 'auth/wrong-password') friendly = 'Incorrect password.';
+        else if (err.code === 'auth/weak-password') friendly = 'Password must be at least 6 characters.';
         window.showAuthError(friendly);
       }
     }
 
-    // ==================== UNIVERSAL UID-ISOLATED STORAGE & DATA ENGINE ====================
+    // ==================== UNIVERSAL UID STORAGE & DATA ENGINE ====================
     function getUidStorageKeys(uid) {
       const safeUid = uid || 'guest';
       return {
-        primary: `personal_hisab_univ_${safeUid}_v2`,
-        snapshot: `personal_hisab_univ_${safeUid}_snap_v2`,
-        pending: `personal_hisab_univ_${safeUid}_pend_v2`
+        primary: `personal_hisab_univ_${safeUid}_v3`,
+        snapshot: `personal_hisab_univ_${safeUid}_snap_v3`,
+        pending: `personal_hisab_univ_${safeUid}_pend_v3`
       };
     }
 
     const defaultTemplateData = {
       lastModified: new Date().toISOString(),
       settings: {
-        expenseCategories: ['Bazar o Khabar', 'Basa Bhara o Bill', 'Jatayat', 'Chikitsha', 'Kenakata', 'Mobile o Internet', 'Paribarik', 'Onnanno'],
-        incomeCategories: ['Beton / Ay', 'Bebsha hote Joma', 'Bank Uttolon', 'Paona Aday', 'Onnanno Joma']
+        drCategories: ['Expense', 'Rent & Bills', 'Transport', 'Medical', 'Shopping', 'Mobile & Net', 'Family', 'Other Dr'],
+        crCategories: ['Income / Salary', 'Business Cr', 'Bank Withdraw', 'Recovery', 'Other Cr']
       },
       cashbook: [],
       cashFilter: {
@@ -498,24 +495,59 @@
       return JSON.parse(JSON.stringify(defaultTemplateData));
     }
 
+    function normalizeLedgerType(t) {
+      if (t === 'dr' || t === 'debit') return 'dr';
+      return 'cr';
+    }
+
     function mergeWithDefaults(rawObj) {
       const parsed = rawObj || {};
       const base = createFreshDefaultData();
 
-      // Migrate legacy keys if any user had v1 data
       if (!parsed.medicineEntries && Array.isArray(parsed.ammuMedicines)) {
         parsed.medicineEntries = parsed.ammuMedicines;
       }
       if (!parsed.medicinePrescriptions && Array.isArray(parsed.ammuPrescriptions)) {
         parsed.medicinePrescriptions = parsed.ammuPrescriptions;
       }
-      if (!parsed.othersAccounts || !parsed.othersAccounts.length) {
+      if (!Array.isArray(parsed.othersAccounts) || !parsed.othersAccounts.length) {
         parsed.othersAccounts = base.othersAccounts;
+      } else {
+        parsed.othersAccounts = parsed.othersAccounts.map(acc => ({
+          id: acc.id || ('oth_' + Math.random().toString(36).slice(2, 8)),
+          name: acc.name || 'Others Hisab',
+          positiveType: acc.positiveType === 'cr' ? 'cr' : 'dr',
+          entries: Array.isArray(acc.entries) ? acc.entries.map(e => ({
+            ...e,
+            type: normalizeLedgerType(e.type),
+            amount: Number(e.amount) || 0
+          })) : []
+        }));
       }
+
+      const normalizedCash = Array.isArray(parsed.cashbook)
+        ? parsed.cashbook.map(x => ({ ...x, type: normalizeLedgerType(x.type), amount: Number(x.amount) || 0 }))
+        : [];
+
+      const normalizedMed = Array.isArray(parsed.medicineEntries)
+        ? parsed.medicineEntries.map(x => ({ ...x, type: normalizeLedgerType(x.type), amount: Number(x.amount) || 0 }))
+        : [];
+
+      const normalizedWife = Array.isArray(parsed.wifeLedger)
+        ? parsed.wifeLedger.map(x => ({ ...x, type: normalizeLedgerType(x.type), amount: Number(x.amount) || 0 }))
+        : [];
+
+      const normalizedBankLedger = Array.isArray(parsed.bankLedger)
+        ? parsed.bankLedger.map(x => ({ ...x, type: normalizeLedgerType(x.type), amount: Number(x.amount) || 0 }))
+        : [];
 
       return {
         ...base,
         ...parsed,
+        cashbook: normalizedCash,
+        medicineEntries: normalizedMed,
+        wifeLedger: normalizedWife,
+        bankLedger: normalizedBankLedger,
         settings: {
           ...base.settings,
           ...(parsed.settings || {})
@@ -610,7 +642,7 @@
           const res = await window.firebasePushUidData(activeUid, appData);
           if (res && res.ok) {
             localStorage.removeItem(keys.pending);
-            updateShieldStatus('UID Cloud Synced', 'cloud');
+            updateShieldStatus('Cloud Synced', 'cloud');
             return;
           }
         } catch (err) {
@@ -619,7 +651,7 @@
           return;
         }
       }
-      updateShieldStatus('Local UID Vault Safe', 'local');
+      updateShieldStatus('Local Vault Safe', 'local');
     }
 
     async function pullFromCloudForUid() {
@@ -638,12 +670,12 @@
             renderSidebar();
             renderCurrentView();
           }
-          updateShieldStatus('UID Cloud Synced', 'cloud');
+          updateShieldStatus('Cloud Synced', 'cloud');
         } else {
           await saveData(false);
         }
       } catch (e) {
-        updateShieldStatus('Local UID Vault Safe', 'local');
+        updateShieldStatus('Local Vault Safe', 'local');
       }
     }
 
@@ -652,13 +684,13 @@
       try {
         const res = await window.firebasePushUidData(activeUid, appData);
         if (res && res.ok) {
-          updateShieldStatus('UID Cloud Synced', 'cloud');
-          showToast('Apnar nijosho UID vault-e data sync hoyeche!');
+          updateShieldStatus('Cloud Synced', 'cloud');
+          showToast('Synced to UID Vault!');
         } else {
-          showToast('Sync hoyni; local data safe ache.');
+          showToast('Saved locally.');
         }
       } catch (e) {
-        showToast('Network error; local data safe ache.');
+        showToast('Saved locally.');
       }
     }
 
@@ -677,18 +709,18 @@
       const toast = document.getElementById('toast');
       document.getElementById('toastMsg').innerText = msg;
       toast.classList.remove('translate-y-20', 'opacity-0');
-      setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 2500);
+      setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 2200);
     }
 
     async function logoutUser() {
-      if (!confirm('Apni ki Sign Out korte chan? (Pore abar oi Gmail dea Sign In korle data paben)')) return;
+      if (!confirm('Sign out from your account?')) return;
       if (window.firebaseSignOutUser) await window.firebaseSignOutUser();
     }
 
     // ==================== DIRECT FILE DOWNLOAD HELPER ====================
     function downloadStoredFile(dataUrl, filename) {
       if (!dataUrl) {
-        showToast('Ei entry-te kono uploaded file nei.');
+        showToast('No file attached.');
         return;
       }
       const a = document.createElement('a');
@@ -697,7 +729,7 @@
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-      showToast('File download shuru hoyeche!');
+      showToast('Downloading file...');
     }
 
     // ==================== UNIVERSAL 3-DOT SIDEBAR NAVIGATION ====================
@@ -708,9 +740,9 @@
       { id: 'family_docs', label: '4. Family Documents', icon: 'fa-users-rectangle' },
       { id: 'others', label: '5. Others Hisab', icon: 'fa-layer-group' },
       { id: 'medicine', label: '6. Medicine Hisab', icon: 'fa-pills' },
-      { id: 'wife', label: '7. Wife AC (Ledger)', icon: 'fa-heart' },
-      { id: 'bank', label: '8. Bank (DPS/FDR/Savings)', icon: 'fa-building-columns' },
-      { id: 'settings', label: '9. Setting Panel', icon: 'fa-sliders' }
+      { id: 'wife', label: '7. Wife AC', icon: 'fa-heart' },
+      { id: 'bank', label: '8. Bank Accounts', icon: 'fa-building-columns' },
+      { id: 'settings', label: '9. Settings', icon: 'fa-sliders' }
     ];
 
     function updateBottomNavActive() {
@@ -718,9 +750,9 @@
         const btn = document.getElementById('bnav_' + id);
         if (!btn) return;
         if (currentTab === id) {
-          btn.className = 'flex flex-col items-center py-1 px-2 rounded-xl text-[11px] font-bold text-emerald-400 bg-emerald-500/15';
+          btn.className = 'flex flex-col items-center py-1 px-2 rounded-xl text-[10px] font-bold text-emerald-400 bg-emerald-500/15';
         } else {
-          btn.className = 'flex flex-col items-center py-1 px-2 rounded-xl text-[11px] font-bold text-slate-400';
+          btn.className = 'flex flex-col items-center py-1 px-2 rounded-xl text-[10px] font-bold text-slate-400';
         }
       });
     }
@@ -731,7 +763,7 @@
         const active = currentTab === tab.id;
         return `
           <button onclick="switchTab('${tab.id}')"
-            class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition ${
+            class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition ${
               active ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md' : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
             }">
             <span class="flex items-center gap-3 truncate">
@@ -764,17 +796,17 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // ==================== GENERIC SMART DOUBLE-ENTRY LEDGER ENGINE ====================
+    // ==================== GENERIC SMART DOUBLE-ENTRY LEDGER ENGINE (DR / CR) ====================
     function computeDoubleEntry(items, filterObj, options = {}) {
-      const positiveType = options.positiveType || 'dr';
-      const sorted = [...items].sort((a, b) => a.date.localeCompare(b.date) || a.id.localeCompare(b.id));
+      const positiveType = options.positiveType === 'cr' ? 'cr' : 'dr';
+      const sorted = [...items].sort((a, b) => (a.date || '').localeCompare(b.date || '') || (a.id || '').localeCompare(b.id || ''));
 
       let openingBal = 0;
-      if (filterObj.from) {
+      if (filterObj && filterObj.from) {
         sorted.forEach(item => {
           if (item.date < filterObj.from) {
             const amt = Number(item.amount) || 0;
-            const isDr = item.type === 'dr' || item.type === 'debit';
+            const isDr = normalizeLedgerType(item.type) === 'dr';
             if (positiveType === 'dr') openingBal += isDr ? amt : -amt;
             else openingBal += !isDr ? amt : -amt;
           }
@@ -782,9 +814,9 @@
       }
 
       const filtered = sorted.filter(item => {
-        if (filterObj.from && item.date < filterObj.from) return false;
-        if (filterObj.to && item.date > filterObj.to) return false;
-        if (filterObj.search) {
+        if (filterObj && filterObj.from && item.date < filterObj.from) return false;
+        if (filterObj && filterObj.to && item.date > filterObj.to) return false;
+        if (filterObj && filterObj.search) {
           const hay = `${item.desc || ''} ${item.medicine || ''} ${item.doctor || ''} ${item.method || ''}`.toLowerCase();
           if (!hay.includes(filterObj.search.toLowerCase())) return false;
         }
@@ -796,14 +828,15 @@
       let totalCr = 0;
       const rows = filtered.map(item => {
         const amt = Number(item.amount) || 0;
-        const isDr = item.type === 'dr' || item.type === 'debit';
+        const normType = normalizeLedgerType(item.type);
+        const isDr = normType === 'dr';
         const dr = isDr ? amt : 0;
         const cr = !isDr ? amt : 0;
         totalDr += dr;
         totalCr += cr;
         if (positiveType === 'dr') bal += (dr - cr);
         else bal += (cr - dr);
-        return { ...item, dr, cr, bal };
+        return { ...item, type: normType, dr, cr, bal };
       });
 
       return { openingBal, totalDr, totalCr, closingBal: bal, rows };
@@ -820,7 +853,7 @@
       });
       const med = computeDoubleEntry(appData.medicineEntries, { from: '', to: '', search: '' }, { positiveType: 'cr' });
       const wf = computeDoubleEntry(appData.wifeLedger, { from: '', to: '', search: '' }, { positiveType: 'dr' });
-      const totalBank = appData.banks.reduce((s, b) => s + Number(b.balance), 0);
+      const totalBank = appData.banks.reduce((s, b) => s + Number(b.balance || 0), 0);
       return { cb, othersTotalDr, othersTotalCr, othersNetBal, med, wf, totalBank };
     }
 
@@ -840,106 +873,106 @@
 
     // ==================== 1. DASHBOARD ====================
     function renderDashboard(container) {
-      const { cb, othersTotalDr, othersTotalCr, othersNetBal, med, wf, totalBank } = getAllAccountSummaries();
+      const { cb, othersNetBal, med, wf, totalBank } = getAllAccountSummaries();
 
       container.innerHTML = `
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4 mb-6">
-          <div onclick="switchTab('cashbook')" class="cursor-pointer glass-card p-4 sm:p-5 rounded-3xl border border-emerald-200/70 shadow-sm hover:shadow-md active:scale-[0.99] transition">
-            <div class="flex items-center justify-between mb-1.5">
-              <span class="text-[11px] sm:text-xs font-extrabold text-emerald-800 uppercase">Cash Book</span>
-              <span class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-sm"><i class="fa-solid fa-wallet"></i></span>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 mb-5">
+          <div onclick="switchTab('cashbook')" class="cursor-pointer glass-card p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-emerald-200/70 shadow-sm hover:shadow-md active:scale-[0.99] transition">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[10px] sm:text-xs font-extrabold text-emerald-800 uppercase">Cash Book</span>
+              <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs sm:text-sm"><i class="fa-solid fa-wallet"></i></span>
             </div>
-            <p class="text-lg sm:text-2xl font-black text-emerald-700">${formatBDT(cb.closingBal)}</p>
-            <p class="text-[11px] text-slate-500 mt-1 truncate">Cr: ${formatBDT(cb.totalCr)} • Dr: ${formatBDT(cb.totalDr)}</p>
+            <p class="text-base sm:text-2xl font-black text-emerald-700">${formatBDT(cb.closingBal)}</p>
+            <p class="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 truncate">Cr: ${formatBDT(cb.totalCr)} • Dr: ${formatBDT(cb.totalDr)}</p>
           </div>
 
-          <div onclick="switchTab('bank')" class="cursor-pointer glass-card p-4 sm:p-5 rounded-3xl border border-blue-200/70 shadow-sm hover:shadow-md active:scale-[0.99] transition">
-            <div class="flex items-center justify-between mb-1.5">
-              <span class="text-[11px] sm:text-xs font-extrabold text-blue-800 uppercase">Bank Accounts</span>
-              <span class="w-8 h-8 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center text-sm"><i class="fa-solid fa-building-columns"></i></span>
+          <div onclick="switchTab('bank')" class="cursor-pointer glass-card p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-blue-200/70 shadow-sm hover:shadow-md active:scale-[0.99] transition">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[10px] sm:text-xs font-extrabold text-blue-800 uppercase">Bank Accounts</span>
+              <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center text-xs sm:text-sm"><i class="fa-solid fa-building-columns"></i></span>
             </div>
-            <p class="text-lg sm:text-2xl font-black text-blue-700">${formatBDT(totalBank)}</p>
-            <p class="text-[11px] text-slate-500 mt-1 truncate">DPS / FDR / Savings (${appData.banks.length})</p>
+            <p class="text-base sm:text-2xl font-black text-blue-700">${formatBDT(totalBank)}</p>
+            <p class="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 truncate">DPS / FDR / Savings (${appData.banks.length})</p>
           </div>
 
-          <div onclick="switchTab('documents')" class="cursor-pointer glass-card p-4 sm:p-5 rounded-3xl border border-amber-200/70 shadow-sm hover:shadow-md active:scale-[0.99] transition">
-            <div class="flex items-center justify-between mb-1.5">
-              <span class="text-[11px] sm:text-xs font-extrabold text-amber-800 uppercase">Land Docs</span>
-              <span class="w-8 h-8 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-sm"><i class="fa-solid fa-folder-open"></i></span>
+          <div onclick="switchTab('documents')" class="cursor-pointer glass-card p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-amber-200/70 shadow-sm hover:shadow-md active:scale-[0.99] transition">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[10px] sm:text-xs font-extrabold text-amber-800 uppercase">Land Documents</span>
+              <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-xs sm:text-sm"><i class="fa-solid fa-folder-open"></i></span>
             </div>
-            <p class="text-lg sm:text-2xl font-black text-amber-700">${appData.documents.length} ti file</p>
-            <p class="text-[11px] text-slate-500 mt-1 truncate">BS / RS / Dalil + Download</p>
+            <p class="text-base sm:text-2xl font-black text-amber-700">${appData.documents.length} Files</p>
+            <p class="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 truncate">BS / RS / Dalil</p>
           </div>
 
-          <div onclick="switchTab('family_docs')" class="cursor-pointer glass-card p-4 sm:p-5 rounded-3xl border border-cyan-200/70 shadow-sm hover:shadow-md active:scale-[0.99] transition">
-            <div class="flex items-center justify-between mb-1.5">
-              <span class="text-[11px] sm:text-xs font-extrabold text-cyan-800 uppercase">Family Docs</span>
-              <span class="w-8 h-8 rounded-xl bg-cyan-100 text-cyan-700 flex items-center justify-center text-sm"><i class="fa-solid fa-users-rectangle"></i></span>
+          <div onclick="switchTab('family_docs')" class="cursor-pointer glass-card p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-cyan-200/70 shadow-sm hover:shadow-md active:scale-[0.99] transition">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[10px] sm:text-xs font-extrabold text-cyan-800 uppercase">Family Documents</span>
+              <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-cyan-100 text-cyan-700 flex items-center justify-center text-xs sm:text-sm"><i class="fa-solid fa-users-rectangle"></i></span>
             </div>
-            <p class="text-lg sm:text-2xl font-black text-cyan-700">${appData.familyDocuments.length} ti file</p>
-            <p class="text-[11px] text-slate-500 mt-1 truncate">NID / Birth / Passport</p>
+            <p class="text-base sm:text-2xl font-black text-cyan-700">${appData.familyDocuments.length} Files</p>
+            <p class="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 truncate">NID / Birth / Passport</p>
           </div>
 
-          <div onclick="switchTab('others')" class="cursor-pointer glass-card p-4 sm:p-5 rounded-3xl border border-indigo-200/70 shadow-sm hover:shadow-md active:scale-[0.99] transition">
-            <div class="flex items-center justify-between mb-1.5">
-              <span class="text-[11px] sm:text-xs font-extrabold text-indigo-800 uppercase">Others Hisab</span>
-              <span class="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-sm"><i class="fa-solid fa-layer-group"></i></span>
+          <div onclick="switchTab('others')" class="cursor-pointer glass-card p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-indigo-200/70 shadow-sm hover:shadow-md active:scale-[0.99] transition">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[10px] sm:text-xs font-extrabold text-indigo-800 uppercase">Others Hisab</span>
+              <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-xs sm:text-sm"><i class="fa-solid fa-layer-group"></i></span>
             </div>
-            <p class="text-lg sm:text-2xl font-black text-indigo-700">${formatBDT(othersNetBal)}</p>
-            <p class="text-[11px] text-slate-500 mt-1 truncate">${appData.othersAccounts.length} ti Custom Khat</p>
+            <p class="text-base sm:text-2xl font-black text-indigo-700">${formatBDT(othersNetBal)}</p>
+            <p class="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 truncate">${appData.othersAccounts.length} Ledgers</p>
           </div>
 
-          <div onclick="switchTab('medicine')" class="cursor-pointer glass-card p-4 sm:p-5 rounded-3xl border border-rose-200/70 shadow-sm hover:shadow-md active:scale-[0.99] transition">
-            <div class="flex items-center justify-between mb-1.5">
-              <span class="text-[11px] sm:text-xs font-extrabold text-rose-800 uppercase">Medicine Hisab</span>
-              <span class="w-8 h-8 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center text-sm"><i class="fa-solid fa-pills"></i></span>
+          <div onclick="switchTab('medicine')" class="cursor-pointer glass-card p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-rose-200/70 shadow-sm hover:shadow-md active:scale-[0.99] transition">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[10px] sm:text-xs font-extrabold text-rose-800 uppercase">Medicine Hisab</span>
+              <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center text-xs sm:text-sm"><i class="fa-solid fa-pills"></i></span>
             </div>
-            <p class="text-lg sm:text-2xl font-black text-rose-700">${formatBDT(med.totalDr)}</p>
-            <p class="text-[11px] text-slate-500 mt-1 truncate">Balance: ${formatBDT(med.closingBal)}</p>
+            <p class="text-base sm:text-2xl font-black text-rose-700">${formatBDT(med.closingBal)}</p>
+            <p class="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 truncate">Dr: ${formatBDT(med.totalDr)} • Cr: ${formatBDT(med.totalCr)}</p>
           </div>
 
-          <div onclick="switchTab('wife')" class="cursor-pointer glass-card p-4 sm:p-5 rounded-3xl border border-pink-200/70 shadow-sm hover:shadow-md active:scale-[0.99] transition">
-            <div class="flex items-center justify-between mb-1.5">
-              <span class="text-[11px] sm:text-xs font-extrabold text-pink-800 uppercase">Wife AC</span>
-              <span class="w-8 h-8 rounded-xl bg-pink-100 text-pink-700 flex items-center justify-center text-sm"><i class="fa-solid fa-heart"></i></span>
+          <div onclick="switchTab('wife')" class="cursor-pointer glass-card p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-pink-200/70 shadow-sm hover:shadow-md active:scale-[0.99] transition">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[10px] sm:text-xs font-extrabold text-pink-800 uppercase">Wife AC</span>
+              <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-pink-100 text-pink-700 flex items-center justify-center text-xs sm:text-sm"><i class="fa-solid fa-heart"></i></span>
             </div>
-            <p class="text-lg sm:text-2xl font-black text-pink-700">${formatBDT(wf.closingBal)}</p>
-            <p class="text-[11px] text-slate-500 mt-1 truncate">Dr: ${formatBDT(wf.totalDr)} • Cr: ${formatBDT(wf.totalCr)}</p>
+            <p class="text-base sm:text-2xl font-black text-pink-700">${formatBDT(wf.closingBal)}</p>
+            <p class="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 truncate">Dr: ${formatBDT(wf.totalDr)} • Cr: ${formatBDT(wf.totalCr)}</p>
           </div>
 
-          <div onclick="switchTab('settings')" class="cursor-pointer bg-gradient-to-br from-slate-900 to-emerald-950 text-white p-4 sm:p-5 rounded-3xl shadow-sm hover:shadow-md active:scale-[0.99] transition">
-            <div class="flex items-center justify-between mb-1.5">
-              <span class="text-[11px] sm:text-xs font-extrabold text-emerald-400 uppercase">Settings & Backup</span>
-              <span class="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm"><i class="fa-solid fa-sliders"></i></span>
+          <div onclick="switchTab('settings')" class="cursor-pointer bg-gradient-to-br from-slate-900 to-emerald-950 text-white p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl shadow-sm hover:shadow-md active:scale-[0.99] transition">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[10px] sm:text-xs font-extrabold text-emerald-400 uppercase">Settings</span>
+              <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs sm:text-sm"><i class="fa-solid fa-sliders"></i></span>
             </div>
-            <p class="text-base sm:text-lg font-extrabold">+ Custom Khat</p>
-            <p class="text-[11px] text-slate-300 mt-1 truncate">Others Hisab & UID Vault</p>
+            <p class="text-sm sm:text-lg font-extrabold">Add Ledger</p>
+            <p class="text-[10px] sm:text-[11px] text-slate-300 mt-0.5 truncate">Custom Others & Backup</p>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
           <div class="lg:col-span-2 glass-card p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-sm">
             <div class="flex items-center justify-between mb-3">
-              <h3 class="font-extrabold text-slate-800 text-sm sm:text-base">Category-wise Khoroch Chart</h3>
+              <h3 class="font-extrabold text-slate-800 text-xs sm:text-base uppercase">Dr Analytics by Category</h3>
               <button onclick="switchTab('cashbook')" class="text-xs text-emerald-600 font-bold hover:underline">Cash Book →</button>
             </div>
-            <div class="h-56 sm:h-64"><canvas id="cashChartCanvas"></canvas></div>
+            <div class="h-52 sm:h-64"><canvas id="cashChartCanvas"></canvas></div>
           </div>
 
           <div class="glass-card p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-sm">
-            <h3 class="font-extrabold text-slate-800 text-sm sm:text-base mb-3">Samprotik Lenden</h3>
-            <div class="space-y-2.5">
+            <h3 class="font-extrabold text-slate-800 text-xs sm:text-base uppercase mb-3">Recent Transactions</h3>
+            <div class="space-y-2">
               ${cb.rows.length ? cb.rows.slice(-5).reverse().map(item => `
-                <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50/90 border border-slate-200/70">
+                <div class="flex items-center justify-between p-2.5 sm:p-3 rounded-2xl bg-slate-50/90 border border-slate-200/70">
                   <div class="min-w-0 pr-2">
                     <p class="text-xs sm:text-sm font-bold text-slate-800 truncate">${item.desc}</p>
-                    <p class="text-[11px] text-slate-500">${item.date} • ${item.method}</p>
+                    <p class="text-[10px] sm:text-[11px] text-slate-500">${item.date} • ${item.method}</p>
                   </div>
-                  <span class="text-xs sm:text-sm font-black shrink-0 ${item.type === 'credit' ? 'text-emerald-600' : 'text-rose-600'}">
-                    ${item.type === 'credit' ? '+' : '-'}${formatBDT(item.amount)}
+                  <span class="text-xs sm:text-sm font-black shrink-0 ${item.type === 'cr' ? 'text-emerald-600' : 'text-rose-600'}">
+                    ${item.type === 'cr' ? 'Cr ' : 'Dr '}${formatBDT(item.amount)}
                   </span>
                 </div>
-              `).join('') : '<p class="text-xs text-slate-400 text-center py-8">Kono lenden nei. Upore + Joma ba - Khoroch diye shuru korun.</p>'}
+              `).join('') : '<p class="text-xs text-slate-400 text-center py-8">No transactions yet.</p>'}
             </div>
           </div>
         </div>
@@ -950,7 +983,7 @@
         if (!ctx) return;
         if (dashboardChart) dashboardChart.destroy();
         const catMap = {};
-        appData.cashbook.filter(x => x.type === 'debit').forEach(x => {
+        appData.cashbook.filter(x => normalizeLedgerType(x.type) === 'dr').forEach(x => {
           catMap[x.category] = (catMap[x.category] || 0) + Number(x.amount);
         });
         dashboardChart = new Chart(ctx, {
@@ -958,7 +991,7 @@
           data: {
             labels: Object.keys(catMap),
             datasets: [{
-              label: 'Khoroch (৳)',
+              label: 'Dr (৳)',
               data: Object.values(catMap),
               backgroundColor: ['#10b981', '#0ea5e9', '#f59e0b', '#f43f5e', '#8b5cf6', '#ec4899'],
               borderRadius: 10
@@ -983,11 +1016,12 @@
 
       if (startDateLimit) {
         allSorted.forEach(item => {
-          if (item.date < startDateLimit) openingBalance += (item.type === 'credit' ? Number(item.amount) : -Number(item.amount));
+          if (item.date < startDateLimit) openingBalance += (normalizeLedgerType(item.type) === 'cr' ? Number(item.amount) : -Number(item.amount));
         });
       }
 
       const filtered = allSorted.filter(item => {
+        const normType = normalizeLedgerType(item.type);
         if (f.mode === 'today' && item.date !== todayStr) return false;
         if (f.mode === 'single' && f.singleDate && item.date !== f.singleDate) return false;
         if (f.mode === 'range') {
@@ -995,7 +1029,7 @@
           if (f.toDate && item.date > f.toDate) return false;
         }
         if (f.mode === 'month' && f.month && !item.date.startsWith(f.month)) return false;
-        if (f.typeFilter !== 'all' && item.type !== f.typeFilter) return false;
+        if (f.typeFilter !== 'all' && normType !== f.typeFilter) return false;
         if (f.search && !item.desc.toLowerCase().includes(f.search.toLowerCase()) && !item.category.toLowerCase().includes(f.search.toLowerCase())) return false;
         return true;
       });
@@ -1003,79 +1037,80 @@
       let running = openingBalance, periodCr = 0, periodDr = 0;
       const rows = filtered.map(item => {
         const amt = Number(item.amount) || 0;
-        const cr = item.type === 'credit' ? amt : 0;
-        const dr = item.type === 'debit' ? amt : 0;
+        const normType = normalizeLedgerType(item.type);
+        const cr = normType === 'cr' ? amt : 0;
+        const dr = normType === 'dr' ? amt : 0;
         periodCr += cr; periodDr += dr;
         running += (cr - dr);
-        return { ...item, cr, dr, bal: running };
+        return { ...item, type: normType, cr, dr, bal: running };
       });
 
       container.innerHTML = `
-        <div class="glass-card p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-sm mb-4">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+        <div class="glass-card p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-slate-200 shadow-sm mb-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-3 border-b border-slate-100">
             <div>
-              <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Personal Cash Book</h2>
-              <p class="text-xs text-slate-500">Joma (Cr +), Khoroch (Dr -) o Cholman Balance</p>
+              <h2 class="text-base sm:text-xl font-extrabold text-slate-900 uppercase">Personal Cash Book</h2>
+              <p class="text-[11px] sm:text-xs text-slate-500">Dr / Cr Double-Entry & Running Balance</p>
             </div>
             <div class="flex gap-2 no-print">
-              <button onclick="openCashModal('credit')" class="flex-1 sm:flex-none bg-emerald-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow">+ Joma (Cr)</button>
-              <button onclick="openCashModal('debit')" class="flex-1 sm:flex-none bg-rose-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow">- Khoroch (Dr)</button>
+              <button onclick="openCashModal('dr')" class="flex-1 sm:flex-none bg-rose-600 hover:bg-rose-500 text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow flex items-center justify-center gap-1"><i class="fa-solid fa-plus"></i> Add Dr</button>
+              <button onclick="openCashModal('cr')" class="flex-1 sm:flex-none bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow flex items-center justify-center gap-1"><i class="fa-solid fa-plus"></i> Add Cr</button>
             </div>
           </div>
 
-          <form onsubmit="handleQuickCashEntry(event)" class="mt-3.5 bg-slate-50 p-3 rounded-2xl border border-slate-200 no-print">
+          <form onsubmit="handleQuickCashEntry(event)" class="mt-3 bg-slate-50 p-2.5 sm:p-3 rounded-2xl border border-slate-200 no-print">
             <div class="grid grid-cols-2 sm:grid-cols-6 gap-2">
-              <input type="date" id="qDate" value="${todayStr}" required class="px-2.5 py-2 rounded-xl border border-slate-300 bg-white text-xs sm:text-sm" />
-              <select id="qType" class="px-2.5 py-2 rounded-xl border border-slate-300 bg-white text-xs sm:text-sm font-bold">
-                <option value="credit">+ Joma (Cr)</option>
-                <option value="debit" selected>- Khoroch (Dr)</option>
+              <input type="date" id="qDate" value="${todayStr}" required class="px-2.5 py-2 rounded-xl border border-slate-300 bg-white text-xs" />
+              <select id="qType" class="px-2.5 py-2 rounded-xl border border-slate-300 bg-white text-xs font-bold">
+                <option value="dr" selected>Dr</option>
+                <option value="cr">Cr</option>
               </select>
-              <input type="text" id="qDesc" placeholder="Biboron likhun..." required class="col-span-2 px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs sm:text-sm" />
-              <input type="number" id="qAmount" placeholder="Taka" min="1" step="any" required class="px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs sm:text-sm font-bold" />
-              <button type="submit" class="bg-slate-900 hover:bg-emerald-600 text-white font-bold py-2 px-3 rounded-xl text-xs sm:text-sm shadow">Add</button>
+              <input type="text" id="qDesc" placeholder="Description..." required class="col-span-2 px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs" />
+              <input type="number" id="qAmount" placeholder="Amount" min="1" step="any" required class="px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs font-bold" />
+              <button type="submit" class="bg-slate-900 hover:bg-emerald-600 text-white font-bold py-2 px-3 rounded-xl text-xs shadow">Add</button>
             </div>
           </form>
         </div>
 
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
-          <div class="glass-card p-3.5 rounded-2xl border border-slate-200"><p class="text-[11px] text-slate-500 font-bold">Purber Jer</p><p class="text-base sm:text-lg font-black text-slate-700 mt-0.5">${formatBDT(openingBalance)}</p></div>
-          <div class="bg-emerald-50/90 p-3.5 rounded-2xl border border-emerald-200"><p class="text-[11px] text-emerald-700 font-bold">Mot Joma (Cr +)</p><p class="text-base sm:text-lg font-black text-emerald-700 mt-0.5">${formatBDT(periodCr)}</p></div>
-          <div class="bg-rose-50/90 p-3.5 rounded-2xl border border-rose-200"><p class="text-[11px] text-rose-700 font-bold">Mot Khoroch (Dr -)</p><p class="text-base sm:text-lg font-black text-rose-700 mt-0.5">${formatBDT(periodDr)}</p></div>
-          <div class="bg-slate-900 text-white p-3.5 rounded-2xl"><p class="text-[11px] text-emerald-300 font-bold">Bortoman Balance</p><p class="text-base sm:text-lg font-black mt-0.5">${formatBDT(running)}</p></div>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 mb-4">
+          <div class="glass-card p-3 sm:p-3.5 rounded-2xl border border-slate-200"><p class="text-[10px] sm:text-[11px] text-slate-500 font-bold uppercase">Opening Bal</p><p class="text-sm sm:text-lg font-black text-slate-700 mt-0.5">${formatBDT(openingBalance)}</p></div>
+          <div class="bg-rose-50/90 p-3 sm:p-3.5 rounded-2xl border border-rose-200"><p class="text-[10px] sm:text-[11px] text-rose-700 font-bold uppercase">Total Dr</p><p class="text-sm sm:text-lg font-black text-rose-700 mt-0.5">${formatBDT(periodDr)}</p></div>
+          <div class="bg-emerald-50/90 p-3 sm:p-3.5 rounded-2xl border border-emerald-200"><p class="text-[10px] sm:text-[11px] text-emerald-700 font-bold uppercase">Total Cr</p><p class="text-sm sm:text-lg font-black text-emerald-700 mt-0.5">${formatBDT(periodCr)}</p></div>
+          <div class="bg-slate-900 text-white p-3 sm:p-3.5 rounded-2xl"><p class="text-[10px] sm:text-[11px] text-emerald-300 font-bold uppercase">Closing Bal</p><p class="text-sm sm:text-lg font-black mt-0.5">${formatBDT(running)}</p></div>
         </div>
 
-        <div class="glass-card p-3.5 rounded-2xl border border-slate-200 shadow-sm mb-4 no-print">
-          <div class="flex items-center gap-1.5 overflow-x-auto pb-2 mb-2.5">
-            <button onclick="appData.cashFilter.mode='all';renderCurrentView()" class="px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 ${f.mode === 'all' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'}">Sob Tarikh</button>
-            <button onclick="appData.cashFilter.mode='today';renderCurrentView()" class="px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 ${f.mode === 'today' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'}">Ajker</button>
-            <button onclick="appData.cashFilter.mode='single';renderCurrentView()" class="px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 ${f.mode === 'single' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'}">Nirdishto Tarikh</button>
-            <button onclick="appData.cashFilter.mode='range';renderCurrentView()" class="px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 ${f.mode === 'range' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'}">Tarikh Range</button>
-            <button onclick="appData.cashFilter.mode='month';renderCurrentView()" class="px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 ${f.mode === 'month' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'}">Mash Onujayi</button>
+        <div class="glass-card p-3 sm:p-3.5 rounded-2xl border border-slate-200 shadow-sm mb-4 no-print">
+          <div class="flex items-center gap-1.5 overflow-x-auto pb-2 mb-2">
+            <button onclick="appData.cashFilter.mode='all';renderCurrentView()" class="px-3 py-1.5 rounded-xl text-[11px] font-bold shrink-0 ${f.mode === 'all' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'}">All Dates</button>
+            <button onclick="appData.cashFilter.mode='today';renderCurrentView()" class="px-3 py-1.5 rounded-xl text-[11px] font-bold shrink-0 ${f.mode === 'today' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'}">Today</button>
+            <button onclick="appData.cashFilter.mode='single';renderCurrentView()" class="px-3 py-1.5 rounded-xl text-[11px] font-bold shrink-0 ${f.mode === 'single' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'}">Single Date</button>
+            <button onclick="appData.cashFilter.mode='range';renderCurrentView()" class="px-3 py-1.5 rounded-xl text-[11px] font-bold shrink-0 ${f.mode === 'range' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'}">Date Range</button>
+            <button onclick="appData.cashFilter.mode='month';renderCurrentView()" class="px-3 py-1.5 rounded-xl text-[11px] font-bold shrink-0 ${f.mode === 'month' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'}">Monthly</button>
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-            ${f.mode === 'single' ? `<input type="date" value="${f.singleDate}" onchange="appData.cashFilter.singleDate=this.value;renderCurrentView()" class="px-3 py-2 rounded-xl border border-slate-300 text-sm" />` : ''}
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            ${f.mode === 'single' ? `<input type="date" value="${f.singleDate}" onchange="appData.cashFilter.singleDate=this.value;renderCurrentView()" class="px-3 py-2 rounded-xl border border-slate-300 text-xs" />` : ''}
             ${f.mode === 'range' ? `
-              <input type="date" value="${f.fromDate}" onchange="appData.cashFilter.fromDate=this.value;renderCurrentView()" class="px-3 py-2 rounded-xl border border-slate-300 text-sm" />
-              <input type="date" value="${f.toDate}" onchange="appData.cashFilter.toDate=this.value;renderCurrentView()" class="px-3 py-2 rounded-xl border border-slate-300 text-sm" />
+              <input type="date" value="${f.fromDate}" onchange="appData.cashFilter.fromDate=this.value;renderCurrentView()" class="px-3 py-2 rounded-xl border border-slate-300 text-xs" />
+              <input type="date" value="${f.toDate}" onchange="appData.cashFilter.toDate=this.value;renderCurrentView()" class="px-3 py-2 rounded-xl border border-slate-300 text-xs" />
             ` : ''}
-            ${f.mode === 'month' ? `<input type="month" value="${f.month}" onchange="appData.cashFilter.month=this.value;renderCurrentView()" class="px-3 py-2 rounded-xl border border-slate-300 text-sm" />` : ''}
-            <input type="text" value="${f.search}" oninput="appData.cashFilter.search=this.value;renderCurrentView()" placeholder="Search korun..." class="px-3 py-2 rounded-xl border border-slate-300 text-sm" />
+            ${f.mode === 'month' ? `<input type="month" value="${f.month}" onchange="appData.cashFilter.month=this.value;renderCurrentView()" class="px-3 py-2 rounded-xl border border-slate-300 text-xs" />` : ''}
+            <input type="text" value="${f.search}" oninput="appData.cashFilter.search=this.value;renderCurrentView()" placeholder="Search..." class="px-3 py-2 rounded-xl border border-slate-300 text-xs" />
           </div>
         </div>
 
-        <div class="md:hidden space-y-2.5 mb-4">
+        <div class="md:hidden space-y-2 mb-4">
           ${rows.map(r => `
-            <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs">
+            <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-xs">
               <div class="flex items-start justify-between gap-2">
                 <div class="min-w-0">
-                  <p class="text-sm font-extrabold text-slate-900 truncate">${r.desc}</p>
-                  <p class="text-[11px] text-slate-500 mt-0.5">${r.date} • ${r.category} • ${r.method}</p>
+                  <p class="text-xs font-extrabold text-slate-900 truncate">${r.desc}</p>
+                  <p class="text-[10px] text-slate-500 mt-0.5">${r.date} • ${r.category} • ${r.method}</p>
                 </div>
-                <span class="text-sm font-black shrink-0 ${r.cr > 0 ? 'text-emerald-600' : 'text-rose-600'}">
-                  ${r.cr > 0 ? '+' + formatBDT(r.cr) : '-' + formatBDT(r.dr)}
+                <span class="text-xs font-black shrink-0 ${r.cr > 0 ? 'text-emerald-600' : 'text-rose-600'}">
+                  ${r.cr > 0 ? 'Cr ' + formatBDT(r.cr) : 'Dr ' + formatBDT(r.dr)}
                 </span>
               </div>
-              <div class="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
+              <div class="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
                 <span class="font-bold text-slate-700">Bal: <span class="text-slate-900 font-black">${formatBDT(r.bal)}</span></span>
                 <div class="flex gap-1.5 no-print">
                   <button onclick="openCashModal('${r.type}', '${r.id}')" class="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-600 font-bold">Edit</button>
@@ -1091,22 +1126,22 @@
             <table class="w-full text-sm text-left">
               <thead class="bg-slate-900 text-white text-xs uppercase">
                 <tr>
-                  <th class="py-3.5 px-4">Tarikh</th>
-                  <th class="py-3.5 px-4">Biboron o Maddhom</th>
-                  <th class="py-3.5 px-4 text-right text-emerald-300">Joma (Cr +)</th>
-                  <th class="py-3.5 px-4 text-right text-rose-300">Khoroch (Dr -)</th>
-                  <th class="py-3.5 px-4 text-right text-amber-300">Balance (Bal)</th>
+                  <th class="py-3.5 px-4">Date</th>
+                  <th class="py-3.5 px-4">Description & Mode</th>
+                  <th class="py-3.5 px-4 text-right text-rose-300">Dr</th>
+                  <th class="py-3.5 px-4 text-right text-emerald-300">Cr</th>
+                  <th class="py-3.5 px-4 text-right text-amber-300">Balance</th>
                   <th class="py-3.5 px-4 text-center no-print">Action</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-200">
-                ${startDateLimit ? `<tr class="bg-slate-100 font-bold"><td colspan="4" class="py-2 px-4">Purber Jer (Opening Balance)</td><td class="py-2 px-4 text-right">${formatBDT(openingBalance)}</td><td class="no-print"></td></tr>` : ''}
+                ${startDateLimit ? `<tr class="bg-slate-100 font-bold"><td colspan="4" class="py-2 px-4">Opening Balance</td><td class="py-2 px-4 text-right">${formatBDT(openingBalance)}</td><td class="no-print"></td></tr>` : ''}
                 ${rows.map(r => `
                   <tr class="hover:bg-slate-50">
                     <td class="py-3 px-4 whitespace-nowrap">${r.date}</td>
                     <td class="py-3 px-4 font-semibold">${r.desc} <span class="text-[11px] bg-slate-100 px-2 py-0.5 rounded ml-1">${r.category} • ${r.method}</span></td>
-                    <td class="py-3 px-4 text-right font-bold text-emerald-600">${r.cr > 0 ? formatBDT(r.cr) : '-'}</td>
                     <td class="py-3 px-4 text-right font-bold text-rose-600">${r.dr > 0 ? formatBDT(r.dr) : '-'}</td>
+                    <td class="py-3 px-4 text-right font-bold text-emerald-600">${r.cr > 0 ? formatBDT(r.cr) : '-'}</td>
                     <td class="py-3 px-4 text-right font-extrabold">${formatBDT(r.bal)}</td>
                     <td class="py-3 px-4 text-center whitespace-nowrap no-print">
                       <button onclick="openCashModal('${r.type}', '${r.id}')" class="p-1.5 rounded-lg bg-blue-50 text-blue-600 mr-1"><i class="fa-solid fa-pen-to-square"></i></button>
@@ -1117,9 +1152,9 @@
               </tbody>
               <tfoot class="bg-slate-100 font-extrabold border-t-2 border-slate-300">
                 <tr>
-                  <td colspan="2" class="py-3 px-4 text-right">Mot Hisab:</td>
-                  <td class="py-3 px-4 text-right text-emerald-700">${formatBDT(periodCr)}</td>
+                  <td colspan="2" class="py-3 px-4 text-right">Total:</td>
                   <td class="py-3 px-4 text-right text-rose-700">${formatBDT(periodDr)}</td>
+                  <td class="py-3 px-4 text-right text-emerald-700">${formatBDT(periodCr)}</td>
                   <td class="py-3 px-4 text-right">${formatBDT(running)}</td>
                   <td class="no-print"></td>
                 </tr>
@@ -1132,38 +1167,39 @@
 
     function handleQuickCashEntry(e) {
       e.preventDefault();
+      const t = normalizeLedgerType(document.getElementById('qType').value);
       appData.cashbook.push({
         id: 'cb_' + Date.now(),
         date: document.getElementById('qDate').value,
-        type: document.getElementById('qType').value,
-        category: document.getElementById('qType').value === 'credit' ? 'Sadharon Joma' : 'Sadharon Khoroch',
+        type: t,
+        category: t === 'cr' ? 'General Cr' : 'General Dr',
         desc: document.getElementById('qDesc').value.trim(),
         method: 'Cash',
         amount: parseFloat(document.getElementById('qAmount').value)
       });
-      saveData(); showToast('Entry jukto o songrokkhito hoyeche!'); renderCurrentView();
+      saveData(); showToast('Added!'); renderCurrentView();
     }
 
-    function openCashModal(defaultType = 'debit', editId = null) {
+    function openCashModal(defaultType = 'dr', editId = null) {
       const existing = editId ? appData.cashbook.find(x => x.id === editId) : null;
-      const type = existing ? existing.type : defaultType;
+      const type = existing ? normalizeLedgerType(existing.type) : normalizeLedgerType(defaultType);
       const today = new Date().toISOString().split('T')[0];
-      const cats = type === 'credit' ? appData.settings.incomeCategories : appData.settings.expenseCategories;
+      const cats = type === 'cr' ? appData.settings.crCategories : appData.settings.drCategories;
 
-      document.getElementById('modalTitle').innerText = existing ? 'Cash Book Edit' : (type === 'credit' ? '+ Notun Joma (Cr)' : '- Notun Khoroch (Dr)');
+      document.getElementById('modalTitle').innerText = existing ? 'Edit Cash Book Entry' : (type === 'cr' ? 'Add Cr Entry' : 'Add Dr Entry');
       document.getElementById('modalBody').innerHTML = `
-        <form onsubmit="saveCashModal(event, '${editId || ''}')" class="space-y-4">
+        <form onsubmit="saveCashModal(event, '${editId || ''}')" class="space-y-3.5">
           <div class="grid grid-cols-2 gap-3">
-            <div><label class="block text-xs font-bold text-slate-600 mb-1">Tarikh</label><input type="date" id="mCashDate" value="${existing ? existing.date : today}" required class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm" /></div>
-            <div><label class="block text-xs font-bold text-slate-600 mb-1">Dhoron</label><select id="mCashType" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm font-bold"><option value="credit" ${type === 'credit' ? 'selected' : ''}>+ Joma (Cr)</option><option value="debit" ${type === 'debit' ? 'selected' : ''}>- Khoroch (Dr)</option></select></div>
+            <div><label class="block text-[11px] font-bold text-slate-600 mb-1">Date</label><input type="date" id="mCashDate" value="${existing ? existing.date : today}" required class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs sm:text-sm" /></div>
+            <div><label class="block text-[11px] font-bold text-slate-600 mb-1">Side</label><select id="mCashType" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs sm:text-sm font-bold"><option value="dr" ${type === 'dr' ? 'selected' : ''}>Dr</option><option value="cr" ${type === 'cr' ? 'selected' : ''}>Cr</option></select></div>
           </div>
           <div class="grid grid-cols-2 gap-3">
-            <div><label class="block text-xs font-bold text-slate-600 mb-1">Category</label><select id="mCashCat" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm">${cats.map(c => `<option value="${c}" ${existing && existing.category === c ? 'selected' : ''}>${c}</option>`).join('')}</select></div>
-            <div><label class="block text-xs font-bold text-slate-600 mb-1">Maddhom</label><select id="mCashMethod" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm">${['Cash', 'bKash', 'Nagad', 'Bank'].map(m => `<option value="${m}" ${existing && existing.method === m ? 'selected' : ''}>${m}</option>`).join('')}</select></div>
+            <div><label class="block text-[11px] font-bold text-slate-600 mb-1">Category</label><select id="mCashCat" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs sm:text-sm">${cats.map(c => `<option value="${c}" ${existing && existing.category === c ? 'selected' : ''}>${c}</option>`).join('')}</select></div>
+            <div><label class="block text-[11px] font-bold text-slate-600 mb-1">Mode</label><select id="mCashMethod" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs sm:text-sm">${['Cash', 'bKash', 'Nagad', 'Bank'].map(m => `<option value="${m}" ${existing && existing.method === m ? 'selected' : ''}>${m}</option>`).join('')}</select></div>
           </div>
-          <div><label class="block text-xs font-bold text-slate-600 mb-1">Biboron</label><input type="text" id="mCashDesc" value="${existing ? existing.desc : ''}" required class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm" /></div>
-          <div><label class="block text-xs font-bold text-slate-600 mb-1">Taka (৳)</label><input type="number" id="mCashAmount" value="${existing ? existing.amount : ''}" min="1" step="any" required class="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-lg font-extrabold" /></div>
-          <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-3 rounded-xl shadow">Songrokkhon Korun</button>
+          <div><label class="block text-[11px] font-bold text-slate-600 mb-1">Description</label><input type="text" id="mCashDesc" value="${existing ? existing.desc : ''}" required class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs sm:text-sm" /></div>
+          <div><label class="block text-[11px] font-bold text-slate-600 mb-1">Amount (৳)</label><input type="number" id="mCashAmount" value="${existing ? existing.amount : ''}" min="1" step="any" required class="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-base sm:text-lg font-extrabold" /></div>
+          <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-xl text-sm shadow">Save</button>
         </form>
       `;
       openModal();
@@ -1174,7 +1210,7 @@
       const payload = {
         id: editId || 'cb_' + Date.now(),
         date: document.getElementById('mCashDate').value,
-        type: document.getElementById('mCashType').value,
+        type: normalizeLedgerType(document.getElementById('mCashType').value),
         category: document.getElementById('mCashCat').value,
         method: document.getElementById('mCashMethod').value,
         desc: document.getElementById('mCashDesc').value.trim(),
@@ -1184,16 +1220,16 @@
         const idx = appData.cashbook.findIndex(x => x.id === editId);
         if (idx !== -1) appData.cashbook[idx] = payload;
       } else appData.cashbook.push(payload);
-      saveData(); closeModal(); showToast('Songrokkhito hoyeche!'); renderCurrentView();
+      saveData(); closeModal(); showToast('Saved!'); renderCurrentView();
     }
 
     function deleteCashEntry(id) {
-      if (!confirm('Muche felte chan?')) return;
+      if (!confirm('Delete this entry?')) return;
       appData.cashbook = appData.cashbook.filter(x => x.id !== id);
       saveData(); renderCurrentView();
     }
 
-    // ==================== 3. LAND DOCUMENTS & 4. FAMILY DOCUMENTS (WITH DOWNLOAD) ====================
+    // ==================== 3. LAND DOCUMENTS & 4. FAMILY DOCUMENTS ====================
     function renderDocuments(container, sectionType = 'land') {
       const isFamily = sectionType === 'family';
       const folders = isFamily ? appData.familyFolders : appData.docFolders;
@@ -1201,67 +1237,66 @@
       const activeFolder = isFamily ? selectedFamilyFolder : selectedDocFolder;
       const docs = activeFolder === 'all' ? allDocs : allDocs.filter(d => d.folderId === activeFolder);
 
-      const headerTitle = isFamily ? 'Family Documents (NID / Birth / Passport)' : 'Land Documents (BS / RS / Dalil)';
-      const headerSub = isFamily ? 'Paribarik document folder onujayi songrokkhon, preview o download' : 'Jomir document folder onujayi songrokkhon, preview o download';
+      const headerTitle = isFamily ? '4. Family Documents' : '3. Land Documents';
+      const headerSub = isFamily ? 'NID, Birth Certificate, Passport — Preview & Download' : 'BS Khatian, RS Khatian, Dalil — Preview & Download';
       const badgeColor = isFamily ? 'bg-cyan-100 text-cyan-800' : 'bg-amber-100 text-amber-800';
 
       container.innerHTML = `
-        <div class="glass-card p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-sm mb-5">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+        <div class="glass-card p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-slate-200 shadow-sm mb-4 sm:mb-5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-3.5">
             <div>
-              <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">${headerTitle}</h2>
-              <p class="text-xs text-slate-500">${headerSub}</p>
+              <h2 class="text-base sm:text-xl font-extrabold text-slate-900 uppercase">${headerTitle}</h2>
+              <p class="text-[11px] sm:text-xs text-slate-500">${headerSub}</p>
             </div>
             <div class="flex gap-2 no-print">
-              <button onclick="openNewFolderModal('${sectionType}')" class="flex-1 sm:flex-none bg-slate-800 text-white px-3.5 py-2 rounded-xl text-xs font-bold">+ Folder</button>
-              <button onclick="openUploadDocModal('${sectionType}')" class="flex-1 sm:flex-none bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-bold">+ Upload</button>
+              <button onclick="openNewFolderModal('${sectionType}')" class="flex-1 sm:flex-none bg-slate-800 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1"><i class="fa-solid fa-plus"></i> Add Folder</button>
+              <button onclick="openUploadDocModal('${sectionType}')" class="flex-1 sm:flex-none bg-emerald-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1"><i class="fa-solid fa-plus"></i> Upload</button>
             </div>
           </div>
-          <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
-            <button onclick="selectDocFolderFilter('${sectionType}', 'all')" class="p-3 rounded-2xl border text-left ${activeFolder === 'all' ? 'bg-amber-50 border-amber-400' : 'bg-slate-50'}">
-              <p class="font-bold text-xs sm:text-sm">Sokol File</p>
-              <p class="text-[11px] text-slate-500">${allDocs.length} ti</p>
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-2">
+            <button onclick="selectDocFolderFilter('${sectionType}', 'all')" class="p-2.5 sm:p-3 rounded-2xl border text-left ${activeFolder === 'all' ? 'bg-amber-50 border-amber-400' : 'bg-slate-50'}">
+              <p class="font-bold text-xs">All Files</p>
+              <p class="text-[10px] text-slate-500">${allDocs.length} files</p>
             </button>
             ${folders.map(f => `
-              <button onclick="selectDocFolderFilter('${sectionType}', '${f.id}')" class="p-3 rounded-2xl border text-left ${activeFolder === f.id ? 'bg-emerald-50 border-emerald-500' : 'bg-slate-50'}">
-                <p class="font-bold text-xs sm:text-sm truncate">${f.name}</p>
-                <p class="text-[11px] text-slate-500">${allDocs.filter(d => d.folderId === f.id).length} ti</p>
+              <button onclick="selectDocFolderFilter('${sectionType}', '${f.id}')" class="p-2.5 sm:p-3 rounded-2xl border text-left ${activeFolder === f.id ? 'bg-emerald-50 border-emerald-500' : 'bg-slate-50'}">
+                <p class="font-bold text-xs truncate">${f.name}</p>
+                <p class="text-[10px] text-slate-500">${allDocs.filter(d => d.folderId === f.id).length} files</p>
               </button>
             `).join('')}
           </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
           ${docs.length ? docs.map(doc => {
             const folder = folders.find(f => f.id === doc.folderId);
-            const safeDownloadName = (doc.fileName || (doc.title + '.pdf')).replace(/'/g, '');
             return `
               <div class="glass-card p-4 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
                 <div>
                   <div class="flex justify-between items-start mb-2">
-                    <span class="px-2.5 py-1 rounded-lg ${badgeColor} text-xs font-bold">${folder ? folder.name : 'Doc'}</span>
+                    <span class="px-2.5 py-1 rounded-lg ${badgeColor} text-[11px] font-bold">${folder ? folder.name : 'Doc'}</span>
                     <button onclick="deleteDoc('${sectionType}', '${doc.id}')" class="text-slate-400 hover:text-rose-600 text-xs no-print"><i class="fa-solid fa-trash"></i></button>
                   </div>
-                  <h4 class="font-bold text-slate-900">${doc.title}</h4>
-                  <p class="text-xs text-slate-500 mt-1">No: ${doc.docNo || '-'} • ${doc.date}</p>
+                  <h4 class="font-bold text-sm text-slate-900">${doc.title}</h4>
+                  <p class="text-[11px] text-slate-500 mt-1">Ref: ${doc.docNo || '-'} • ${doc.date}</p>
                   ${doc.fileName ? `<p class="text-[11px] text-emerald-700 mt-1 truncate"><i class="fa-solid fa-paperclip"></i> ${doc.fileName}</p>` : ''}
                 </div>
                 <div class="mt-3 pt-3 border-t flex flex-wrap gap-1.5 justify-between items-center no-print">
                   <div class="flex gap-1.5">
                     ${doc.fileData ? `
-                      <button onclick="previewStoredDoc('${sectionType}', '${doc.id}')" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-800 px-2.5 py-1.5 rounded-lg font-bold flex items-center gap-1">
-                        <i class="fa-solid fa-eye"></i> Dekhun
+                      <button onclick="previewStoredDoc('${sectionType}', '${doc.id}')" class="text-[11px] bg-slate-100 hover:bg-slate-200 text-slate-800 px-2.5 py-1.5 rounded-lg font-bold flex items-center gap-1">
+                        <i class="fa-solid fa-eye"></i> View
                       </button>
-                      <button onclick="triggerDocDownload('${sectionType}', '${doc.id}')" class="text-xs bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded-lg font-bold flex items-center gap-1 shadow-2xs">
+                      <button onclick="triggerDocDownload('${sectionType}', '${doc.id}')" class="text-[11px] bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded-lg font-bold flex items-center gap-1 shadow-2xs">
                         <i class="fa-solid fa-download"></i> Download
                       </button>
-                    ` : '<span class="text-[11px] text-slate-400">No local file</span>'}
+                    ` : '<span class="text-[11px] text-slate-400">No file</span>'}
                   </div>
-                  ${doc.driveLink ? `<a href="${doc.driveLink}" target="_blank" class="text-xs bg-emerald-600 text-white px-2.5 py-1.5 rounded-lg font-bold">Drive</a>` : ''}
+                  ${doc.driveLink ? `<a href="${doc.driveLink}" target="_blank" class="text-[11px] bg-emerald-600 text-white px-2.5 py-1.5 rounded-lg font-bold">Drive</a>` : ''}
                 </div>
               </div>
             `;
-          }).join('') : '<div class="col-span-full text-center py-10 text-xs text-slate-400 bg-white rounded-3xl border border-slate-200">Kono document upload kora hoyni. Upore "+ Upload" button theke add korun.</div>'}
+          }).join('') : '<div class="col-span-full text-center py-10 text-xs text-slate-400 bg-white rounded-3xl border border-slate-200">No documents uploaded yet.</div>'}
         </div>
       `;
     }
@@ -1273,11 +1308,11 @@
     }
 
     function openNewFolderModal(sectionType = 'land') {
-      document.getElementById('modalTitle').innerText = 'Notun Folder Toiri Korun';
+      document.getElementById('modalTitle').innerText = 'Add Folder';
       document.getElementById('modalBody').innerHTML = `
         <form onsubmit="createFolder(event, '${sectionType}')" class="space-y-4">
-          <input type="text" id="newFolderName" required placeholder="Folder-er naam..." class="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-sm" />
-          <button type="submit" class="w-full bg-slate-900 text-white font-bold py-2.5 rounded-xl">Toiri Korun</button>
+          <input type="text" id="newFolderName" required placeholder="Folder name..." class="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-xs sm:text-sm" />
+          <button type="submit" class="w-full bg-slate-900 text-white font-bold py-2.5 rounded-xl text-sm">Save</button>
         </form>
       `;
       openModal();
@@ -1293,21 +1328,21 @@
     function openUploadDocModal(sectionType = 'land') {
       const today = new Date().toISOString().split('T')[0];
       const folders = sectionType === 'family' ? appData.familyFolders : appData.docFolders;
-      document.getElementById('modalTitle').innerText = sectionType === 'family' ? 'Family Document Upload' : 'Land Document Upload';
+      document.getElementById('modalTitle').innerText = sectionType === 'family' ? 'Upload Family Document' : 'Upload Land Document';
       document.getElementById('modalBody').innerHTML = `
         <form onsubmit="saveUploadedDoc(event, '${sectionType}')" class="space-y-3">
-          <select id="docFolderSelect" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm font-bold">${folders.map(f => `<option value="${f.id}">${f.name}</option>`).join('')}</select>
-          <input type="text" id="docTitle" placeholder="Document-er Shirsho (jemon: NID / Dalil)" required class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm" />
+          <select id="docFolderSelect" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs sm:text-sm font-bold">${folders.map(f => `<option value="${f.id}">${f.name}</option>`).join('')}</select>
+          <input type="text" id="docTitle" placeholder="Document Title" required class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs sm:text-sm" />
           <div class="grid grid-cols-2 gap-2">
-            <input type="text" id="docNo" placeholder="Number / ID (Optional)" class="px-3 py-2 rounded-xl border border-slate-300 text-sm" />
-            <input type="date" id="docDate" value="${today}" class="px-3 py-2 rounded-xl border border-slate-300 text-sm" />
+            <input type="text" id="docNo" placeholder="Doc No / ID" class="px-3 py-2 rounded-xl border border-slate-300 text-xs sm:text-sm" />
+            <input type="date" id="docDate" value="${today}" class="px-3 py-2 rounded-xl border border-slate-300 text-xs sm:text-sm" />
           </div>
           <div>
-            <label class="block text-[11px] font-bold text-slate-600 mb-1">File Select Korun (Image / PDF — pore Download kora jabe)</label>
+            <label class="block text-[11px] font-bold text-slate-600 mb-1">Select File (Image / PDF)</label>
             <input type="file" id="docFileInput" accept="image/*,.pdf" class="w-full text-xs border rounded-xl p-2" />
           </div>
-          <input type="url" id="docDriveUrl" placeholder="Google Drive Link (Optional)" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm" />
-          <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-2.5 rounded-xl">Songrokkhon Korun</button>
+          <input type="url" id="docDriveUrl" placeholder="Drive Link (Optional)" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs sm:text-sm" />
+          <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-xl text-sm shadow">Save</button>
         </form>
       `;
       openModal();
@@ -1328,7 +1363,7 @@
           fileName: fileName || '',
           fileData: fileData || ''
         });
-        saveData(); closeModal(); showToast('Document songrokkhito hoyeche!'); renderCurrentView();
+        saveData(); closeModal(); showToast('Saved!'); renderCurrentView();
       };
       if (file) { const r = new FileReader(); r.onload = () => finish(file.name, r.result); r.readAsDataURL(file); }
       else finish('', '');
@@ -1349,13 +1384,13 @@
     }
 
     function deleteDoc(sectionType, id) {
-      if (!confirm('Muche felte chan?')) return;
+      if (!confirm('Delete this document?')) return;
       if (sectionType === 'family') appData.familyDocuments = appData.familyDocuments.filter(d => d.id !== id);
       else appData.documents = appData.documents.filter(d => d.id !== id);
       saveData(); renderCurrentView();
     }
 
-    // ==================== 5. OTHERS HISAB (CUSTOMIZABLE LEDGERS) ====================
+    // ==================== 5. OTHERS HISAB (CUSTOMIZABLE DR/CR LEDGERS) ====================
     function renderOthersHisab(container) {
       const accounts = appData.othersAccounts || [];
       if (!accounts.length) {
@@ -1364,57 +1399,74 @@
       if (!appData.othersAccounts.some(a => a.id === selectedOthersAccountId)) {
         selectedOthersAccountId = appData.othersAccounts[0].id;
       }
-      const activeAcc = appData.othersAccounts.find(a => a.id === selectedOthersAccountId);
-      const res = computeDoubleEntry(activeAcc.entries || [], ledgerFilters.others, { positiveType: activeAcc.positiveType || 'dr' });
+      const activeAcc = appData.othersAccounts.find(a => a.id === selectedOthersAccountId) || appData.othersAccounts[0];
+      if (!Array.isArray(activeAcc.entries)) activeAcc.entries = [];
+
+      const res = computeDoubleEntry(activeAcc.entries, ledgerFilters.others, { positiveType: activeAcc.positiveType || 'dr' });
+      const todayStr = new Date().toISOString().split('T')[0];
 
       container.innerHTML = `
-        <div class="glass-card p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-sm mb-4">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+        <div class="glass-card p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-slate-200 shadow-sm mb-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-3 border-b border-slate-100">
             <div>
-              <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">5. Others Hisab (${activeAcc.name})</h2>
-              <p class="text-xs text-slate-500">Nijer icche moto alada khata toiri korun (Settings ba ekhan theke)</p>
+              <h2 class="text-base sm:text-xl font-extrabold text-slate-900 uppercase">5. Others Hisab • ${activeAcc.name}</h2>
+              <p class="text-[11px] sm:text-xs text-slate-500">Custom Ledgers • Dr / Cr Double-Entry</p>
             </div>
-            <div class="flex flex-wrap gap-2 no-print">
-              <button onclick="openAddOthersAccountModal()" class="bg-slate-900 text-white px-3 py-2 rounded-xl text-xs font-bold shadow">+ Notun Khat</button>
-              <button onclick="openOthersEntryModal('dr')" class="bg-indigo-600 text-white px-3 py-2 rounded-xl text-xs font-bold shadow">+ Dr</button>
-              <button onclick="openOthersEntryModal('cr')" class="bg-emerald-600 text-white px-3 py-2 rounded-xl text-xs font-bold shadow">- Cr</button>
+            <div class="flex flex-wrap gap-1.5 sm:gap-2 no-print">
+              <button onclick="openAddOthersAccountModal()" class="bg-slate-900 text-white px-3 py-2 rounded-xl text-xs font-bold shadow flex items-center gap-1"><i class="fa-solid fa-plus"></i> Add Ledger</button>
+              <button onclick="openOthersEntryModal('dr')" class="bg-indigo-600 text-white px-3 py-2 rounded-xl text-xs font-bold shadow flex items-center gap-1"><i class="fa-solid fa-plus"></i> Add Dr</button>
+              <button onclick="openOthersEntryModal('cr')" class="bg-emerald-600 text-white px-3 py-2 rounded-xl text-xs font-bold shadow flex items-center gap-1"><i class="fa-solid fa-plus"></i> Add Cr</button>
             </div>
           </div>
 
-          <div class="mt-3 flex items-center gap-2 overflow-x-auto pb-1 no-print">
+          <div class="mt-3 flex items-center gap-1.5 overflow-x-auto pb-1 no-print">
             ${appData.othersAccounts.map(acc => `
               <button onclick="selectedOthersAccountId='${acc.id}';renderCurrentView()"
-                class="px-3.5 py-2 rounded-xl text-xs font-extrabold shrink-0 border transition ${
-                  acc.id === selectedOthersAccountId
-                    ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
+                class="px-3 py-1.5 rounded-xl text-xs font-extrabold shrink-0 border transition ${
+                  acc.id === activeAcc.id
+                    ? 'bg-indigo-600 text-white border-indigo-600 shadow-2xs'
                     : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
                 }">
                 ${acc.name} (${(acc.entries || []).length})
               </button>
             `).join('')}
           </div>
+
+          <!-- Instant Quick Entry Form inside active Others Ledger -->
+          <form onsubmit="handleQuickOthersEntry(event)" class="mt-3 bg-slate-50 p-2.5 sm:p-3 rounded-2xl border border-slate-200 no-print">
+            <div class="grid grid-cols-2 sm:grid-cols-6 gap-2">
+              <input type="date" id="qOthDate" value="${todayStr}" required class="px-2.5 py-2 rounded-xl border border-slate-300 bg-white text-xs" />
+              <select id="qOthType" class="px-2.5 py-2 rounded-xl border border-slate-300 bg-white text-xs font-bold">
+                <option value="dr" selected>Dr</option>
+                <option value="cr">Cr</option>
+              </select>
+              <input type="text" id="qOthDesc" placeholder="Description..." required class="col-span-2 px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs" />
+              <input type="number" id="qOthAmount" placeholder="Amount" min="1" step="any" required class="px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs font-bold" />
+              <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-3 rounded-xl text-xs shadow">Add</button>
+            </div>
+          </form>
         </div>
 
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
-          <div class="glass-card p-3.5 rounded-2xl border border-slate-200"><p class="text-[11px] text-slate-500 font-bold">Purber Jer</p><p class="text-base sm:text-lg font-black text-slate-700">${formatBDT(res.openingBal)}</p></div>
-          <div class="bg-indigo-50/90 p-3.5 rounded-2xl border border-indigo-200"><p class="text-[11px] text-indigo-700 font-bold">Mot Dr +</p><p class="text-base sm:text-lg font-black text-indigo-800">${formatBDT(res.totalDr)}</p></div>
-          <div class="bg-emerald-50/90 p-3.5 rounded-2xl border border-emerald-200"><p class="text-[11px] text-emerald-700 font-bold">Mot Cr -</p><p class="text-base sm:text-lg font-black text-emerald-800">${formatBDT(res.totalCr)}</p></div>
-          <div class="bg-slate-900 text-white p-3.5 rounded-2xl"><p class="text-[11px] text-amber-300 font-bold">Bortoman Balance</p><p class="text-base sm:text-lg font-black">${formatBDT(res.closingBal)}</p></div>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 mb-4">
+          <div class="glass-card p-3 sm:p-3.5 rounded-2xl border border-slate-200"><p class="text-[10px] sm:text-[11px] text-slate-500 font-bold uppercase">Opening Bal</p><p class="text-sm sm:text-lg font-black text-slate-700">${formatBDT(res.openingBal)}</p></div>
+          <div class="bg-indigo-50/90 p-3 sm:p-3.5 rounded-2xl border border-indigo-200"><p class="text-[10px] sm:text-[11px] text-indigo-700 font-bold uppercase">Total Dr</p><p class="text-sm sm:text-lg font-black text-indigo-800">${formatBDT(res.totalDr)}</p></div>
+          <div class="bg-emerald-50/90 p-3 sm:p-3.5 rounded-2xl border border-emerald-200"><p class="text-[10px] sm:text-[11px] text-emerald-700 font-bold uppercase">Total Cr</p><p class="text-sm sm:text-lg font-black text-emerald-800">${formatBDT(res.totalCr)}</p></div>
+          <div class="bg-slate-900 text-white p-3 sm:p-3.5 rounded-2xl"><p class="text-[10px] sm:text-[11px] text-amber-300 font-bold uppercase">Balance</p><p class="text-sm sm:text-lg font-black">${formatBDT(res.closingBal)}</p></div>
         </div>
 
-        <div class="md:hidden space-y-2.5 mb-4">
-          ${res.rows.map(r => `
-            <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs">
+        <div class="md:hidden space-y-2 mb-4">
+          ${res.rows.length ? res.rows.map(r => `
+            <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-xs">
               <div class="flex items-start justify-between gap-2">
                 <div class="min-w-0">
-                  <p class="text-sm font-extrabold text-slate-900">${r.desc || ''}</p>
-                  <p class="text-[11px] text-slate-500 mt-0.5">${r.date} ${r.method ? `• ${r.method}` : ''}</p>
+                  <p class="text-xs font-extrabold text-slate-900">${r.desc || ''}</p>
+                  <p class="text-[10px] text-slate-500 mt-0.5">${r.date} ${r.method ? `• ${r.method}` : ''}</p>
                 </div>
-                <span class="text-xs sm:text-sm font-black shrink-0 ${r.dr > 0 ? 'text-indigo-600' : 'text-emerald-600'}">
+                <span class="text-xs font-black shrink-0 ${r.dr > 0 ? 'text-indigo-600' : 'text-emerald-600'}">
                   ${r.dr > 0 ? 'Dr ' + formatBDT(r.dr) : 'Cr ' + formatBDT(r.cr)}
                 </span>
               </div>
-              <div class="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
+              <div class="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
                 <span class="font-bold text-slate-700">Bal: <span class="font-black text-slate-900">${formatBDT(r.bal)}</span></span>
                 <div class="flex gap-1.5 no-print">
                   <button onclick="openOthersEntryModal('${r.type}', '${r.id}')" class="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-600 font-bold">Edit</button>
@@ -1422,7 +1474,7 @@
                 </div>
               </div>
             </div>
-          `).join('')}
+          `).join('') : '<div class="text-center py-8 text-xs text-slate-400 bg-white rounded-2xl border border-slate-200">No entries in this ledger yet.</div>'}
         </div>
 
         <div class="hidden md:block bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
@@ -1430,16 +1482,16 @@
             <table class="w-full text-sm text-left">
               <thead class="bg-slate-900 text-white text-xs uppercase">
                 <tr>
-                  <th class="py-3 px-4">Tarikh</th>
-                  <th class="py-3 px-4">Biboron</th>
-                  <th class="py-3 px-4 text-right text-indigo-300">Dr +</th>
-                  <th class="py-3 px-4 text-right text-emerald-300">Cr -</th>
+                  <th class="py-3 px-4">Date</th>
+                  <th class="py-3 px-4">Description</th>
+                  <th class="py-3 px-4 text-right text-indigo-300">Dr</th>
+                  <th class="py-3 px-4 text-right text-emerald-300">Cr</th>
                   <th class="py-3 px-4 text-right text-amber-300">Balance</th>
                   <th class="py-3 px-4 text-center no-print">Action</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-200">
-                ${res.rows.map(r => `
+                ${res.rows.length ? res.rows.map(r => `
                   <tr class="hover:bg-slate-50">
                     <td class="py-3 px-4 whitespace-nowrap">${r.date}</td>
                     <td class="py-3 px-4 font-semibold">${r.desc || ''} <span class="text-[11px] text-slate-500">${r.method || ''}</span></td>
@@ -1451,7 +1503,7 @@
                       <button onclick="deleteOthersEntry('${r.id}')" class="p-1.5 rounded-lg bg-rose-50 text-rose-600"><i class="fa-solid fa-trash"></i></button>
                     </td>
                   </tr>
-                `).join('')}
+                `).join('') : '<tr><td colspan="6" class="py-8 text-center text-xs text-slate-400">No entries yet.</td></tr>'}
               </tbody>
             </table>
           </div>
@@ -1459,22 +1511,41 @@
       `;
     }
 
+    function handleQuickOthersEntry(e) {
+      e.preventDefault();
+      const activeAcc = appData.othersAccounts.find(a => a.id === selectedOthersAccountId) || appData.othersAccounts[0];
+      if (!activeAcc) return;
+      if (!Array.isArray(activeAcc.entries)) activeAcc.entries = [];
+
+      activeAcc.entries.push({
+        id: 'oe_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+        date: document.getElementById('qOthDate').value,
+        type: normalizeLedgerType(document.getElementById('qOthType').value),
+        method: 'Cash',
+        desc: document.getElementById('qOthDesc').value.trim(),
+        amount: parseFloat(document.getElementById('qOthAmount').value)
+      });
+      saveData();
+      showToast('Added to ' + activeAcc.name + '!');
+      renderCurrentView();
+    }
+
     function openAddOthersAccountModal() {
-      document.getElementById('modalTitle').innerText = 'Others Hisab-e Notun Khat Jukto Korun';
+      document.getElementById('modalTitle').innerText = 'Add Custom Ledger';
       document.getElementById('modalBody').innerHTML = `
         <form onsubmit="saveNewOthersAccount(event)" class="space-y-4">
           <div>
-            <label class="block text-xs font-bold text-slate-600 mb-1">Khater Naam (Icche moto naam din)</label>
-            <input type="text" id="newOthAccName" required placeholder="Jemon: Jaigar Hisab / Baki Khata / Bondhu AC" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm" />
+            <label class="block text-[11px] font-bold text-slate-600 mb-1">Ledger Name</label>
+            <input type="text" id="newOthAccName" required placeholder="e.g. Custom Ledger 1, Credit Book" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs sm:text-sm" />
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-600 mb-1">Hisaber Dhoron</label>
-            <select id="newOthAccType" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm font-bold">
-              <option value="dr">Paona / Khoroch Ledger (Dr + / Cr -)</option>
-              <option value="cr">Joma / Tohhobil Ledger (Cr + / Dr -)</option>
+            <label class="block text-[11px] font-bold text-slate-600 mb-1">Balance Type</label>
+            <select id="newOthAccType" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs sm:text-sm font-bold">
+              <option value="dr">Dr Positive (Dr - Cr)</option>
+              <option value="cr">Cr Positive (Cr - Dr)</option>
             </select>
           </div>
-          <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 rounded-xl shadow">+ Others Hisab-e Jukto Korun</button>
+          <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 rounded-xl text-sm shadow">Save</button>
         </form>
       `;
       openModal();
@@ -1483,46 +1554,48 @@
     function saveNewOthersAccount(e) {
       e.preventDefault();
       const name = document.getElementById('newOthAccName').value.trim();
-      const positiveType = document.getElementById('newOthAccType').value;
+      const positiveType = document.getElementById('newOthAccType').value === 'cr' ? 'cr' : 'dr';
       if (!name) return;
       const newId = 'oth_' + Date.now();
       appData.othersAccounts.push({ id: newId, name, positiveType, entries: [] });
       selectedOthersAccountId = newId;
-      saveData(); closeModal(); showToast(`"${name}" jukto hoyeche!`); renderCurrentView();
+      saveData(); closeModal(); showToast('Ledger added!'); renderCurrentView();
     }
 
     function deleteOthersAccount(accId) {
       if (appData.othersAccounts.length <= 1) {
-        alert('Kompokkhe 1 ti khat rakhte hobe.');
+        alert('At least one ledger is required.');
         return;
       }
-      if (!confirm('Ei khat ebong er sob lenden muche felte chan?')) return;
+      if (!confirm('Delete this ledger and its entries?')) return;
       appData.othersAccounts = appData.othersAccounts.filter(a => a.id !== accId);
       if (selectedOthersAccountId === accId) selectedOthersAccountId = appData.othersAccounts[0].id;
       saveData(); renderCurrentView();
     }
 
     function openOthersEntryModal(defaultType = 'dr', editId = null) {
-      const activeAcc = appData.othersAccounts.find(a => a.id === selectedOthersAccountId);
+      const activeAcc = appData.othersAccounts.find(a => a.id === selectedOthersAccountId) || appData.othersAccounts[0];
       if (!activeAcc) return;
+      if (!Array.isArray(activeAcc.entries)) activeAcc.entries = [];
+
       const existing = editId ? activeAcc.entries.find(x => x.id === editId) : null;
-      const type = existing ? existing.type : defaultType;
+      const type = existing ? normalizeLedgerType(existing.type) : normalizeLedgerType(defaultType);
       const today = new Date().toISOString().split('T')[0];
 
-      document.getElementById('modalTitle').innerText = existing ? `${activeAcc.name} — Edit` : `${activeAcc.name} — Notun Entry`;
+      document.getElementById('modalTitle').innerText = existing ? `Edit • ${activeAcc.name}` : `Add Entry • ${activeAcc.name}`;
       document.getElementById('modalBody').innerHTML = `
         <form onsubmit="saveOthersEntry(event, '${editId || ''}')" class="space-y-3">
           <div class="grid grid-cols-2 gap-3">
-            <input type="date" id="othDate" value="${existing ? existing.date : today}" required class="px-3 py-2 rounded-xl border text-sm" />
-            <select id="othType" class="px-3 py-2 rounded-xl border text-sm font-bold">
-              <option value="dr" ${type === 'dr' ? 'selected' : ''}>Dr (+)</option>
-              <option value="cr" ${type === 'cr' ? 'selected' : ''}>Cr (-)</option>
+            <input type="date" id="othDate" value="${existing ? existing.date : today}" required class="px-3 py-2 rounded-xl border text-xs sm:text-sm" />
+            <select id="othType" class="px-3 py-2 rounded-xl border text-xs sm:text-sm font-bold">
+              <option value="dr" ${type === 'dr' ? 'selected' : ''}>Dr</option>
+              <option value="cr" ${type === 'cr' ? 'selected' : ''}>Cr</option>
             </select>
           </div>
-          <select id="othMethod" class="w-full px-3 py-2 rounded-xl border text-sm">${['Cash', 'bKash', 'Nagad', 'Bank'].map(m => `<option value="${m}" ${existing && existing.method === m ? 'selected' : ''}>${m}</option>`).join('')}</select>
-          <input type="text" id="othDesc" value="${existing ? existing.desc : ''}" required placeholder="Biboron..." class="w-full px-3 py-2 rounded-xl border text-sm" />
-          <input type="number" id="othAmt" value="${existing ? existing.amount : ''}" required min="1" step="any" placeholder="Taka" class="w-full px-3 py-2.5 rounded-xl border text-lg font-bold" />
-          <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-2.5 rounded-xl">Songrokkhon Korun</button>
+          <select id="othMethod" class="w-full px-3 py-2 rounded-xl border text-xs sm:text-sm">${['Cash', 'bKash', 'Nagad', 'Bank'].map(m => `<option value="${m}" ${existing && existing.method === m ? 'selected' : ''}>${m}</option>`).join('')}</select>
+          <input type="text" id="othDesc" value="${existing ? existing.desc : ''}" required placeholder="Description..." class="w-full px-3 py-2 rounded-xl border text-xs sm:text-sm" />
+          <input type="number" id="othAmt" value="${existing ? existing.amount : ''}" required min="1" step="any" placeholder="Amount" class="w-full px-3 py-2.5 rounded-xl border text-base sm:text-lg font-bold" />
+          <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2.5 rounded-xl text-sm shadow">Save</button>
         </form>
       `;
       openModal();
@@ -1530,77 +1603,80 @@
 
     function saveOthersEntry(e, editId) {
       e.preventDefault();
-      const activeAcc = appData.othersAccounts.find(a => a.id === selectedOthersAccountId);
+      const activeAcc = appData.othersAccounts.find(a => a.id === selectedOthersAccountId) || appData.othersAccounts[0];
       if (!activeAcc) return;
+      if (!Array.isArray(activeAcc.entries)) activeAcc.entries = [];
+
       const payload = {
-        id: editId || 'oe_' + Date.now(),
+        id: editId || ('oe_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6)),
         date: document.getElementById('othDate').value,
-        type: document.getElementById('othType').value,
+        type: normalizeLedgerType(document.getElementById('othType').value),
         method: document.getElementById('othMethod').value,
         desc: document.getElementById('othDesc').value.trim(),
         amount: parseFloat(document.getElementById('othAmt').value)
       };
+
       if (editId) {
         const idx = activeAcc.entries.findIndex(x => x.id === editId);
         if (idx !== -1) activeAcc.entries[idx] = payload;
       } else {
         activeAcc.entries.push(payload);
       }
-      saveData(); closeModal(); renderCurrentView();
+      saveData(); closeModal(); showToast('Saved!'); renderCurrentView();
     }
 
     function deleteOthersEntry(entryId) {
-      if (!confirm('Muche felte chan?')) return;
-      const activeAcc = appData.othersAccounts.find(a => a.id === selectedOthersAccountId);
+      if (!confirm('Delete this entry?')) return;
+      const activeAcc = appData.othersAccounts.find(a => a.id === selectedOthersAccountId) || appData.othersAccounts[0];
       if (!activeAcc) return;
-      activeAcc.entries = activeAcc.entries.filter(x => x.id !== entryId);
+      activeAcc.entries = (activeAcc.entries || []).filter(x => x.id !== entryId);
       saveData(); renderCurrentView();
     }
 
-    // ==================== 6. MEDICINE HISAB (WITH PRESCRIPTION DOWNLOAD) ====================
+    // ==================== 6. MEDICINE HISAB ====================
     function renderMedicineHisab(container) {
       const f = ledgerFilters.medicine;
       const res = computeDoubleEntry(appData.medicineEntries, f, { positiveType: 'cr' });
       container.innerHTML = `
-        <div class="glass-card p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-sm mb-4 flex flex-wrap justify-between items-center gap-3">
-          <div><h2 class="text-lg sm:text-xl font-extrabold text-slate-900">6. Medicine Hisab</h2><p class="text-xs text-slate-500">Tohhobil Joma (Cr +), Oshudh Khoroch (Dr -) o Prescription Download</p></div>
-          <div class="flex flex-wrap gap-2 no-print">
-            <button onclick="openMedicineModal('cr')" class="bg-emerald-600 text-white px-3 py-2 rounded-xl text-xs font-bold shadow">+ Tohhobil</button>
-            <button onclick="openMedicineModal('dr')" class="bg-rose-600 text-white px-3 py-2 rounded-xl text-xs font-bold shadow">- Oshudh</button>
-            <button onclick="openPrescriptionModal()" class="bg-slate-900 text-white px-3 py-2 rounded-xl text-xs font-bold shadow">+ Prescription</button>
+        <div class="glass-card p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-slate-200 shadow-sm mb-4 flex flex-wrap justify-between items-center gap-2.5">
+          <div><h2 class="text-base sm:text-xl font-extrabold text-slate-900 uppercase">6. Medicine Hisab</h2><p class="text-[11px] sm:text-xs text-slate-500">Dr / Cr Ledger & Prescription Files</p></div>
+          <div class="flex flex-wrap gap-1.5 sm:gap-2 no-print">
+            <button onclick="openMedicineModal('dr')" class="bg-rose-600 text-white px-3 py-2 rounded-xl text-xs font-bold shadow flex items-center gap-1"><i class="fa-solid fa-plus"></i> Add Dr</button>
+            <button onclick="openMedicineModal('cr')" class="bg-emerald-600 text-white px-3 py-2 rounded-xl text-xs font-bold shadow flex items-center gap-1"><i class="fa-solid fa-plus"></i> Add Cr</button>
+            <button onclick="openPrescriptionModal()" class="bg-slate-900 text-white px-3 py-2 rounded-xl text-xs font-bold shadow flex items-center gap-1"><i class="fa-solid fa-plus"></i> Prescription</button>
           </div>
         </div>
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
-          <div class="glass-card p-3.5 rounded-2xl border border-slate-200"><p class="text-[11px] text-slate-500 font-bold">Purber Jer</p><p class="text-base sm:text-lg font-black">${formatBDT(res.openingBal)}</p></div>
-          <div class="bg-emerald-50 p-3.5 rounded-2xl border border-emerald-200"><p class="text-[11px] text-emerald-700 font-bold">Mot Joma</p><p class="text-base sm:text-lg font-black text-emerald-800">${formatBDT(res.totalCr)}</p></div>
-          <div class="bg-rose-50 p-3.5 rounded-2xl border border-rose-200"><p class="text-[11px] text-rose-700 font-bold">Mot Khoroch</p><p class="text-base sm:text-lg font-black text-rose-800">${formatBDT(res.totalDr)}</p></div>
-          <div class="bg-slate-900 text-white p-3.5 rounded-2xl"><p class="text-[11px] text-amber-300 font-bold">Balance</p><p class="text-base sm:text-lg font-black">${formatBDT(res.closingBal)}</p></div>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 mb-4">
+          <div class="glass-card p-3 sm:p-3.5 rounded-2xl border border-slate-200"><p class="text-[10px] sm:text-[11px] text-slate-500 font-bold uppercase">Opening Bal</p><p class="text-sm sm:text-lg font-black">${formatBDT(res.openingBal)}</p></div>
+          <div class="bg-rose-50 p-3 sm:p-3.5 rounded-2xl border border-rose-200"><p class="text-[10px] sm:text-[11px] text-rose-700 font-bold uppercase">Total Dr</p><p class="text-sm sm:text-lg font-black text-rose-800">${formatBDT(res.totalDr)}</p></div>
+          <div class="bg-emerald-50 p-3 sm:p-3.5 rounded-2xl border border-emerald-200"><p class="text-[10px] sm:text-[11px] text-emerald-700 font-bold uppercase">Total Cr</p><p class="text-sm sm:text-lg font-black text-emerald-800">${formatBDT(res.totalCr)}</p></div>
+          <div class="bg-slate-900 text-white p-3 sm:p-3.5 rounded-2xl"><p class="text-[10px] sm:text-[11px] text-amber-300 font-bold uppercase">Balance</p><p class="text-sm sm:text-lg font-black">${formatBDT(res.closingBal)}</p></div>
         </div>
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
-          <div class="lg:col-span-2 space-y-2.5">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
+          <div class="lg:col-span-2 space-y-2">
             ${res.rows.map(m => `
-              <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between gap-2">
+              <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between gap-2">
                 <div class="min-w-0">
-                  <p class="text-sm font-extrabold text-slate-900 truncate">${m.medicine}</p>
-                  <p class="text-[11px] text-slate-500">${m.date} ${m.doctor ? `• ${m.doctor}` : ''} • Bal: ${formatBDT(m.bal)}</p>
+                  <p class="text-xs sm:text-sm font-extrabold text-slate-900 truncate">${m.medicine}</p>
+                  <p class="text-[10px] sm:text-[11px] text-slate-500">${m.date} ${m.doctor ? `• ${m.doctor}` : ''} • Bal: ${formatBDT(m.bal)}</p>
                 </div>
-                <div class="flex items-center gap-2 shrink-0 no-print">
-                  <span class="text-sm font-black ${m.cr > 0 ? 'text-emerald-600' : 'text-rose-600'}">${m.cr > 0 ? '+' : '-'}${formatBDT(m.amount)}</span>
+                <div class="flex items-center gap-1.5 shrink-0 no-print">
+                  <span class="text-xs sm:text-sm font-black ${m.cr > 0 ? 'text-emerald-600' : 'text-rose-600'}">${m.cr > 0 ? 'Cr ' : 'Dr '}${formatBDT(m.amount)}</span>
                   <button onclick="openMedicineModal('${m.type}', '${m.id}')" class="p-1.5 rounded-lg bg-blue-50 text-blue-600 text-xs"><i class="fa-solid fa-pen"></i></button>
                   <button onclick="deleteMedicineItem('${m.id}')" class="p-1.5 rounded-lg bg-rose-50 text-rose-600 text-xs"><i class="fa-solid fa-trash"></i></button>
                 </div>
               </div>
             `).join('')}
           </div>
-          <div class="glass-card p-4 rounded-2xl border border-slate-200 shadow-xs space-y-2.5">
-            <h3 class="font-bold text-slate-800 text-sm">Prescription (${appData.medicinePrescriptions.length})</h3>
+          <div class="glass-card p-4 rounded-2xl border border-slate-200 shadow-xs space-y-2">
+            <h3 class="font-bold text-slate-800 text-xs sm:text-sm uppercase">Prescriptions (${appData.medicinePrescriptions.length})</h3>
             ${appData.medicinePrescriptions.map(p => `
-              <div class="p-3 rounded-xl bg-slate-50 border flex justify-between items-center gap-2">
-                <div class="min-w-0"><p class="font-bold text-xs sm:text-sm truncate">${p.title}</p><p class="text-[11px] text-slate-500">${p.doctor || ''} • ${p.date}</p></div>
+              <div class="p-2.5 rounded-xl bg-slate-50 border flex justify-between items-center gap-2">
+                <div class="min-w-0"><p class="font-bold text-xs truncate">${p.title}</p><p class="text-[10px] text-slate-500">${p.doctor || ''} • ${p.date}</p></div>
                 <div class="flex items-center gap-1 shrink-0 no-print">
                   ${p.fileData ? `
-                    <button onclick="previewPrescription('${p.id}')" class="text-xs bg-emerald-600 text-white px-2 py-1 rounded-lg font-bold">Dekhun</button>
-                    <button onclick="downloadPrescription('${p.id}')" title="Download" class="text-xs bg-blue-600 text-white px-2 py-1 rounded-lg font-bold"><i class="fa-solid fa-download"></i></button>
+                    <button onclick="previewPrescription('${p.id}')" class="text-[11px] bg-emerald-600 text-white px-2 py-1 rounded-lg font-bold">View</button>
+                    <button onclick="downloadPrescription('${p.id}')" title="Download" class="text-[11px] bg-blue-600 text-white px-2 py-1 rounded-lg font-bold"><i class="fa-solid fa-download"></i></button>
                   ` : ''}
                   <button onclick="deletePrescription('${p.id}')" class="text-rose-500 p-1"><i class="fa-solid fa-trash"></i></button>
                 </div>
@@ -1613,19 +1689,19 @@
 
     function openMedicineModal(defaultType = 'dr', editId = null) {
       const existing = editId ? appData.medicineEntries.find(x => x.id === editId) : null;
-      const type = existing ? existing.type : defaultType;
+      const type = existing ? normalizeLedgerType(existing.type) : normalizeLedgerType(defaultType);
       const today = new Date().toISOString().split('T')[0];
-      document.getElementById('modalTitle').innerText = existing ? 'Medicine Ledger Edit' : 'Medicine Hisab — Notun Entry';
+      document.getElementById('modalTitle').innerText = existing ? 'Edit Medicine Entry' : 'Add Medicine Entry';
       document.getElementById('modalBody').innerHTML = `
         <form onsubmit="saveMedicineItem(event, '${editId || ''}')" class="space-y-3">
           <div class="grid grid-cols-2 gap-3">
-            <input type="date" id="amDate" value="${existing ? existing.date : today}" required class="px-3 py-2 rounded-xl border text-sm" />
-            <select id="amType" class="px-3 py-2 rounded-xl border text-sm font-bold"><option value="dr" ${type === 'dr' ? 'selected' : ''}>Oshudh Khoroch (Dr -)</option><option value="cr" ${type === 'cr' ? 'selected' : ''}>Tohhobil Joma (Cr +)</option></select>
+            <input type="date" id="amDate" value="${existing ? existing.date : today}" required class="px-3 py-2 rounded-xl border text-xs sm:text-sm" />
+            <select id="amType" class="px-3 py-2 rounded-xl border text-xs sm:text-sm font-bold"><option value="dr" ${type === 'dr' ? 'selected' : ''}>Dr</option><option value="cr" ${type === 'cr' ? 'selected' : ''}>Cr</option></select>
           </div>
-          <input type="text" id="amName" value="${existing ? existing.medicine : ''}" required placeholder="Oshudh / Rogi / Biboroner naam" class="w-full px-3 py-2 rounded-xl border text-sm" />
-          <input type="text" id="amDoc" value="${existing ? (existing.doctor || '') : ''}" placeholder="Doctor-er naam (Optional)" class="w-full px-3 py-2 rounded-xl border text-sm" />
-          <input type="number" id="amAmt" value="${existing ? existing.amount : ''}" required min="1" step="any" placeholder="Taka" class="w-full px-3 py-2.5 rounded-xl border text-lg font-bold" />
-          <button type="submit" class="w-full bg-rose-600 text-white font-bold py-2.5 rounded-xl">Songrokkhon Korun</button>
+          <input type="text" id="amName" value="${existing ? existing.medicine : ''}" required placeholder="Medicine / Item name" class="w-full px-3 py-2 rounded-xl border text-xs sm:text-sm" />
+          <input type="text" id="amDoc" value="${existing ? (existing.doctor || '') : ''}" placeholder="Doctor (Optional)" class="w-full px-3 py-2 rounded-xl border text-xs sm:text-sm" />
+          <input type="number" id="amAmt" value="${existing ? existing.amount : ''}" required min="1" step="any" placeholder="Amount" class="w-full px-3 py-2.5 rounded-xl border text-base sm:text-lg font-bold" />
+          <button type="submit" class="w-full bg-rose-600 text-white font-bold py-2.5 rounded-xl text-sm">Save</button>
         </form>
       `;
       openModal();
@@ -1633,18 +1709,18 @@
 
     function saveMedicineItem(e, editId) {
       e.preventDefault();
-      const payload = { id: editId || 'med_' + Date.now(), date: document.getElementById('amDate').value, type: document.getElementById('amType').value, medicine: document.getElementById('amName').value.trim(), doctor: document.getElementById('amDoc').value.trim(), amount: parseFloat(document.getElementById('amAmt').value), note: '' };
+      const payload = { id: editId || 'med_' + Date.now(), date: document.getElementById('amDate').value, type: normalizeLedgerType(document.getElementById('amType').value), medicine: document.getElementById('amName').value.trim(), doctor: document.getElementById('amDoc').value.trim(), amount: parseFloat(document.getElementById('amAmt').value), note: '' };
       if (editId) { const idx = appData.medicineEntries.findIndex(x => x.id === editId); if (idx !== -1) appData.medicineEntries[idx] = payload; }
       else appData.medicineEntries.push(payload);
       saveData(); closeModal(); renderCurrentView();
     }
 
-    function deleteMedicineItem(id) { if (!confirm('Muche felte chan?')) return; appData.medicineEntries = appData.medicineEntries.filter(x => x.id !== id); saveData(); renderCurrentView(); }
+    function deleteMedicineItem(id) { if (!confirm('Delete this entry?')) return; appData.medicineEntries = appData.medicineEntries.filter(x => x.id !== id); saveData(); renderCurrentView(); }
 
     function openPrescriptionModal() {
       const today = new Date().toISOString().split('T')[0];
-      document.getElementById('modalTitle').innerText = 'Prescription Upload';
-      document.getElementById('modalBody').innerHTML = `<form onsubmit="savePrescription(event)" class="space-y-3"><input type="text" id="prTitle" required placeholder="Prescription Shirsho" class="w-full px-3 py-2 rounded-xl border text-sm" /><input type="text" id="prDoc" placeholder="Doctor-er naam" class="w-full px-3 py-2 rounded-xl border text-sm" /><input type="date" id="prDate" value="${today}" class="w-full px-3 py-2 rounded-xl border text-sm" /><input type="file" id="prFile" accept="image/*,.pdf" required class="w-full text-xs border rounded-xl p-2" /><button type="submit" class="w-full bg-slate-900 text-white font-bold py-2.5 rounded-xl">Upload Korun</button></form>`;
+      document.getElementById('modalTitle').innerText = 'Upload Prescription';
+      document.getElementById('modalBody').innerHTML = `<form onsubmit="savePrescription(event)" class="space-y-3"><input type="text" id="prTitle" required placeholder="Prescription Title" class="w-full px-3 py-2 rounded-xl border text-xs sm:text-sm" /><input type="text" id="prDoc" placeholder="Doctor Name" class="w-full px-3 py-2 rounded-xl border text-xs sm:text-sm" /><input type="date" id="prDate" value="${today}" class="w-full px-3 py-2 rounded-xl border text-xs sm:text-sm" /><input type="file" id="prFile" accept="image/*,.pdf" required class="w-full text-xs border rounded-xl p-2" /><button type="submit" class="w-full bg-slate-900 text-white font-bold py-2.5 rounded-xl text-sm">Save</button></form>`;
       openModal();
     }
 
@@ -1666,36 +1742,36 @@
       if (p) downloadStoredFile(p.fileData, p.fileName || (p.title + '.pdf'));
     }
 
-    function deletePrescription(id) { if (!confirm('Muche felte chan?')) return; appData.medicinePrescriptions = appData.medicinePrescriptions.filter(x => x.id !== id); saveData(); renderCurrentView(); }
+    function deletePrescription(id) { if (!confirm('Delete this prescription?')) return; appData.medicinePrescriptions = appData.medicinePrescriptions.filter(x => x.id !== id); saveData(); renderCurrentView(); }
 
     // ==================== 7. WIFE AC ====================
     function renderWifeLedger(container) {
       const res = computeDoubleEntry(appData.wifeLedger, ledgerFilters.wife, { positiveType: 'dr' });
       container.innerHTML = `
-        <div class="glass-card p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-sm mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="glass-card p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-slate-200 shadow-sm mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
           <div>
-            <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">7. Wife AC — Smart Ledger</h2>
-            <p class="text-xs text-slate-500">Diyeci (Dr +), Peyechi/Ferot (Cr -), Balance</p>
+            <h2 class="text-base sm:text-xl font-extrabold text-slate-900 uppercase">7. Wife AC</h2>
+            <p class="text-[11px] sm:text-xs text-slate-500">Dr / Cr Ledger & Running Balance</p>
           </div>
           <div class="flex gap-2 no-print">
-            <button onclick="openWifeModal('dr')" class="flex-1 sm:flex-none bg-pink-600 text-white px-3.5 py-2.5 rounded-xl text-xs font-bold shadow">+ Dr</button>
-            <button onclick="openWifeModal('cr')" class="flex-1 sm:flex-none bg-emerald-600 text-white px-3.5 py-2.5 rounded-xl text-xs font-bold shadow">- Cr</button>
+            <button onclick="openWifeModal('dr')" class="flex-1 sm:flex-none bg-pink-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow flex items-center justify-center gap-1"><i class="fa-solid fa-plus"></i> Add Dr</button>
+            <button onclick="openWifeModal('cr')" class="flex-1 sm:flex-none bg-emerald-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow flex items-center justify-center gap-1"><i class="fa-solid fa-plus"></i> Add Cr</button>
           </div>
         </div>
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
-          <div class="glass-card p-3.5 rounded-2xl border border-slate-200"><p class="text-[11px] text-slate-500 font-bold">Purber Jer</p><p class="text-base sm:text-lg font-black text-slate-700">${formatBDT(res.openingBal)}</p></div>
-          <div class="bg-pink-50/90 p-3.5 rounded-2xl border border-pink-200"><p class="text-[11px] text-pink-700 font-bold">Mot Dr +</p><p class="text-base sm:text-lg font-black text-pink-800">${formatBDT(res.totalDr)}</p></div>
-          <div class="bg-emerald-50/90 p-3.5 rounded-2xl border border-emerald-200"><p class="text-[11px] text-emerald-700 font-bold">Mot Cr -</p><p class="text-base sm:text-lg font-black text-emerald-800">${formatBDT(res.totalCr)}</p></div>
-          <div class="bg-slate-900 text-white p-3.5 rounded-2xl"><p class="text-[11px] text-amber-300 font-bold">Bortoman Balance</p><p class="text-base sm:text-lg font-black">${formatBDT(res.closingBal)}</p></div>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 mb-4">
+          <div class="glass-card p-3 sm:p-3.5 rounded-2xl border border-slate-200"><p class="text-[10px] sm:text-[11px] text-slate-500 font-bold uppercase">Opening Bal</p><p class="text-sm sm:text-lg font-black text-slate-700">${formatBDT(res.openingBal)}</p></div>
+          <div class="bg-pink-50/90 p-3 sm:p-3.5 rounded-2xl border border-pink-200"><p class="text-[10px] sm:text-[11px] text-pink-700 font-bold uppercase">Total Dr</p><p class="text-sm sm:text-lg font-black text-pink-800">${formatBDT(res.totalDr)}</p></div>
+          <div class="bg-emerald-50/90 p-3 sm:p-3.5 rounded-2xl border border-emerald-200"><p class="text-[10px] sm:text-[11px] text-emerald-700 font-bold uppercase">Total Cr</p><p class="text-sm sm:text-lg font-black text-emerald-800">${formatBDT(res.totalCr)}</p></div>
+          <div class="bg-slate-900 text-white p-3 sm:p-3.5 rounded-2xl"><p class="text-[10px] sm:text-[11px] text-amber-300 font-bold uppercase">Balance</p><p class="text-sm sm:text-lg font-black">${formatBDT(res.closingBal)}</p></div>
         </div>
-        <div class="space-y-2.5">
+        <div class="space-y-2">
           ${res.rows.map(r => `
-            <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between gap-2">
+            <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between gap-2">
               <div class="min-w-0">
-                <p class="text-sm font-extrabold text-slate-900">${r.desc || ''}</p>
-                <p class="text-[11px] text-slate-500 mt-0.5">${r.date} • ${r.method || ''} • Bal: ${formatBDT(r.bal)}</p>
+                <p class="text-xs sm:text-sm font-extrabold text-slate-900">${r.desc || ''}</p>
+                <p class="text-[10px] sm:text-[11px] text-slate-500 mt-0.5">${r.date} • ${r.method || ''} • Bal: ${formatBDT(r.bal)}</p>
               </div>
-              <div class="flex items-center gap-2 shrink-0 no-print">
+              <div class="flex items-center gap-1.5 shrink-0 no-print">
                 <span class="text-xs sm:text-sm font-black ${r.dr > 0 ? 'text-pink-600' : 'text-emerald-600'}">${r.dr > 0 ? 'Dr ' + formatBDT(r.dr) : 'Cr ' + formatBDT(r.cr)}</span>
                 <button onclick="openWifeModal('${r.type}', '${r.id}')" class="p-1.5 rounded-lg bg-blue-50 text-blue-600 text-xs"><i class="fa-solid fa-pen"></i></button>
                 <button onclick="deleteWifeItem('${r.id}')" class="p-1.5 rounded-lg bg-rose-50 text-rose-600 text-xs"><i class="fa-solid fa-trash"></i></button>
@@ -1708,16 +1784,16 @@
 
     function openWifeModal(defaultType = 'dr', editId = null) {
       const existing = editId ? appData.wifeLedger.find(x => x.id === editId) : null;
-      const type = existing ? existing.type : defaultType;
+      const type = existing ? normalizeLedgerType(existing.type) : normalizeLedgerType(defaultType);
       const today = new Date().toISOString().split('T')[0];
-      document.getElementById('modalTitle').innerText = existing ? 'Wife AC Ledger Edit' : 'Wife AC — Notun Entry';
+      document.getElementById('modalTitle').innerText = existing ? 'Edit Wife AC Entry' : 'Add Wife AC Entry';
       document.getElementById('modalBody').innerHTML = `
         <form onsubmit="saveWifeItem(event, '${editId || ''}')" class="space-y-3">
-          <div class="grid grid-cols-2 gap-3"><input type="date" id="wDate" value="${existing ? existing.date : today}" required class="px-3 py-2 rounded-xl border text-sm" /><select id="wType" class="px-3 py-2 rounded-xl border text-sm font-bold"><option value="dr" ${type === 'dr' ? 'selected' : ''}>Diyeci (Dr +)</option><option value="cr" ${type === 'cr' ? 'selected' : ''}>Peyechi / Ferot (Cr -)</option></select></div>
-          <select id="wMethod" class="w-full px-3 py-2 rounded-xl border text-sm">${['Cash', 'bKash', 'Nagad', 'Bank'].map(m => `<option value="${m}" ${existing && existing.method === m ? 'selected' : ''}>${m}</option>`).join('')}</select>
-          <input type="text" id="wDesc" value="${existing ? existing.desc : ''}" required placeholder="Biboron" class="w-full px-3 py-2 rounded-xl border text-sm" />
-          <input type="number" id="wAmt" value="${existing ? existing.amount : ''}" required min="1" step="any" placeholder="Taka" class="w-full px-3 py-2.5 rounded-xl border text-lg font-bold" />
-          <button type="submit" class="w-full bg-pink-600 text-white font-bold py-2.5 rounded-xl">Songrokkhon Korun</button>
+          <div class="grid grid-cols-2 gap-3"><input type="date" id="wDate" value="${existing ? existing.date : today}" required class="px-3 py-2 rounded-xl border text-xs sm:text-sm" /><select id="wType" class="px-3 py-2 rounded-xl border text-xs sm:text-sm font-bold"><option value="dr" ${type === 'dr' ? 'selected' : ''}>Dr</option><option value="cr" ${type === 'cr' ? 'selected' : ''}>Cr</option></select></div>
+          <select id="wMethod" class="w-full px-3 py-2 rounded-xl border text-xs sm:text-sm">${['Cash', 'bKash', 'Nagad', 'Bank'].map(m => `<option value="${m}" ${existing && existing.method === m ? 'selected' : ''}>${m}</option>`).join('')}</select>
+          <input type="text" id="wDesc" value="${existing ? existing.desc : ''}" required placeholder="Description" class="w-full px-3 py-2 rounded-xl border text-xs sm:text-sm" />
+          <input type="number" id="wAmt" value="${existing ? existing.amount : ''}" required min="1" step="any" placeholder="Amount" class="w-full px-3 py-2.5 rounded-xl border text-base sm:text-lg font-bold" />
+          <button type="submit" class="w-full bg-pink-600 text-white font-bold py-2.5 rounded-xl text-sm">Save</button>
         </form>
       `;
       openModal();
@@ -1725,13 +1801,13 @@
 
     function saveWifeItem(e, editId) {
       e.preventDefault();
-      const payload = { id: editId || 'w_' + Date.now(), date: document.getElementById('wDate').value, type: document.getElementById('wType').value, method: document.getElementById('wMethod').value, desc: document.getElementById('wDesc').value.trim(), amount: parseFloat(document.getElementById('wAmt').value) };
+      const payload = { id: editId || 'w_' + Date.now(), date: document.getElementById('wDate').value, type: normalizeLedgerType(document.getElementById('wType').value), method: document.getElementById('wMethod').value, desc: document.getElementById('wDesc').value.trim(), amount: parseFloat(document.getElementById('wAmt').value) };
       if (editId) { const idx = appData.wifeLedger.findIndex(x => x.id === editId); if (idx !== -1) appData.wifeLedger[idx] = payload; }
       else appData.wifeLedger.push(payload);
       saveData(); closeModal(); renderCurrentView();
     }
 
-    function deleteWifeItem(id) { if (!confirm('Muche felte chan?')) return; appData.wifeLedger = appData.wifeLedger.filter(x => x.id !== id); saveData(); renderCurrentView(); }
+    function deleteWifeItem(id) { if (!confirm('Delete this entry?')) return; appData.wifeLedger = appData.wifeLedger.filter(x => x.id !== id); saveData(); renderCurrentView(); }
 
     // ==================== 8. BANK ====================
     function renderBank(container) {
@@ -1739,35 +1815,35 @@
       const bankItems = selectedBankFilter === 'all' ? appData.bankLedger : appData.bankLedger.filter(x => x.bankId === selectedBankFilter);
       const res = computeDoubleEntry(bankItems, f, { positiveType: 'cr' });
       container.innerHTML = `
-        <div class="glass-card p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-sm mb-4 flex flex-wrap justify-between items-center gap-3">
-          <div><h2 class="text-lg sm:text-xl font-extrabold text-slate-900">8. Bank (DPS / FDR / SAVINGS)</h2><p class="text-xs text-slate-500">Joma (Cr +), Uttolon (Dr -) o Balance</p></div>
-          <div class="flex flex-wrap gap-2 no-print">
-            <button onclick="openBankModal()" class="bg-slate-800 text-white px-3 py-2 rounded-xl text-xs font-bold">+ Account</button>
-            <button onclick="openBankLedgerModal('cr')" class="bg-emerald-600 text-white px-3 py-2 rounded-xl text-xs font-bold">+ Joma (Cr)</button>
-            <button onclick="openBankLedgerModal('dr')" class="bg-rose-600 text-white px-3 py-2 rounded-xl text-xs font-bold">- Uttolon (Dr)</button>
+        <div class="glass-card p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-slate-200 shadow-sm mb-4 flex flex-wrap justify-between items-center gap-2.5">
+          <div><h2 class="text-base sm:text-xl font-extrabold text-slate-900 uppercase">8. Bank Accounts</h2><p class="text-[11px] sm:text-xs text-slate-500">DPS / FDR / Savings • Dr / Cr Ledger</p></div>
+          <div class="flex flex-wrap gap-1.5 sm:gap-2 no-print">
+            <button onclick="openBankModal()" class="bg-slate-800 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1"><i class="fa-solid fa-plus"></i> Add Bank</button>
+            <button onclick="openBankLedgerModal('dr')" class="bg-rose-600 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1"><i class="fa-solid fa-plus"></i> Add Dr</button>
+            <button onclick="openBankLedgerModal('cr')" class="bg-emerald-600 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1"><i class="fa-solid fa-plus"></i> Add Cr</button>
           </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 mb-5">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
           ${appData.banks.map(b => `
-            <div onclick="selectedBankFilter='${b.id}';renderCurrentView()" class="cursor-pointer glass-card p-4 sm:p-5 rounded-2xl border shadow-xs transition ${selectedBankFilter === b.id ? 'border-blue-600 ring-2 ring-blue-100' : 'border-slate-200'}">
-              <div class="flex justify-between items-center"><span class="px-2.5 py-0.5 rounded bg-blue-100 text-blue-800 text-xs font-extrabold">${b.type}</span><button onclick="event.stopPropagation();deleteBank('${b.id}')" class="text-slate-400 hover:text-rose-600 text-xs no-print"><i class="fa-solid fa-trash"></i></button></div>
-              <h3 class="font-extrabold text-sm sm:text-base mt-2">${b.bankName}</h3>
-              <p class="text-xs text-slate-500">A/C: ${b.accountNo}</p>
-              <p class="text-xl sm:text-2xl font-black text-blue-700 mt-2.5">${formatBDT(b.balance)}</p>
+            <div onclick="selectedBankFilter='${b.id}';renderCurrentView()" class="cursor-pointer glass-card p-4 rounded-2xl border shadow-xs transition ${selectedBankFilter === b.id ? 'border-blue-600 ring-2 ring-blue-100' : 'border-slate-200'}">
+              <div class="flex justify-between items-center"><span class="px-2.5 py-0.5 rounded bg-blue-100 text-blue-800 text-[11px] font-extrabold">${b.type}</span><button onclick="event.stopPropagation();deleteBank('${b.id}')" class="text-slate-400 hover:text-rose-600 text-xs no-print"><i class="fa-solid fa-trash"></i></button></div>
+              <h3 class="font-extrabold text-sm mt-2">${b.bankName}</h3>
+              <p class="text-[11px] text-slate-500">A/C: ${b.accountNo}</p>
+              <p class="text-lg sm:text-2xl font-black text-blue-700 mt-2">${formatBDT(b.balance)}</p>
             </div>
           `).join('')}
         </div>
-        <div class="space-y-2.5">
+        <div class="space-y-2">
           ${res.rows.map(r => {
             const bank = appData.banks.find(b => b.id === r.bankId);
             return `
-              <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between gap-2">
+              <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between gap-2">
                 <div class="min-w-0">
-                  <p class="text-sm font-extrabold text-slate-900 truncate">${r.desc}</p>
-                  <p class="text-[11px] text-slate-500">${r.date} • ${bank ? `${bank.bankName} (${bank.type})` : ''} • Bal: ${formatBDT(r.bal)}</p>
+                  <p class="text-xs sm:text-sm font-extrabold text-slate-900 truncate">${r.desc}</p>
+                  <p class="text-[10px] sm:text-[11px] text-slate-500">${r.date} • ${bank ? `${bank.bankName} (${bank.type})` : ''} • Bal: ${formatBDT(r.bal)}</p>
                 </div>
-                <div class="flex items-center gap-2 shrink-0 no-print">
-                  <span class="text-sm font-black ${r.cr > 0 ? 'text-emerald-600' : 'text-rose-600'}">${r.cr > 0 ? '+' : '-'}${formatBDT(r.amount)}</span>
+                <div class="flex items-center gap-1.5 shrink-0 no-print">
+                  <span class="text-xs sm:text-sm font-black ${r.cr > 0 ? 'text-emerald-600' : 'text-rose-600'}">${r.cr > 0 ? 'Cr ' : 'Dr '}${formatBDT(r.amount)}</span>
                   <button onclick="openBankLedgerModal('${r.type}', '${r.id}')" class="p-1.5 rounded-lg bg-blue-50 text-blue-600 text-xs"><i class="fa-solid fa-pen"></i></button>
                   <button onclick="deleteBankLedgerItem('${r.id}')" class="p-1.5 rounded-lg bg-rose-50 text-rose-600 text-xs"><i class="fa-solid fa-trash"></i></button>
                 </div>
@@ -1781,13 +1857,13 @@
     function recalculateBankBalances() {
       appData.banks.forEach(b => {
         const txns = appData.bankLedger.filter(x => x.bankId === b.id);
-        b.balance = txns.reduce((s, x) => s + (x.type === 'cr' ? Number(x.amount) : -Number(x.amount)), 0);
+        b.balance = txns.reduce((s, x) => s + (normalizeLedgerType(x.type) === 'cr' ? Number(x.amount) : -Number(x.amount)), 0);
       });
     }
 
     function openBankModal() {
-      document.getElementById('modalTitle').innerText = 'Notun Bank Account';
-      document.getElementById('modalBody').innerHTML = `<form onsubmit="saveBank(event)" class="space-y-3"><select id="bType" class="w-full px-3 py-2 rounded-xl border text-sm font-bold"><option value="SAVINGS">SAVINGS</option><option value="DPS">DPS</option><option value="FDR">FDR</option></select><input type="text" id="bName" required placeholder="Bank-er naam" class="w-full px-3 py-2 rounded-xl border text-sm" /><input type="text" id="bAcc" required placeholder="Account number" class="w-full px-3 py-2 rounded-xl border text-sm" /><input type="number" id="bBal" required placeholder="Proarombik Balance (৳)" class="w-full px-3 py-2 rounded-xl border text-lg font-bold" /><button type="submit" class="w-full bg-blue-600 text-white font-bold py-2.5 rounded-xl">Songrokkhon</button></form>`;
+      document.getElementById('modalTitle').innerText = 'Add Bank Account';
+      document.getElementById('modalBody').innerHTML = `<form onsubmit="saveBank(event)" class="space-y-3"><select id="bType" class="w-full px-3 py-2 rounded-xl border text-xs sm:text-sm font-bold"><option value="SAVINGS">SAVINGS</option><option value="DPS">DPS</option><option value="FDR">FDR</option></select><input type="text" id="bName" required placeholder="Bank Name" class="w-full px-3 py-2 rounded-xl border text-xs sm:text-sm" /><input type="text" id="bAcc" required placeholder="Account Number" class="w-full px-3 py-2 rounded-xl border text-xs sm:text-sm" /><input type="number" id="bBal" required placeholder="Opening Balance" class="w-full px-3 py-2 rounded-xl border text-base sm:text-lg font-bold" /><button type="submit" class="w-full bg-blue-600 text-white font-bold py-2.5 rounded-xl text-sm">Save</button></form>`;
       openModal();
     }
 
@@ -1796,26 +1872,26 @@
       const newId = 'b_' + Date.now();
       const initBal = parseFloat(document.getElementById('bBal').value) || 0;
       appData.banks.push({ id: newId, type: document.getElementById('bType').value, bankName: document.getElementById('bName').value.trim(), accountNo: document.getElementById('bAcc').value.trim(), balance: initBal, installment: 0, maturityDate: '-' });
-      if (initBal > 0) appData.bankLedger.push({ id: 'bl_' + Date.now(), bankId: newId, date: new Date().toISOString().split('T')[0], type: 'cr', desc: 'Account opening joma', amount: initBal });
+      if (initBal > 0) appData.bankLedger.push({ id: 'bl_' + Date.now(), bankId: newId, date: new Date().toISOString().split('T')[0], type: 'cr', desc: 'Opening Balance', amount: initBal });
       saveData(); closeModal(); renderCurrentView();
     }
 
     function openBankLedgerModal(defaultType = 'cr', editId = null) {
       if (!appData.banks.length) {
-        alert('Age "+ Account" button theke ontoto 1 ta bank account jukto korun.');
+        alert('Please add a bank account first.');
         return;
       }
       const existing = editId ? appData.bankLedger.find(x => x.id === editId) : null;
-      const type = existing ? existing.type : defaultType;
+      const type = existing ? normalizeLedgerType(existing.type) : normalizeLedgerType(defaultType);
       const today = new Date().toISOString().split('T')[0];
-      document.getElementById('modalTitle').innerText = existing ? 'Bank Lenden Edit' : 'Bank Smart Ledger — Notun Entry';
+      document.getElementById('modalTitle').innerText = existing ? 'Edit Bank Entry' : 'Add Bank Entry';
       document.getElementById('modalBody').innerHTML = `
         <form onsubmit="saveBankLedgerItem(event, '${editId || ''}')" class="space-y-3">
-          <select id="blBankId" required class="w-full px-3 py-2 rounded-xl border text-sm font-bold">${appData.banks.map(b => `<option value="${b.id}" ${existing && existing.bankId === b.id ? 'selected' : ''}>${b.bankName} (${b.type} - ${b.accountNo})</option>`).join('')}</select>
-          <div class="grid grid-cols-2 gap-3"><input type="date" id="blDate" value="${existing ? existing.date : today}" required class="px-3 py-2 rounded-xl border text-sm" /><select id="blType" class="px-3 py-2 rounded-xl border text-sm font-bold"><option value="cr" ${type === 'cr' ? 'selected' : ''}>Banke Joma / Kisti (Cr +)</option><option value="dr" ${type === 'dr' ? 'selected' : ''}>Uttolon / Charge (Dr -)</option></select></div>
-          <input type="text" id="blDesc" value="${existing ? existing.desc : ''}" required placeholder="Lenden-er biboron..." class="w-full px-3 py-2 rounded-xl border text-sm" />
-          <input type="number" id="blAmt" value="${existing ? existing.amount : ''}" required min="1" step="any" placeholder="Taka" class="w-full px-3 py-2.5 rounded-xl border text-lg font-bold" />
-          <button type="submit" class="w-full bg-blue-600 text-white font-bold py-2.5 rounded-xl">Songrokkhon Korun</button>
+          <select id="blBankId" required class="w-full px-3 py-2 rounded-xl border text-xs sm:text-sm font-bold">${appData.banks.map(b => `<option value="${b.id}" ${existing && existing.bankId === b.id ? 'selected' : ''}>${b.bankName} (${b.type} - ${b.accountNo})</option>`).join('')}</select>
+          <div class="grid grid-cols-2 gap-3"><input type="date" id="blDate" value="${existing ? existing.date : today}" required class="px-3 py-2 rounded-xl border text-xs sm:text-sm" /><select id="blType" class="px-3 py-2 rounded-xl border text-xs sm:text-sm font-bold"><option value="cr" ${type === 'cr' ? 'selected' : ''}>Cr</option><option value="dr" ${type === 'dr' ? 'selected' : ''}>Dr</option></select></div>
+          <input type="text" id="blDesc" value="${existing ? existing.desc : ''}" required placeholder="Description..." class="w-full px-3 py-2 rounded-xl border text-xs sm:text-sm" />
+          <input type="number" id="blAmt" value="${existing ? existing.amount : ''}" required min="1" step="any" placeholder="Amount" class="w-full px-3 py-2.5 rounded-xl border text-base sm:text-lg font-bold" />
+          <button type="submit" class="w-full bg-blue-600 text-white font-bold py-2.5 rounded-xl text-sm">Save</button>
         </form>
       `;
       openModal();
@@ -1823,61 +1899,60 @@
 
     function saveBankLedgerItem(e, editId) {
       e.preventDefault();
-      const payload = { id: editId || 'bl_' + Date.now(), bankId: document.getElementById('blBankId').value, date: document.getElementById('blDate').value, type: document.getElementById('blType').value, desc: document.getElementById('blDesc').value.trim(), amount: parseFloat(document.getElementById('blAmt').value) };
+      const payload = { id: editId || 'bl_' + Date.now(), bankId: document.getElementById('blBankId').value, date: document.getElementById('blDate').value, type: normalizeLedgerType(document.getElementById('blType').value), desc: document.getElementById('blDesc').value.trim(), amount: parseFloat(document.getElementById('blAmt').value) };
       if (editId) { const idx = appData.bankLedger.findIndex(x => x.id === editId); if (idx !== -1) appData.bankLedger[idx] = payload; }
       else appData.bankLedger.push(payload);
       recalculateBankBalances(); saveData(); closeModal(); renderCurrentView();
     }
 
-    function deleteBankLedgerItem(id) { if (!confirm('Muche felte chan?')) return; appData.bankLedger = appData.bankLedger.filter(x => x.id !== id); recalculateBankBalances(); saveData(); renderCurrentView(); }
+    function deleteBankLedgerItem(id) { if (!confirm('Delete this entry?')) return; appData.bankLedger = appData.bankLedger.filter(x => x.id !== id); recalculateBankBalances(); saveData(); renderCurrentView(); }
 
-    function deleteBank(id) { if (!confirm('Ei bank account o er lenden muche felte chan?')) return; appData.banks = appData.banks.filter(b => b.id !== id); appData.bankLedger = appData.bankLedger.filter(x => x.bankId !== id); saveData(); renderCurrentView(); }
+    function deleteBank(id) { if (!confirm('Delete this bank account and its entries?')) return; appData.banks = appData.banks.filter(b => b.id !== id); appData.bankLedger = appData.bankLedger.filter(x => x.bankId !== id); saveData(); renderCurrentView(); }
 
-    // ==================== 9. SETTING PANEL (CUSTOMIZE OTHERS HISAB + UID BACKUP) ====================
+    // ==================== 9. SETTINGS PANEL ====================
     function renderSettings(container) {
       const user = window.currentFirebaseUser || {};
       container.innerHTML = `
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          <div class="glass-card p-5 rounded-3xl border shadow-xs">
-            <h2 class="text-lg font-extrabold mb-1">Others Hisab-e Customize Khat Jukto Korun</h2>
-            <p class="text-xs text-slate-500 mb-4">Apnar icche moto notun khat (jemon: Jaigar Hisab, Baki Khata, Dokan, Bondhu AC) toiri korun—egulo "5. Others Hisab" er moddhe jukto hobe</p>
-            <form onsubmit="addOthersAccountFromSettings(event)" class="space-y-2.5 mb-4 bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
-              <input type="text" id="settingsOthersName" required placeholder="Notun khater naam likhun..." class="w-full px-3.5 py-2.5 rounded-xl border bg-white text-sm" />
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5">
+          <div class="glass-card p-4 sm:p-5 rounded-2xl sm:rounded-3xl border shadow-xs">
+            <h2 class="text-base sm:text-lg font-extrabold uppercase mb-1">Custom Ledgers (Others Hisab)</h2>
+            <p class="text-[11px] sm:text-xs text-slate-500 mb-3.5">Add custom ledgers inside 5. Others Hisab as needed</p>
+            <form onsubmit="addOthersAccountFromSettings(event)" class="space-y-2.5 mb-4 bg-slate-50 p-3 rounded-2xl border border-slate-200">
+              <input type="text" id="settingsOthersName" required placeholder="New ledger name..." class="w-full px-3.5 py-2 rounded-xl border bg-white text-xs sm:text-sm" />
               <div class="flex gap-2">
-                <select id="settingsOthersType" class="flex-1 px-3 py-2.5 rounded-xl border bg-white text-xs sm:text-sm font-bold">
-                  <option value="dr">Paona / Khoroch (Dr + / Cr -)</option>
-                  <option value="cr">Joma / Tohhobil (Cr + / Dr -)</option>
+                <select id="settingsOthersType" class="flex-1 px-3 py-2 rounded-xl border bg-white text-xs font-bold">
+                  <option value="dr">Dr Positive</option>
+                  <option value="cr">Cr Positive</option>
                 </select>
-                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-xl text-sm font-bold shrink-0">+ Jog Korun</button>
+                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-xs font-bold shrink-0 flex items-center gap-1"><i class="fa-solid fa-plus"></i> Add</button>
               </div>
             </form>
             <div class="space-y-2">
               ${appData.othersAccounts.map(acc => `
-                <div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 border">
-                  <div>
-                    <p class="text-sm font-bold text-slate-900">${acc.name}</p>
-                    <p class="text-[11px] text-slate-500">${(acc.entries || []).length} ti entry • ${acc.positiveType === 'cr' ? 'Joma Ledger' : 'Paona/Khoroch Ledger'}</p>
+                <div class="flex items-center justify-between p-2.5 sm:p-3 rounded-xl bg-slate-50 border">
+                  <div class="min-w-0 pr-2">
+                    <p class="text-xs sm:text-sm font-bold text-slate-900 truncate">${acc.name}</p>
+                    <p class="text-[10px] text-slate-500">${(acc.entries || []).length} entries • ${acc.positiveType === 'cr' ? 'Cr Positive' : 'Dr Positive'}</p>
                   </div>
-                  <div class="flex items-center gap-1.5">
-                    <button onclick="selectedOthersAccountId='${acc.id}';switchTab('others')" class="text-xs bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-lg font-bold">Open</button>
-                    ${appData.othersAccounts.length > 1 ? `<button onclick="deleteOthersAccount('${acc.id}')" class="text-xs bg-rose-100 text-rose-700 px-2.5 py-1 rounded-lg font-bold">Delete</button>` : ''}
+                  <div class="flex items-center gap-1.5 shrink-0">
+                    <button onclick="selectedOthersAccountId='${acc.id}';switchTab('others')" class="text-[11px] bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-lg font-bold">Open</button>
+                    ${appData.othersAccounts.length > 1 ? `<button onclick="deleteOthersAccount('${acc.id}')" class="text-[11px] bg-rose-100 text-rose-700 px-2.5 py-1 rounded-lg font-bold">Delete</button>` : ''}
                   </div>
                 </div>
               `).join('')}
             </div>
           </div>
 
-          <div class="glass-card p-5 rounded-3xl border shadow-xs space-y-4">
-            <h2 class="text-lg font-extrabold">UID Security & Personal Backup</h2>
+          <div class="glass-card p-4 sm:p-5 rounded-2xl sm:rounded-3xl border shadow-xs space-y-4">
+            <h2 class="text-base sm:text-lg font-extrabold uppercase">UID Vault & Backup</h2>
             <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 text-xs space-y-1.5">
-              <p><span class="font-bold text-slate-600">Signed-in Gmail:</span> <span class="font-extrabold text-slate-900">${user.email || '-'}</span></p>
-              <p><span class="font-bold text-slate-600">Isolated Firebase UID:</span> <code class="bg-emerald-100 text-emerald-900 px-1.5 py-0.5 rounded font-mono">${activeUid || '-'}</code></p>
-              <p class="text-[11px] text-slate-500 pt-1">Apnar data shudhumatro ei UID-er odhine songrokkhito hocche; onno kono user-er sathe mix hobe na.</p>
+              <p><span class="font-bold text-slate-600">Account:</span> <span class="font-extrabold text-slate-900">${user.email || '-'}</span></p>
+              <p><span class="font-bold text-slate-600">UID:</span> <code class="bg-emerald-100 text-emerald-900 px-1.5 py-0.5 rounded font-mono text-[11px]">${activeUid || '-'}</code></p>
             </div>
             <div class="flex flex-wrap gap-2">
-              <button onclick="manualSyncNow()" class="bg-sky-600 text-white px-4 py-2.5 rounded-xl text-xs font-bold">Force Cloud Sync</button>
-              <button onclick="exportBackupJSON()" class="bg-emerald-600 text-white px-4 py-2.5 rounded-xl text-xs font-bold">JSON Backup</button>
-              <label class="bg-slate-200 text-slate-800 px-4 py-2.5 rounded-xl text-xs font-bold cursor-pointer">JSON Restore <input type="file" accept=".json" onchange="importBackupJSON(event)" class="hidden" /></label>
+              <button onclick="manualSyncNow()" class="bg-sky-600 text-white px-3.5 py-2.5 rounded-xl text-xs font-bold">Sync Now</button>
+              <button onclick="exportBackupJSON()" class="bg-emerald-600 text-white px-3.5 py-2.5 rounded-xl text-xs font-bold">Export JSON</button>
+              <label class="bg-slate-200 text-slate-800 px-3.5 py-2.5 rounded-xl text-xs font-bold cursor-pointer">Import JSON <input type="file" accept=".json" onchange="importBackupJSON(event)" class="hidden" /></label>
             </div>
           </div>
         </div>
@@ -1888,14 +1963,14 @@
       e.preventDefault();
       const inp = document.getElementById('settingsOthersName');
       const name = inp.value.trim();
-      const positiveType = document.getElementById('settingsOthersType').value;
+      const positiveType = document.getElementById('settingsOthersType').value === 'cr' ? 'cr' : 'dr';
       if (!name) return;
       const newId = 'oth_' + Date.now();
       appData.othersAccounts.push({ id: newId, name, positiveType, entries: [] });
       selectedOthersAccountId = newId;
       inp.value = '';
       saveData();
-      showToast(`"${name}" Others Hisab-e jukto hoyeche!`);
+      showToast('Ledger added!');
       renderCurrentView();
     }
 
@@ -1914,9 +1989,12 @@
       r.onload = async () => {
         try {
           appData = mergeWithDefaults(JSON.parse(r.result));
+          if (appData.othersAccounts && appData.othersAccounts.length) {
+            selectedOthersAccountId = appData.othersAccounts[0].id;
+          }
           await saveData(); renderSidebar(); renderCurrentView();
-          showToast('Backup apnar UID vault-e restore hoyeche!');
-        } catch (err) { alert('Sothik JSON file din.'); }
+          showToast('Backup restored!');
+        } catch (err) { alert('Invalid JSON file.'); }
       };
       r.readAsText(file);
     }
@@ -1931,8 +2009,8 @@
       document.getElementById('modalBody').innerHTML = `
         <div class="space-y-3">
           ${isPdf ? `<iframe src="${dataUrl}" class="w-full h-[60vh] rounded-xl border"></iframe>` : `<img src="${dataUrl}" class="w-full rounded-xl border shadow" alt="${title}" />`}
-          <button onclick="downloadStoredFile('${dataUrl}', '${safeName}')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 shadow">
-            <i class="fa-solid fa-download"></i> File Download Korun
+          <button onclick="downloadStoredFile('${dataUrl}', '${safeName}')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl text-sm flex items-center justify-center gap-2 shadow">
+            <i class="fa-solid fa-download"></i> Download
           </button>
         </div>
       `;
@@ -1940,7 +2018,7 @@
     }
 
     document.getElementById('todayDateText').innerText = new Date().toLocaleDateString('en-GB', {
-      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+      weekday: 'short', year: 'numeric', month: 'short', day: 'numeric'
     });
     renderSidebar();
     renderCurrentView();
