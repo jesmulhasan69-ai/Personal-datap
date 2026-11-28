@@ -7,7 +7,6 @@
   <title>PERSONAL HISAB MANAGER</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet" />
   <style>
@@ -57,35 +56,58 @@
 </head>
 <body class="min-h-screen flex flex-col md:flex-row pb-20 md:pb-0">
 
-  <!-- ==================== GMAIL LOGIN GATE ==================== -->
-  <div id="loginScreen" class="fixed inset-0 z-50 bg-gradient-to-br from-slate-950 via-emerald-950 to-teal-950 flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 sm:p-8 text-center border border-emerald-100">
-      <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 via-teal-600 to-cyan-700 text-white flex items-center justify-center text-3xl mx-auto shadow-xl mb-4">
+  <!-- ==================== FIREBASE SIGN UP / SIGN IN GATE ==================== -->
+  <div id="loginScreen" class="fixed inset-0 z-50 bg-gradient-to-br from-slate-950 via-emerald-950 to-teal-950 flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-5 sm:p-7 text-center border border-emerald-100 my-auto">
+      <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 via-teal-600 to-cyan-700 text-white flex items-center justify-center text-2xl mx-auto shadow-xl mb-3">
         <i class="fa-solid fa-vault"></i>
       </div>
-      <h1 class="brand-font text-2xl font-black text-slate-900 tracking-wide uppercase">PERSONAL HISAB MANAGER</h1>
-      <p class="text-xs sm:text-sm text-slate-500 mt-1">Mobile Smart Cloud + Local Multi-Layer Ledger</p>
+      <h1 class="brand-font text-xl sm:text-2xl font-black text-slate-900 tracking-wide uppercase">PERSONAL HISAB MANAGER</h1>
+      <p class="text-xs text-slate-500 mt-0.5">Personal Gmail Sign Up & Sign In • Private UID Vault</p>
 
-      <div class="mt-5 bg-slate-50 p-4 rounded-2xl border border-slate-200 text-left">
-        <p class="text-xs font-bold text-slate-700 mb-2 flex items-center gap-1.5">
-          <i class="fa-brands fa-google text-rose-500"></i> যেকোনো ফোন থেকে একই ডাটা পেতে Gmail দিন
-        </p>
+      <div class="mt-4 bg-slate-50 p-4 rounded-2xl border border-slate-200 text-left space-y-3.5">
+        <div id="authLoadingState" class="py-3 text-xs font-bold text-emerald-700 flex items-center justify-center gap-2">
+          <i class="fa-solid fa-spinner fa-spin"></i> Session check hocche...
+        </div>
 
-        <div id="googleBtnWrapper" class="mb-3 flex justify-center"></div>
-
-        <form onsubmit="handleGmailLogin(event)" class="space-y-3">
-          <div>
-            <label class="block text-[11px] font-bold text-slate-600 mb-1">Gmail ঠিকানা</label>
-            <input type="email" id="loginEmailInput" value="jesmulhasan69@gmail.com" required placeholder="jesmulhasan69@gmail.com" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-sm focus:outline-none focus:border-emerald-600" />
-          </div>
-          <div>
-            <label class="block text-[11px] font-bold text-slate-600 mb-1">আপনার নাম</label>
-            <input type="text" id="loginNameInput" value="Jesmul" required placeholder="আপনার নাম লিখুন" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-sm focus:outline-none focus:border-emerald-600" />
-          </div>
-          <button type="submit" class="w-full bg-gradient-to-r from-slate-900 to-emerald-800 hover:from-emerald-700 hover:to-teal-700 text-white font-bold py-3 rounded-xl text-sm shadow-lg transition flex items-center justify-center gap-2">
-            <i class="fa-solid fa-right-to-bracket text-emerald-300"></i> Continue & Sync
+        <div id="authFormContainer" class="hidden space-y-3">
+          <button id="googleSignInBtn" type="button" onclick="triggerGoogleSignIn()" class="w-full bg-white hover:bg-slate-50 active:scale-[0.99] text-slate-800 font-bold py-3 px-4 rounded-xl text-sm shadow-xs border border-slate-300 transition flex items-center justify-center gap-2.5">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5 h-5" alt="Google" />
+            <span>Continue with Personal Gmail</span>
           </button>
-        </form>
+
+          <div class="flex items-center gap-2 text-[11px] text-slate-400 font-bold">
+            <span class="flex-1 h-px bg-slate-200"></span>
+            <span>ATHABA GMAIL + PASSWORD</span>
+            <span class="flex-1 h-px bg-slate-200"></span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-1.5 bg-slate-200/70 p-1 rounded-xl">
+            <button type="button" id="tabBtnSignin" onclick="setAuthMode('signin')" class="py-1.5 rounded-lg text-xs font-extrabold bg-white text-slate-900 shadow-2xs transition">Sign In</button>
+            <button type="button" id="tabBtnSignup" onclick="setAuthMode('signup')" class="py-1.5 rounded-lg text-xs font-bold text-slate-600 transition">Sign Up</button>
+          </div>
+
+          <form id="emailAuthForm" onsubmit="handleEmailPasswordAuth(event)" class="space-y-2.5">
+            <div id="signupNameField" class="hidden">
+              <label class="block text-[11px] font-bold text-slate-600 mb-1">Apnar Naam</label>
+              <input type="text" id="authNameInput" placeholder="Apnar naam likhun" class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-sm focus:outline-none focus:border-emerald-600" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-slate-600 mb-1">Personal Gmail</label>
+              <input type="email" id="authEmailInput" required placeholder="example@gmail.com" class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-sm focus:outline-none focus:border-emerald-600" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-slate-600 mb-1">Password (kompokkhe 6 okkhor)</label>
+              <input type="password" id="authPasswordInput" required minlength="6" placeholder="••••••••" class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-sm focus:outline-none focus:border-emerald-600" />
+            </div>
+            <button type="submit" id="emailSubmitBtn" class="w-full bg-gradient-to-r from-slate-900 to-emerald-800 hover:from-emerald-700 hover:to-teal-700 text-white font-bold py-2.5 rounded-xl text-sm shadow-md transition flex items-center justify-center gap-2">
+              <i class="fa-solid fa-right-to-bracket text-emerald-300"></i>
+              <span id="emailSubmitLabel">Sign In</span>
+            </button>
+          </form>
+        </div>
+
+        <p id="authErrorBox" class="hidden text-[11px] text-rose-600 bg-rose-50 border border-rose-200 p-2.5 rounded-xl text-left"></p>
       </div>
     </div>
   </div>
@@ -102,10 +124,10 @@
       </div>
     </div>
     <div class="flex items-center gap-1.5 shrink-0">
-      <button onclick="openCashModal('credit')" title="জমা" class="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-sm shadow active:scale-95">
+      <button onclick="openCashModal('credit')" title="Joma" class="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-sm shadow active:scale-95">
         <i class="fa-solid fa-plus"></i>
       </button>
-      <button onclick="openCashModal('debit')" title="খরচ" class="w-9 h-9 rounded-xl bg-rose-600 text-white flex items-center justify-center text-sm shadow active:scale-95">
+      <button onclick="openCashModal('debit')" title="Khoroch" class="w-9 h-9 rounded-xl bg-rose-600 text-white flex items-center justify-center text-sm shadow active:scale-95">
         <i class="fa-solid fa-minus"></i>
       </button>
       <button onclick="manualSyncNow()" title="Sync Cloud" class="bg-sky-600 text-white text-xs px-2.5 h-9 rounded-xl font-bold shadow flex items-center gap-1 active:scale-95">
@@ -136,13 +158,13 @@
     <!-- User Profile Card -->
     <div id="sidebarUserCard" class="px-4 py-3 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between gap-2">
       <div class="flex items-center gap-2.5 min-w-0">
-        <img id="userAvatarImg" src="https://ui-avatars.com/api/?name=Jesmul&background=10b981&color=fff" class="w-9 h-9 rounded-full border-2 border-emerald-400 shrink-0" alt="User" />
+        <img id="userAvatarImg" src="https://ui-avatars.com/api/?name=User&background=10b981&color=fff" class="w-9 h-9 rounded-full border-2 border-emerald-400 shrink-0" alt="User" />
         <div class="min-w-0">
-          <p id="userNameDisplay" class="text-xs font-bold text-white truncate">Jesmul</p>
-          <p id="userEmailDisplay" class="text-[10px] text-emerald-300 truncate">jesmulhasan69@gmail.com</p>
+          <p id="userNameDisplay" class="text-xs font-bold text-white truncate">Signed In User</p>
+          <p id="userEmailDisplay" class="text-[10px] text-emerald-300 truncate">UID Verified</p>
         </div>
       </div>
-      <button onclick="logoutUser()" title="Logout" class="text-xs bg-rose-500/20 hover:bg-rose-600 text-rose-300 hover:text-white px-2.5 py-1.5 rounded-lg transition shrink-0">
+      <button onclick="logoutUser()" title="Sign Out" class="text-xs bg-rose-500/20 hover:bg-rose-600 text-rose-300 hover:text-white px-2.5 py-1.5 rounded-lg transition shrink-0">
         <i class="fa-solid fa-right-from-bracket"></i>
       </button>
     </div>
@@ -150,17 +172,17 @@
     <!-- Smart Data Shield Status Bar -->
     <div class="px-4 py-2 bg-slate-900 border-b border-slate-800 flex items-center justify-between text-[11px]">
       <span id="cloudStatusText" class="text-amber-300 font-semibold flex items-center gap-1.5">
-        <i class="fa-solid fa-shield-halved"></i> Local Shield Active
+        <i class="fa-solid fa-shield-halved"></i> UID Vault Ready
       </span>
       <button onclick="manualSyncNow()" class="text-emerald-400 hover:underline font-bold">Sync Now</button>
     </div>
 
-    <!-- Navigation List + 3-Dot Dropdown -->
+    <!-- Universal 3-Dot Navigation List -->
     <nav id="navMenu" class="flex-1 overflow-y-auto py-3 px-3 space-y-1"></nav>
 
     <div class="p-3.5 border-t border-slate-800 bg-slate-950">
       <button onclick="switchTab('settings')" class="w-full text-xs bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white py-2.5 rounded-xl transition flex items-center justify-center gap-2 font-bold shadow">
-        <i class="fa-solid fa-sliders"></i> ৩-ডট মেনু ও Cloud সেটিংস
+        <i class="fa-solid fa-sliders"></i> Setting & Custom Hisab
       </button>
     </div>
   </aside>
@@ -169,42 +191,42 @@
   <main class="flex-1 main-content min-w-0 p-3.5 sm:p-5 md:p-7">
     <div class="bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 text-white rounded-3xl p-4 sm:p-6 mb-5 shadow-xl flex flex-col lg:flex-row lg:items-center justify-between gap-4 border border-emerald-500/20 no-print">
       <div class="flex items-start gap-3">
-        <button onclick="toggleSidebar()" title="৩-ডট মেনু খুলুন" class="hidden md:flex w-11 h-11 rounded-2xl bg-white/10 hover:bg-emerald-600 text-white items-center justify-center text-lg border border-white/15 shrink-0 mt-0.5 transition">
+        <button onclick="toggleSidebar()" title="3-Dot Menu khulun" class="hidden md:flex w-11 h-11 rounded-2xl bg-white/10 hover:bg-emerald-600 text-white items-center justify-center text-lg border border-white/15 shrink-0 mt-0.5 transition">
           <i class="fa-solid fa-ellipsis-vertical"></i>
         </button>
         <div>
           <div class="flex flex-wrap items-center gap-2">
-            <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[11px] font-bold tracking-wide border border-emerald-400/30">Smart Mobile Guard</span>
+            <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[11px] font-bold tracking-wide border border-emerald-400/30">Universal UID Vault</span>
             <span id="todayDateText" class="text-xs text-slate-300"></span>
           </div>
           <h1 class="brand-font text-xl sm:text-3xl font-black tracking-wide text-white mt-1 uppercase">
             PERSONAL HISAB MANAGER
           </h1>
           <p class="text-xs sm:text-sm text-slate-300 mt-0.5 flex items-center gap-1.5">
-            <span class="text-emerald-400 font-semibold">বর্তমান পেজ:</span>
+            <span class="text-emerald-400 font-semibold">Bortoman page:</span>
             <span id="pageTitle" class="font-bold text-white">1. Dashboard</span>
           </p>
         </div>
       </div>
       <div class="flex flex-wrap items-center gap-2">
         <button onclick="openCashModal('credit')" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold shadow-md flex items-center gap-1.5 transition active:scale-95">
-          <i class="fa-solid fa-plus-circle"></i> + জমা (Cr)
+          <i class="fa-solid fa-plus-circle"></i> + Joma (Cr)
         </button>
         <button onclick="openCashModal('debit')" class="bg-rose-600 hover:bg-rose-500 text-white px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold shadow-md flex items-center gap-1.5 transition active:scale-95">
-          <i class="fa-solid fa-minus-circle"></i> - খরচ (Dr)
+          <i class="fa-solid fa-minus-circle"></i> - Khoroch (Dr)
         </button>
         <button onclick="manualSyncNow()" class="bg-sky-600 hover:bg-sky-500 text-white px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold shadow-md flex items-center gap-1.5 transition active:scale-95">
           <i class="fa-solid fa-cloud-arrow-up"></i> Sync
         </button>
         <button onclick="window.print()" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition active:scale-95">
-          <i class="fa-solid fa-print"></i> প্রিন্ট
+          <i class="fa-solid fa-print"></i> Print
         </button>
       </div>
     </div>
 
     <div class="hidden print-only border-b-2 border-slate-800 pb-3 mb-5 text-center">
       <h1 class="brand-font text-2xl font-black uppercase">PERSONAL HISAB MANAGER</h1>
-      <p class="text-sm text-slate-600" id="printHeaderSubtitle">আর্থিক বিবরণী ও লেজার রিপোর্ট</p>
+      <p class="text-sm text-slate-600" id="printHeaderSubtitle">Arthik Biboroni o Ledger Report</p>
     </div>
 
     <div id="appContainer"></div>
@@ -214,22 +236,22 @@
   <nav class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-slate-950/95 backdrop-blur-md border-t border-slate-800 px-2 py-1.5 flex items-center justify-around text-slate-300 safe-bottom no-print">
     <button onclick="switchTab('dashboard')" id="bnav_dashboard" class="flex flex-col items-center py-1 px-2 rounded-xl text-[11px] font-bold">
       <i class="fa-solid fa-chart-pie text-base mb-0.5"></i>
-      <span>হোম</span>
+      <span>Home</span>
     </button>
     <button onclick="switchTab('cashbook')" id="bnav_cashbook" class="flex flex-col items-center py-1 px-2 rounded-xl text-[11px] font-bold">
       <i class="fa-solid fa-book-open text-base mb-0.5"></i>
-      <span>ক্যাশ বুক</span>
+      <span>Cash Book</span>
     </button>
     <button onclick="openCashModal('debit')" class="flex flex-col items-center justify-center w-12 h-12 -mt-5 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-lg border-4 border-slate-950 active:scale-95">
       <i class="fa-solid fa-plus text-lg"></i>
     </button>
-    <button onclick="switchTab('bank')" id="bnav_bank" class="flex flex-col items-center py-1 px-2 rounded-xl text-[11px] font-bold">
-      <i class="fa-solid fa-building-columns text-base mb-0.5"></i>
-      <span>ব্যাংক</span>
+    <button onclick="switchTab('others')" id="bnav_others" class="flex flex-col items-center py-1 px-2 rounded-xl text-[11px] font-bold">
+      <i class="fa-solid fa-layer-group text-base mb-0.5"></i>
+      <span>Others</span>
     </button>
     <button onclick="toggleSidebar()" class="flex flex-col items-center py-1 px-2 rounded-xl text-[11px] font-bold text-emerald-400">
       <i class="fa-solid fa-ellipsis-vertical text-base mb-0.5"></i>
-      <span>মেনু</span>
+      <span>Menu</span>
     </button>
   </nav>
 
@@ -237,7 +259,7 @@
   <div id="modalBackdrop" class="fixed inset-0 bg-slate-950/70 backdrop-blur-xs z-50 hidden items-end sm:items-center justify-center p-0 sm:p-4 no-print">
     <div id="modalBox" class="bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto border border-slate-200">
       <div class="px-5 py-4 border-b border-slate-200 flex items-center justify-between sticky top-0 bg-white z-10">
-        <h3 id="modalTitle" class="text-base sm:text-lg font-extrabold text-slate-900">নতুন এন্ট্রি</h3>
+        <h3 id="modalTitle" class="text-base sm:text-lg font-extrabold text-slate-900">Notun Entry</h3>
         <button onclick="closeModal()" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600">
           <i class="fa-solid fa-xmark"></i>
         </button>
@@ -249,75 +271,32 @@
   <!-- Toast Notification -->
   <div id="toast" class="fixed bottom-20 md:bottom-5 right-4 z-50 bg-slate-900 text-emerald-300 border border-emerald-500/30 px-4 py-2.5 rounded-2xl shadow-2xl text-xs sm:text-sm font-semibold flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 no-print">
     <i class="fa-solid fa-circle-check text-emerald-400"></i>
-    <span id="toastMsg">সফলভাবে সংরক্ষিত হয়েছে</span>
+    <span id="toastMsg">Sofolbhabe songrokkhito hoyeche</span>
   </div>
 
-  <!-- ==================== FIREBASE SMART CLOUD SYNC MODULE ==================== -->
+  <!-- ==================== FIREBASE AUTH (GOOGLE + EMAIL/PASS) & UID FIRESTORE ==================== -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+    import {
+      getAuth,
+      GoogleAuthProvider,
+      signInWithPopup,
+      signInWithRedirect,
+      getRedirectResult,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+      updateProfile,
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+    import {
+      getFirestore,
+      doc,
+      setDoc,
+      getDoc
+    } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-    let dbInstance = null;
-
-    window.initFirebaseSmartSync = function(config) {
-      if (!config || !config.apiKey || !config.projectId) return false;
-      try {
-        const app = initializeApp(config, 'personal_hisab_cloud_app');
-        dbInstance = getFirestore(app);
-        return true;
-      } catch (e) {
-        try {
-          dbInstance = getFirestore();
-          return !!dbInstance;
-        } catch (err) {
-          return false;
-        }
-      }
-    };
-
-    window.firebasePushUserData = async function(email, dataObj, config) {
-      const targetEmail = (email || 'jesmulhasan69@gmail.com').toLowerCase().trim();
-      const ready = dbInstance || window.initFirebaseSmartSync(config);
-      if (!ready || !dbInstance) return { ok: false, reason: 'No Firebase Config' };
-
-      const docKey = targetEmail.replace(/[.#$/[\]]/g, '_');
-      const ref = doc(dbInstance, "personal_hisab_vault", docKey);
-      const cleanPayload = { ...dataObj, settings: { ...(dataObj.settings || {}), firebaseConfig: config } };
-
-      await setDoc(ref, {
-        email: targetEmail,
-        updatedAt: new Date().toISOString(),
-        dataJson: JSON.stringify(cleanPayload)
-      }, { merge: true });
-
-      return { ok: true };
-    };
-
-    window.firebasePullUserData = async function(email, config) {
-      const targetEmail = (email || 'jesmulhasan69@gmail.com').toLowerCase().trim();
-      const ready = dbInstance || window.initFirebaseSmartSync(config);
-      if (!ready || !dbInstance) return null;
-
-      const docKey = targetEmail.replace(/[.#$/[\]]/g, '_');
-      const ref = doc(dbInstance, "personal_hisab_vault", docKey);
-      const snap = await getDoc(ref);
-      if (snap.exists() && snap.data().dataJson) {
-        return JSON.parse(snap.data().dataJson);
-      }
-      return null;
-    };
-  </script>
-
-  <script>
-    // ==================== SMART DATA PROTECTION & STORAGE ====================
-    const DEFAULT_USER_EMAIL = 'jesmulhasan69@gmail.com';
-    const DEFAULT_USER_NAME = 'Jesmul';
-    const STORAGE_KEY = 'personal_hisab_manager_v7';
-    const SNAPSHOT_KEY = 'personal_hisab_manager_v7_snapshot';
-    const PENDING_SYNC_KEY = 'personal_hisab_pending_sync';
-    const AUTH_KEY = 'personal_hisab_auth_user';
-
-    const HARDCODED_FIREBASE_CONFIG = {
+    const FIREBASE_CONFIG = {
       apiKey: "AIzaSyDUWqkLR6cvBSEO_Hctf67ABXYLYwP74SQ",
       authDomain: "personal-hisab-manager.firebaseapp.com",
       projectId: "personal-hisab-manager",
@@ -327,30 +306,169 @@
       measurementId: "G-RN61E1M95P"
     };
 
-    const defaultData = {
+    const app = initializeApp(FIREBASE_CONFIG);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+
+    window.currentFirebaseUser = null;
+
+    getRedirectResult(auth).catch((err) => {
+      if (err && err.message) window.showAuthError(err.message);
+    });
+
+    window.triggerGoogleSignIn = async function() {
+      const errBox = document.getElementById('authErrorBox');
+      if (errBox) errBox.classList.add('hidden');
+      try {
+        await signInWithPopup(auth, provider);
+      } catch (err) {
+        if (err.code === 'auth/popup-blocked' || err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request') {
+          try {
+            await signInWithRedirect(auth, provider);
+          } catch (redirErr) {
+            window.showAuthError(redirErr.message);
+          }
+        } else {
+          window.showAuthError(err.message || 'Google Sign-In hoyni.');
+        }
+      }
+    };
+
+    window.firebaseEmailSignUp = async function(name, email, password) {
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
+      if (name) await updateProfile(cred.user, { displayName: name });
+      return cred.user;
+    };
+
+    window.firebaseEmailSignIn = async function(email, password) {
+      const cred = await signInWithEmailAndPassword(auth, email, password);
+      return cred.user;
+    };
+
+    window.firebaseSignOutUser = async function() {
+      await signOut(auth);
+    };
+
+    window.firebasePushUidData = async function(uid, dataObj) {
+      if (!uid || !auth.currentUser || auth.currentUser.uid !== uid) {
+        return { ok: false, reason: 'Unauthenticated' };
+      }
+      const ref = doc(db, "personal_hisab_vault", uid);
+      await setDoc(ref, {
+        uid: uid,
+        email: auth.currentUser.email || '',
+        displayName: auth.currentUser.displayName || '',
+        updatedAt: new Date().toISOString(),
+        dataJson: JSON.stringify(dataObj)
+      }, { merge: true });
+      return { ok: true };
+    };
+
+    window.firebasePullUidData = async function(uid) {
+      if (!uid || !auth.currentUser || auth.currentUser.uid !== uid) return null;
+      const ref = doc(db, "personal_hisab_vault", uid);
+      const snap = await getDoc(ref);
+      if (snap.exists() && snap.data().dataJson) {
+        return JSON.parse(snap.data().dataJson);
+      }
+      return null;
+    };
+
+    onAuthStateChanged(auth, async (user) => {
+      const loadingEl = document.getElementById('authLoadingState');
+      const formBox = document.getElementById('authFormContainer');
+      if (loadingEl) loadingEl.classList.add('hidden');
+
+      if (user) {
+        window.currentFirebaseUser = user;
+        await window.onUserAuthenticated(user);
+      } else {
+        window.currentFirebaseUser = null;
+        if (formBox) formBox.classList.remove('hidden');
+        window.onUserSignedOut();
+      }
+    });
+  </script>
+
+  <script>
+    // ==================== AUTH MODE TOGGLE (SIGN IN / SIGN UP) ====================
+    let currentAuthMode = 'signin';
+
+    function setAuthMode(mode) {
+      currentAuthMode = mode;
+      const isSignup = mode === 'signup';
+      const btnIn = document.getElementById('tabBtnSignin');
+      const btnUp = document.getElementById('tabBtnSignup');
+      const nameField = document.getElementById('signupNameField');
+      const submitLabel = document.getElementById('emailSubmitLabel');
+      const errBox = document.getElementById('authErrorBox');
+
+      if (errBox) errBox.classList.add('hidden');
+      if (isSignup) {
+        btnUp.className = 'py-1.5 rounded-lg text-xs font-extrabold bg-white text-slate-900 shadow-2xs transition';
+        btnIn.className = 'py-1.5 rounded-lg text-xs font-bold text-slate-600 transition';
+        nameField.classList.remove('hidden');
+        submitLabel.innerText = 'Create Account & Sign Up';
+      } else {
+        btnIn.className = 'py-1.5 rounded-lg text-xs font-extrabold bg-white text-slate-900 shadow-2xs transition';
+        btnUp.className = 'py-1.5 rounded-lg text-xs font-bold text-slate-600 transition';
+        nameField.classList.add('hidden');
+        submitLabel.innerText = 'Sign In';
+      }
+    }
+
+    async function handleEmailPasswordAuth(e) {
+      e.preventDefault();
+      const errBox = document.getElementById('authErrorBox');
+      if (errBox) errBox.classList.add('hidden');
+
+      const name = (document.getElementById('authNameInput').value || '').trim();
+      const email = (document.getElementById('authEmailInput').value || '').trim();
+      const password = document.getElementById('authPasswordInput').value || '';
+
+      try {
+        if (currentAuthMode === 'signup') {
+          await window.firebaseEmailSignUp(name, email, password);
+          showToast('Notun account toiri hoyeche! Ekhon pore oi Gmail dea Sign In korte parben.');
+        } else {
+          await window.firebaseEmailSignIn(email, password);
+          showToast('Safolbhabe Sign In hoyeche!');
+        }
+      } catch (err) {
+        let friendly = err.message || 'Authentication hoyni.';
+        if (err.code === 'auth/email-already-in-use') friendly = 'Ei Gmail dea agei account ache. Sign In tab-e giye login korun.';
+        else if (err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential') friendly = 'Gmail ba Password thik nei. Age Sign Up kore thakle password check korun.';
+        else if (err.code === 'auth/wrong-password') friendly = 'Password bhul hoyeche.';
+        else if (err.code === 'auth/weak-password') friendly = 'Password kompokkhe 6 okkhorer hote hobe.';
+        window.showAuthError(friendly);
+      }
+    }
+
+    // ==================== UNIVERSAL UID-ISOLATED STORAGE & DATA ENGINE ====================
+    function getUidStorageKeys(uid) {
+      const safeUid = uid || 'guest';
+      return {
+        primary: `personal_hisab_univ_${safeUid}_v2`,
+        snapshot: `personal_hisab_univ_${safeUid}_snap_v2`,
+        pending: `personal_hisab_univ_${safeUid}_pend_v2`
+      };
+    }
+
+    const defaultTemplateData = {
       lastModified: new Date().toISOString(),
       settings: {
-        googleScriptUrl: '',
-        googleClientId: '',
-        firebaseConfig: { ...HARDCODED_FIREBASE_CONFIG },
-        expenseCategories: ['বাজার ও খাবার', 'বাসা ভাড়া ও বিল', 'যাতায়াত', 'চিকিৎসা', 'কেনাকাটা', 'মোবাইল ও ইন্টারনেট', 'পারিবারিক', 'অন্যান্য'],
-        incomeCategories: ['বেতন / আয়', 'ব্যবসা হতে জমা', 'ব্যাংক উত্তোলন', 'পাওনা আদায়', 'অন্যান্য জমা'],
-        customTabs: [
-          { id: 'tab_due', name: 'বাকি খাতা (Due Ledger)', icon: 'fa-hand-holding-dollar', entries: [] }
-        ]
+        expenseCategories: ['Bazar o Khabar', 'Basa Bhara o Bill', 'Jatayat', 'Chikitsha', 'Kenakata', 'Mobile o Internet', 'Paribarik', 'Onnanno'],
+        incomeCategories: ['Beton / Ay', 'Bebsha hote Joma', 'Bank Uttolon', 'Paona Aday', 'Onnanno Joma']
       },
-      cashbook: [
-        { id: 'cb1', date: '2026-11-01', type: 'credit', category: 'বেতন / আয়', desc: 'মাসিক মূল তহবিল / হাতে নগদ জমা', method: 'Cash', amount: 45000 },
-        { id: 'cb2', date: '2026-11-05', type: 'debit', category: 'বাজার ও খাবার', desc: 'সাপ্তাহিক কাঁচাবাজার ও মুদি সদাই', method: 'Cash', amount: 3250 },
-        { id: 'cb3', date: '2026-11-10', type: 'debit', category: 'বাসা ভাড়া ও বিল', desc: 'বিদ্যুৎ ও গ্যাস বিল পরিশোধ', method: 'bKash', amount: 2450 },
-        { id: 'cb4', date: '2026-11-15', type: 'credit', category: 'ব্যবসা হতে জমা', desc: 'অতিরিক্ত আয় ক্যাশ বুকে জমা', method: 'Bank', amount: 12000 }
-      ],
+      cashbook: [],
       cashFilter: {
         mode: 'all',
         singleDate: new Date().toISOString().split('T')[0],
-        fromDate: '2026-11-01',
+        fromDate: new Date().toISOString().slice(0, 8) + '01',
         toDate: new Date().toISOString().split('T')[0],
-        month: '2026-11',
+        month: new Date().toISOString().slice(0, 7),
         typeFilter: 'all',
         search: ''
       },
@@ -359,132 +477,108 @@
         { id: 'f_rs', name: 'RS Khatian', icon: 'fa-file-lines' },
         { id: 'f_dalil', name: 'Dalil', icon: 'fa-stamp' }
       ],
-      documents: [
-        { id: 'd1', folderId: 'f_bs', title: 'বিএস খতিয়ান নং - ৪১২ (মূল কপি)', docNo: 'BS-412', date: '2026-09-12', driveLink: 'https://drive.google.com', fileName: 'bs_khatian_412.pdf', fileData: '' },
-        { id: 'd2', folderId: 'f_rs', title: 'আরএস খতিয়ান নং - ১৮৯', docNo: 'RS-189', date: '2026-09-15', driveLink: 'https://drive.google.com', fileName: 'rs_khatian_189.jpg', fileData: '' },
-        { id: 'd3', folderId: 'f_dalil', title: 'সাব-কবলা দলিল নং - ৫৬৭৮', docNo: '5678/2024', date: '2026-10-02', driveLink: 'https://drive.google.com', fileName: 'dalil_5678.pdf', fileData: '' }
+      documents: [],
+      familyFolders: [
+        { id: 'ff_nid', name: 'NID Card', icon: 'fa-id-card' },
+        { id: 'ff_birth', name: 'Birth Certificate', icon: 'fa-certificate' },
+        { id: 'ff_passport', name: 'Passport & Other', icon: 'fa-passport' }
       ],
-      mokulLedger: [
-        { id: 'm1', date: '2026-10-10', type: 'dr', desc: 'ব্যবসায়িক ও ব্যক্তিগত প্রয়োজনে প্রদান (Cash)', method: 'Cash', amount: 25000 },
-        { id: 'm2', date: '2026-11-05', type: 'cr', desc: 'আংশিক ফেরত গ্রহণ (bKash/Cash)', method: 'Cash', amount: 10000 },
-        { id: 'm3', date: '2026-11-18', type: 'dr', desc: 'জরুরি প্রয়োজনে পুনরায় প্রদান', method: 'Bank', amount: 5000 }
+      familyDocuments: [],
+      othersAccounts: [
+        { id: 'oth_general', name: 'General Others Hisab', positiveType: 'dr', entries: [] }
       ],
-      jaigaLedger: [
-        { id: 'jl1', date: '2026-08-15', type: 'dr', landTitle: 'পূর্ব গুমানমর্দ্দন বসতভিটা সংলগ্ন জমি (১২ শতক)', khatian: 'বিএস ৪১২ / দাগ ১০২৪', desc: 'জমির মোট ক্রয় চুক্তিমূল্য নির্ধারণ', amount: 1200000 },
-        { id: 'jl2', date: '2026-08-20', type: 'cr', landTitle: 'পূর্ব গুমানমর্দ্দন বসতভিটা সংলগ্ন জমি (১২ শতক)', khatian: 'বিএস ৪১২ / দাগ ১০২৪', desc: 'বায়না বাবদ নগদ ও ব্যাংক পরিশোধ', amount: 500000 },
-        { id: 'jl3', date: '2026-10-05', type: 'dr', landTitle: 'পূর্ব গুমানমর্দ্দন বসতভিটা সংলগ্ন জমি (১২ শতক)', khatian: 'বিএস ৪১২ / দাগ ১০২৪', desc: 'দলিল রেজিস্ট্রি ও সরকারি ফি বাবদ খরচ', amount: 65000 },
-        { id: 'jl4', date: '2026-10-05', type: 'cr', landTitle: 'পূর্ব গুমানমর্দ্দন বসতভিটা সংলগ্ন জমি (১২ শতক)', khatian: 'বিএস ৪১২ / দাগ ১০২৪', desc: 'রেজিস্ট্রির দিন পরিশোধিত টাকা', amount: 415000 }
-      ],
-      ammuMedicines: [
-        { id: 'am0', date: '2026-11-01', type: 'cr', medicine: 'আম্মুর চিকিৎসা তহবিল জমা', doctor: '-', amount: 5000, note: 'মাসিক বাজেট' },
-        { id: 'am1', date: '2026-11-02', type: 'dr', medicine: 'প্রেশার ও ডায়াবেটিস নিয়মিত ওষুধ (১ মাস)', doctor: 'ডাঃ মাহবুবুল আলম', amount: 2850, note: 'সকাল ও রাতের ডোজ' },
-        { id: 'am2', date: '2026-11-16', type: 'dr', medicine: 'ক্যালসিয়াম ও ভিটামিন ট্যাবলেট', doctor: 'ডাঃ মাহবুবুল আলম', amount: 950, note: '৩০ দিনের কোর্স' }
-      ],
-      ammuPrescriptions: [
-        { id: 'pr1', title: 'মেডিসিন ও হৃদরোগ বিশেষজ্ঞ প্রেসক্রিপশন', doctor: 'ডাঃ মাহবুবুল আলম', date: '2026-11-02', fileName: 'prescription_nov.jpg', fileData: '' }
-      ],
-      wifeLedger: [
-        { id: 'w1', date: '2026-11-01', type: 'dr', desc: 'মাসিক হাতখরচ ও ব্যক্তিগত প্রয়োজনে প্রদান', method: 'Cash', amount: 8000 },
-        { id: 'w2', date: '2026-11-12', type: 'dr', desc: 'কেনাকাটা ও গিফট বাবদ প্রদান', method: 'bKash', amount: 3500 },
-        { id: 'w3', date: '2026-11-20', type: 'cr', desc: 'অবশিষ্ট টাকা ফেরত গ্রহণ', method: 'Cash', amount: 1500 }
-      ],
-      banks: [
-        { id: 'b1', bankName: 'Islami Bank Bangladesh PLC', type: 'SAVINGS', accountNo: '2050-XXXX-4521', balance: 85000, installment: 0, maturityDate: '-' },
-        { id: 'b2', bankName: 'Dutch-Bangla Bank (DBBL)', type: 'DPS', accountNo: '115-XXXX-8890', balance: 60000, installment: 5000, maturityDate: '2029-12-31' },
-        { id: 'b3', bankName: 'City Bank PLC', type: 'FDR', accountNo: '310-XXXX-7741', balance: 200000, installment: 0, maturityDate: '2027-06-30' }
-      ],
-      bankLedger: [
-        { id: 'bl1', bankId: 'b1', date: '2026-11-01', type: 'cr', desc: 'প্রারম্ভিক সেভিংস জমা', amount: 85000 },
-        { id: 'bl2', bankId: 'b2', date: '2026-11-05', type: 'cr', desc: 'নভেম্বর মাসের DPS কিস্তি জমা', amount: 60000 },
-        { id: 'bl3', bankId: 'b3', date: '2026-11-10', type: 'cr', desc: 'FDR স্থায়ী আমানত জমা', amount: 200000 }
-      ]
+      medicineEntries: [],
+      medicinePrescriptions: [],
+      wifeLedger: [],
+      banks: [],
+      bankLedger: []
     };
 
-    function normalizeLegacyData(parsed) {
-      if (Array.isArray(parsed.ammuMedicines)) {
-        parsed.ammuMedicines = parsed.ammuMedicines.map(m => ({ ...m, type: m.type || 'dr' }));
-      }
-      if (Array.isArray(parsed.wifeLedger)) {
-        parsed.wifeLedger = parsed.wifeLedger.map(w => ({
-          ...w,
-          type: w.type === 'give' ? 'dr' : (w.type === 'receive' ? 'cr' : (w.type || 'dr'))
-        }));
-      }
-      if (parsed.settings && Array.isArray(parsed.settings.customTabs)) {
-        parsed.settings.customTabs = parsed.settings.customTabs.map(t => ({
-          ...t,
-          entries: (t.entries || []).map(en => ({
-            ...en,
-            type: en.type === 'in' ? 'cr' : (en.type === 'out' ? 'dr' : (en.type || 'cr'))
-          }))
-        }));
-      }
-      return parsed;
+    function createFreshDefaultData() {
+      return JSON.parse(JSON.stringify(defaultTemplateData));
     }
 
     function mergeWithDefaults(rawObj) {
-      const parsed = normalizeLegacyData(rawObj || {});
-      const savedFb = (parsed.settings && parsed.settings.firebaseConfig) || {};
+      const parsed = rawObj || {};
+      const base = createFreshDefaultData();
+
+      // Migrate legacy keys if any user had v1 data
+      if (!parsed.medicineEntries && Array.isArray(parsed.ammuMedicines)) {
+        parsed.medicineEntries = parsed.ammuMedicines;
+      }
+      if (!parsed.medicinePrescriptions && Array.isArray(parsed.ammuPrescriptions)) {
+        parsed.medicinePrescriptions = parsed.ammuPrescriptions;
+      }
+      if (!parsed.othersAccounts || !parsed.othersAccounts.length) {
+        parsed.othersAccounts = base.othersAccounts;
+      }
+
       return {
-        ...defaultData,
+        ...base,
         ...parsed,
         settings: {
-          ...defaultData.settings,
-          ...(parsed.settings || {}),
-          firebaseConfig: {
-            ...HARDCODED_FIREBASE_CONFIG,
-            ...(savedFb.apiKey ? savedFb : {})
-          }
+          ...base.settings,
+          ...(parsed.settings || {})
         },
-        cashFilter: { ...defaultData.cashFilter, ...(parsed.cashFilter || {}) }
+        cashFilter: { ...base.cashFilter, ...(parsed.cashFilter || {}) }
       };
     }
 
-    function smartLoadInitialData() {
-      for (const key of [STORAGE_KEY, SNAPSHOT_KEY, 'personal_hisab_manager_v6', 'personal_hisab_manager_v5']) {
+    function loadLocalDataForUid(uid) {
+      const keys = getUidStorageKeys(uid);
+      for (const k of [keys.primary, keys.snapshot]) {
         try {
-          const raw = localStorage.getItem(key);
-          if (raw) {
-            const merged = mergeWithDefaults(JSON.parse(raw));
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
-            return merged;
-          }
+          const raw = localStorage.getItem(k);
+          if (raw) return mergeWithDefaults(JSON.parse(raw));
         } catch (e) {}
       }
-      return JSON.parse(JSON.stringify(defaultData));
+      return createFreshDefaultData();
     }
 
-    let appData = smartLoadInitialData();
+    let activeUid = null;
+    let appData = createFreshDefaultData();
     let currentTab = 'dashboard';
     let selectedDocFolder = 'all';
+    let selectedFamilyFolder = 'all';
+    let selectedOthersAccountId = 'oth_general';
     let selectedBankFilter = 'all';
-    let isDropdownOpen = true;
     let dashboardChart = null;
     let ledgerFilters = {
-      mokul: { from: '', to: '', search: '' },
-      jaiga: { from: '', to: '', search: '' },
-      ammu: { from: '', to: '', search: '' },
+      others: { from: '', to: '', search: '' },
+      medicine: { from: '', to: '', search: '' },
       wife: { from: '', to: '', search: '' },
-      bank: { from: '', to: '', search: '' },
-      custom: { from: '', to: '', search: '' }
+      bank: { from: '', to: '', search: '' }
     };
 
-    function getActiveFirebaseConfig() {
-      const cfg = (appData.settings && appData.settings.firebaseConfig) || {};
-      return (cfg.apiKey && cfg.projectId) ? cfg : HARDCODED_FIREBASE_CONFIG;
-    }
+    window.showAuthError = function(msg) {
+      const box = document.getElementById('authErrorBox');
+      if (!box) return;
+      box.innerText = msg;
+      box.classList.remove('hidden');
+    };
 
-    function getCurrentAuthUser() {
-      try {
-        const raw = localStorage.getItem(AUTH_KEY);
-        if (raw) return JSON.parse(raw);
-      } catch (e) {}
-      return {
-        email: DEFAULT_USER_EMAIL,
-        name: DEFAULT_USER_NAME,
-        picture: `https://ui-avatars.com/api/?name=${encodeURIComponent(DEFAULT_USER_NAME)}&background=10b981&color=fff`
-      };
-    }
+    window.onUserAuthenticated = async function(user) {
+      activeUid = user.uid;
+      appData = loadLocalDataForUid(activeUid);
+      if (appData.othersAccounts && appData.othersAccounts.length) {
+        selectedOthersAccountId = appData.othersAccounts[0].id;
+      }
+
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('userNameDisplay').innerText = user.displayName || (user.email ? user.email.split('@')[0] : 'User');
+      document.getElementById('userEmailDisplay').innerText = user.email || `UID: ${user.uid.slice(0, 8)}...`;
+      document.getElementById('userAvatarImg').src = user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || user.email || 'U')}&background=10b981&color=fff`;
+
+      renderSidebar();
+      renderCurrentView();
+      await pullFromCloudForUid();
+    };
+
+    window.onUserSignedOut = function() {
+      activeUid = null;
+      appData = createFreshDefaultData();
+      document.getElementById('loginScreen').classList.remove('hidden');
+    };
 
     function updateShieldStatus(text, type = 'local') {
       const el = document.getElementById('cloudStatusText');
@@ -502,79 +596,76 @@
     }
 
     async function saveData(skipCloud = false) {
+      if (!activeUid) return;
+      const keys = getUidStorageKeys(activeUid);
       appData.lastModified = new Date().toISOString();
       const serialized = JSON.stringify(appData);
-      localStorage.setItem(STORAGE_KEY, serialized);
-      localStorage.setItem(SNAPSHOT_KEY, serialized);
+      localStorage.setItem(keys.primary, serialized);
+      localStorage.setItem(keys.snapshot, serialized);
 
       if (skipCloud) return;
 
-      const user = getCurrentAuthUser();
-      const fbConfig = getActiveFirebaseConfig();
-
-      if (user && user.email && fbConfig && fbConfig.apiKey && fbConfig.projectId && window.firebasePushUserData) {
+      if (window.firebasePushUidData) {
         try {
-          const res = await window.firebasePushUserData(user.email, appData, fbConfig);
+          const res = await window.firebasePushUidData(activeUid, appData);
           if (res && res.ok) {
-            localStorage.removeItem(PENDING_SYNC_KEY);
-            updateShieldStatus('Cloud Synced', 'cloud');
+            localStorage.removeItem(keys.pending);
+            updateShieldStatus('UID Cloud Synced', 'cloud');
             return;
           }
         } catch (err) {
-          localStorage.setItem(PENDING_SYNC_KEY, '1');
+          localStorage.setItem(keys.pending, '1');
           updateShieldStatus('Offline Queued', 'pending');
           return;
         }
       }
-      updateShieldStatus('Local Snapshot Safe', 'local');
+      updateShieldStatus('Local UID Vault Safe', 'local');
     }
 
-    async function pullFromCloudIfAvailable() {
-      const user = getCurrentAuthUser();
-      const fbConfig = getActiveFirebaseConfig();
-      if (!user || !user.email || !fbConfig || !fbConfig.apiKey || !fbConfig.projectId || !window.firebasePullUserData) {
-        updateShieldStatus('Local Snapshot Safe', 'local');
-        return;
-      }
+    async function pullFromCloudForUid() {
+      if (!activeUid || !window.firebasePullUidData) return;
       try {
-        const cloudData = await window.firebasePullUserData(user.email, fbConfig);
+        const cloudData = await window.firebasePullUidData(activeUid);
         if (cloudData) {
           const cloudTime = new Date(cloudData.lastModified || 0).getTime();
           const localTime = new Date(appData.lastModified || 0).getTime();
           if (cloudTime >= localTime) {
             appData = mergeWithDefaults(cloudData);
+            if (appData.othersAccounts && appData.othersAccounts.length && !appData.othersAccounts.some(a => a.id === selectedOthersAccountId)) {
+              selectedOthersAccountId = appData.othersAccounts[0].id;
+            }
             await saveData(true);
             renderSidebar();
             renderCurrentView();
           }
-          updateShieldStatus('Cloud Synced', 'cloud');
+          updateShieldStatus('UID Cloud Synced', 'cloud');
         } else {
           await saveData(false);
         }
       } catch (e) {
-        updateShieldStatus('Local Snapshot Safe', 'local');
+        updateShieldStatus('Local UID Vault Safe', 'local');
       }
     }
 
     async function manualSyncNow() {
-      const user = getCurrentAuthUser();
-      const fbConfig = getActiveFirebaseConfig();
-
+      if (!activeUid) return;
       try {
-        const res = await window.firebasePushUserData(user.email, appData, fbConfig);
+        const res = await window.firebasePushUidData(activeUid, appData);
         if (res && res.ok) {
-          updateShieldStatus('Cloud Synced', 'cloud');
-          showToast('সব ডাটা ক্লাউডে নিরাপদভাবে সিঙ্ক হয়েছে!');
+          updateShieldStatus('UID Cloud Synced', 'cloud');
+          showToast('Apnar nijosho UID vault-e data sync hoyeche!');
         } else {
-          showToast('ক্লাউড সিঙ্ক অপেক্ষমাণ; লোকাল ডাটা সুরক্ষিত আছে।');
+          showToast('Sync hoyni; local data safe ache.');
         }
       } catch (e) {
-        showToast('ক্লাউড সিঙ্ক করা যায়নি; লোকাল ডাটা সুরক্ষিত আছে।');
+        showToast('Network error; local data safe ache.');
       }
     }
 
     window.addEventListener('online', () => {
-      if (localStorage.getItem(PENDING_SYNC_KEY)) manualSyncNow();
+      if (!activeUid) return;
+      const keys = getUidStorageKeys(activeUid);
+      if (localStorage.getItem(keys.pending)) manualSyncNow();
     });
 
     function formatBDT(num) {
@@ -589,94 +680,41 @@
       setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 2500);
     }
 
-    // ==================== GMAIL AUTHENTICATION ====================
-    function checkAuth() {
-      const userRaw = localStorage.getItem(AUTH_KEY);
-      const loginScreen = document.getElementById('loginScreen');
-      if (!userRaw) {
-        loginScreen.classList.remove('hidden');
-        document.getElementById('loginEmailInput').value = DEFAULT_USER_EMAIL;
-        document.getElementById('loginNameInput').value = DEFAULT_USER_NAME;
-        initGoogleIdentity();
-      } else {
-        const user = JSON.parse(userRaw);
-        loginScreen.classList.add('hidden');
-        document.getElementById('userNameDisplay').innerText = user.name || DEFAULT_USER_NAME;
-        document.getElementById('userEmailDisplay').innerText = user.email || DEFAULT_USER_EMAIL;
-        document.getElementById('userAvatarImg').src = user.picture || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name || DEFAULT_USER_NAME)}&background=10b981&color=fff`;
-        pullFromCloudIfAvailable();
+    async function logoutUser() {
+      if (!confirm('Apni ki Sign Out korte chan? (Pore abar oi Gmail dea Sign In korle data paben)')) return;
+      if (window.firebaseSignOutUser) await window.firebaseSignOutUser();
+    }
+
+    // ==================== DIRECT FILE DOWNLOAD HELPER ====================
+    function downloadStoredFile(dataUrl, filename) {
+      if (!dataUrl) {
+        showToast('Ei entry-te kono uploaded file nei.');
+        return;
       }
+      const a = document.createElement('a');
+      a.href = dataUrl;
+      a.download = filename || 'document_file';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      showToast('File download shuru hoyeche!');
     }
 
-    async function handleGmailLogin(e) {
-      e.preventDefault();
-      const email = (document.getElementById('loginEmailInput').value || DEFAULT_USER_EMAIL).trim();
-      const name = (document.getElementById('loginNameInput').value || DEFAULT_USER_NAME).trim();
-      const user = {
-        email,
-        name,
-        picture: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=10b981&color=fff`
-      };
-      localStorage.setItem(AUTH_KEY, JSON.stringify(user));
-      checkAuth();
-      await pullFromCloudIfAvailable();
-      showToast(`${email} দিয়ে লগইন ও ডাটা সিঙ্ক সম্পন্ন হয়েছে!`);
-    }
-
-    function initGoogleIdentity() {
-      const clientId = appData.settings.googleClientId;
-      if (!clientId || typeof google === 'undefined' || !google.accounts) return;
-      google.accounts.id.initialize({
-        client_id: clientId,
-        callback: async (response) => {
-          try {
-            const payload = JSON.parse(atob(response.credential.split('.')[1]));
-            const user = { email: payload.email, name: payload.name, picture: payload.picture };
-            localStorage.setItem(AUTH_KEY, JSON.stringify(user));
-            checkAuth();
-            await pullFromCloudIfAvailable();
-          } catch (err) {}
-        }
-      });
-      google.accounts.id.renderButton(document.getElementById('googleBtnWrapper'), {
-        theme: 'outline', size: 'large', width: 280
-      });
-    }
-
-    function logoutUser() {
-      if (!confirm('আপনি কি Logout করতে চান? (আপনার ডাটা Local ও Cloud-এ সুরক্ষিত থাকবে)')) return;
-      localStorage.removeItem(AUTH_KEY);
-      checkAuth();
-    }
-
-    // ==================== 3-DOT SIDEBAR & DROPDOWN ====================
-    const coreTabs = [
+    // ==================== UNIVERSAL 3-DOT SIDEBAR NAVIGATION ====================
+    const universalTabs = [
       { id: 'dashboard', label: '1. Dashboard', icon: 'fa-chart-pie' },
       { id: 'cashbook', label: '2. Personal Cash Book', icon: 'fa-book-open' },
       { id: 'documents', label: '3. Land Documents', icon: 'fa-folder-open' },
-      { id: 'mokul', label: '4. Mokul Vai AC (Ledger)', icon: 'fa-user-tie' },
-      { id: 'jaiga', label: '5. Jaigar Hisab (Ledger)', icon: 'fa-map-location-dot' },
-      { id: 'ammu', label: '6. Ammor Medicine Hisab', icon: 'fa-pills' },
+      { id: 'family_docs', label: '4. Family Documents', icon: 'fa-users-rectangle' },
+      { id: 'others', label: '5. Others Hisab', icon: 'fa-layer-group' },
+      { id: 'medicine', label: '6. Medicine Hisab', icon: 'fa-pills' },
       { id: 'wife', label: '7. Wife AC (Ledger)', icon: 'fa-heart' },
       { id: 'bank', label: '8. Bank (DPS/FDR/Savings)', icon: 'fa-building-columns' },
       { id: 'settings', label: '9. Setting Panel', icon: 'fa-sliders' }
     ];
 
-    function getAllTabs() {
-      const custom = (appData.settings.customTabs || []).map((t, idx) => ({
-        id: 'custom_' + t.id,
-        label: `${10 + idx}. ${t.name}`,
-        icon: t.icon || 'fa-folder-plus',
-        isCustom: true,
-        customObj: t
-      }));
-      return [...coreTabs, ...custom];
-    }
-
-    function toggleCustomDropdown() { isDropdownOpen = !isDropdownOpen; renderSidebar(); }
-
     function updateBottomNavActive() {
-      ['dashboard', 'cashbook', 'bank'].forEach(id => {
+      ['dashboard', 'cashbook', 'others'].forEach(id => {
         const btn = document.getElementById('bnav_' + id);
         if (!btn) return;
         if (currentTab === id) {
@@ -689,9 +727,7 @@
 
     function renderSidebar() {
       const nav = document.getElementById('navMenu');
-      const customTabs = appData.settings.customTabs || [];
-
-      const coreHtml = coreTabs.map(tab => {
+      nav.innerHTML = universalTabs.map(tab => {
         const active = currentTab === tab.id;
         return `
           <button onclick="switchTab('${tab.id}')"
@@ -705,47 +741,6 @@
           </button>
         `;
       }).join('');
-
-      const dropdownHtml = `
-        <div class="pt-2 mt-2 border-t border-slate-800">
-          <button onclick="toggleCustomDropdown()"
-            class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-extrabold uppercase tracking-wider bg-slate-900 text-emerald-300 hover:bg-slate-800 transition">
-            <span class="flex items-center gap-2">
-              <i class="fa-solid fa-ellipsis-vertical"></i> কাস্টম অপশন (Dropdown)
-            </span>
-            <i class="fa-solid ${isDropdownOpen ? 'fa-chevron-up' : 'fa-chevron-down'} text-xs"></i>
-          </button>
-
-          <div class="${isDropdownOpen ? 'block' : 'hidden'} mt-1.5 pl-2 space-y-1">
-            <button onclick="openAddThreeDotOptionModal()"
-              class="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold bg-emerald-500/15 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition">
-              <i class="fa-solid fa-plus-circle"></i> + নতুন অপশন যোগ করুন
-            </button>
-
-            ${customTabs.map((t, idx) => {
-              const tabId = 'custom_' + t.id;
-              const active = currentTab === tabId;
-              return `
-                <div class="flex items-center gap-1">
-                  <button onclick="switchTab('${tabId}')"
-                    class="flex-1 flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold truncate transition ${
-                      active ? 'bg-emerald-600 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white'
-                    }">
-                    <i class="fa-solid ${t.icon || 'fa-folder-plus'} w-4 text-center text-emerald-400"></i>
-                    <span class="truncate">${10 + idx}. ${t.name}</span>
-                  </button>
-                  <button onclick="deleteCustomTab('${t.id}')" title="Delete Option"
-                    class="p-2 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-slate-800 text-xs">
-                    <i class="fa-solid fa-trash-can"></i>
-                  </button>
-                </div>
-              `;
-            }).join('')}
-          </div>
-        </div>
-      `;
-
-      nav.innerHTML = coreHtml + dropdownHtml;
       updateBottomNavActive();
     }
 
@@ -756,10 +751,10 @@
 
     function switchTab(tabId) {
       currentTab = tabId;
-      const tab = getAllTabs().find(t => t.id === tabId) || coreTabs[0];
+      const tab = universalTabs.find(t => t.id === tabId) || universalTabs[0];
       document.getElementById('pageTitle').innerText = tab.label;
       document.getElementById('mobileSubtitle').innerText = tab.label;
-      document.getElementById('printHeaderSubtitle').innerText = tab.label + ' — রিপোর্ট';
+      document.getElementById('printHeaderSubtitle').innerText = tab.label + ' — Report';
       renderSidebar();
       renderCurrentView();
       if (window.innerWidth < 768) {
@@ -767,39 +762,6 @@
         document.getElementById('sidebarOverlay').classList.add('hidden');
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function openAddThreeDotOptionModal() {
-      document.getElementById('modalTitle').innerText = '৩-ডট মেনুতে নতুন অপশন যোগ করুন';
-      document.getElementById('modalBody').innerHTML = `
-        <form onsubmit="saveNewThreeDotOption(event)" class="space-y-4">
-          <div>
-            <label class="block text-xs font-bold text-slate-600 mb-1">নতুন অপশনের নাম</label>
-            <input type="text" id="modalOptionName" required placeholder="যেমন: দোকান হিসাব / কিস্তি / গাড়ির কাগজ" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm" />
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-600 mb-1">আইকন নির্বাচন করুন</label>
-            <select id="modalOptionIcon" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm">
-              <option value="fa-folder-plus">ফোল্ডার / সাধারণ হিসাব</option>
-              <option value="fa-hand-holding-dollar">বাকি খাতা / পাওনা</option>
-              <option value="fa-briefcase">ব্যবসা / অফিস খরচ</option>
-              <option value="fa-piggy-bank">সঞ্চয় / তহবিল</option>
-              <option value="fa-car">গাড়ি / বাইক হিসাব</option>
-            </select>
-          </div>
-          <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl shadow">+ মেনুতে যুক্ত করুন</button>
-        </form>
-      `;
-      openModal();
-    }
-
-    function saveNewThreeDotOption(e) {
-      e.preventDefault();
-      const name = document.getElementById('modalOptionName').value.trim();
-      const icon = document.getElementById('modalOptionIcon').value;
-      if (!name) return;
-      quickAddPresetTab(name, icon);
-      closeModal();
     }
 
     // ==================== GENERIC SMART DOUBLE-ENTRY LEDGER ENGINE ====================
@@ -823,7 +785,7 @@
         if (filterObj.from && item.date < filterObj.from) return false;
         if (filterObj.to && item.date > filterObj.to) return false;
         if (filterObj.search) {
-          const hay = `${item.desc || ''} ${item.medicine || ''} ${item.landTitle || ''} ${item.doctor || ''} ${item.khatian || ''} ${item.method || ''}`.toLowerCase();
+          const hay = `${item.desc || ''} ${item.medicine || ''} ${item.doctor || ''} ${item.method || ''}`.toLowerCase();
           if (!hay.includes(filterObj.search.toLowerCase())) return false;
         }
         return true;
@@ -849,12 +811,17 @@
 
     function getAllAccountSummaries() {
       const cb = computeDoubleEntry(appData.cashbook, { from: '', to: '', search: '' }, { positiveType: 'cr' });
-      const mk = computeDoubleEntry(appData.mokulLedger, { from: '', to: '', search: '' }, { positiveType: 'dr' });
-      const jg = computeDoubleEntry(appData.jaigaLedger, { from: '', to: '', search: '' }, { positiveType: 'dr' });
-      const am = computeDoubleEntry(appData.ammuMedicines, { from: '', to: '', search: '' }, { positiveType: 'cr' });
+      let othersTotalDr = 0, othersTotalCr = 0, othersNetBal = 0;
+      (appData.othersAccounts || []).forEach(acc => {
+        const res = computeDoubleEntry(acc.entries || [], { from: '', to: '', search: '' }, { positiveType: acc.positiveType || 'dr' });
+        othersTotalDr += res.totalDr;
+        othersTotalCr += res.totalCr;
+        othersNetBal += res.closingBal;
+      });
+      const med = computeDoubleEntry(appData.medicineEntries, { from: '', to: '', search: '' }, { positiveType: 'cr' });
       const wf = computeDoubleEntry(appData.wifeLedger, { from: '', to: '', search: '' }, { positiveType: 'dr' });
       const totalBank = appData.banks.reduce((s, b) => s + Number(b.balance), 0);
-      return { cb, mk, jg, am, wf, totalBank };
+      return { cb, othersTotalDr, othersTotalCr, othersNetBal, med, wf, totalBank };
     }
 
     // ==================== RENDER VIEWS ====================
@@ -862,18 +829,18 @@
       const container = document.getElementById('appContainer');
       if (currentTab === 'dashboard') renderDashboard(container);
       else if (currentTab === 'cashbook') renderCashbook(container);
-      else if (currentTab === 'documents') renderDocuments(container);
-      else if (currentTab === 'mokul') renderMokulLedger(container);
-      else if (currentTab === 'jaiga') renderJaigaLedger(container);
-      else if (currentTab === 'ammu') renderAmmuMedicine(container);
+      else if (currentTab === 'documents') renderDocuments(container, 'land');
+      else if (currentTab === 'family_docs') renderDocuments(container, 'family');
+      else if (currentTab === 'others') renderOthersHisab(container);
+      else if (currentTab === 'medicine') renderMedicineHisab(container);
       else if (currentTab === 'wife') renderWifeLedger(container);
       else if (currentTab === 'bank') renderBank(container);
       else if (currentTab === 'settings') renderSettings(container);
-      else if (currentTab.startsWith('custom_')) renderCustomTab(container, currentTab.replace('custom_', ''));
     }
 
+    // ==================== 1. DASHBOARD ====================
     function renderDashboard(container) {
-      const { cb, mk, jg, am, wf, totalBank } = getAllAccountSummaries();
+      const { cb, othersTotalDr, othersTotalCr, othersNetBal, med, wf, totalBank } = getAllAccountSummaries();
 
       container.innerHTML = `
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4 mb-6">
@@ -895,40 +862,40 @@
             <p class="text-[11px] text-slate-500 mt-1 truncate">DPS / FDR / Savings (${appData.banks.length})</p>
           </div>
 
-          <div onclick="switchTab('mokul')" class="cursor-pointer glass-card p-4 sm:p-5 rounded-3xl border border-indigo-200/70 shadow-sm hover:shadow-md active:scale-[0.99] transition">
-            <div class="flex items-center justify-between mb-1.5">
-              <span class="text-[11px] sm:text-xs font-extrabold text-indigo-800 uppercase">Mokul Vai AC</span>
-              <span class="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-sm"><i class="fa-solid fa-user-tie"></i></span>
-            </div>
-            <p class="text-lg sm:text-2xl font-black text-indigo-700">${formatBDT(mk.closingBal)}</p>
-            <p class="text-[11px] text-slate-500 mt-1 truncate">Dr: ${formatBDT(mk.totalDr)} • Cr: ${formatBDT(mk.totalCr)}</p>
-          </div>
-
-          <div onclick="switchTab('jaiga')" class="cursor-pointer glass-card p-4 sm:p-5 rounded-3xl border border-teal-200/70 shadow-sm hover:shadow-md active:scale-[0.99] transition">
-            <div class="flex items-center justify-between mb-1.5">
-              <span class="text-[11px] sm:text-xs font-extrabold text-teal-800 uppercase">Jaigar Hisab</span>
-              <span class="w-8 h-8 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center text-sm"><i class="fa-solid fa-map-location-dot"></i></span>
-            </div>
-            <p class="text-lg sm:text-2xl font-black text-teal-700">${formatBDT(jg.totalCr)}</p>
-            <p class="text-[11px] text-slate-500 mt-1 truncate">বকেয়া: ${formatBDT(jg.closingBal)}</p>
-          </div>
-
           <div onclick="switchTab('documents')" class="cursor-pointer glass-card p-4 sm:p-5 rounded-3xl border border-amber-200/70 shadow-sm hover:shadow-md active:scale-[0.99] transition">
             <div class="flex items-center justify-between mb-1.5">
               <span class="text-[11px] sm:text-xs font-extrabold text-amber-800 uppercase">Land Docs</span>
               <span class="w-8 h-8 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-sm"><i class="fa-solid fa-folder-open"></i></span>
             </div>
-            <p class="text-lg sm:text-2xl font-black text-amber-700">${appData.documents.length} টি ফাইল</p>
-            <p class="text-[11px] text-slate-500 mt-1 truncate">BS / RS / Dalil Folders</p>
+            <p class="text-lg sm:text-2xl font-black text-amber-700">${appData.documents.length} ti file</p>
+            <p class="text-[11px] text-slate-500 mt-1 truncate">BS / RS / Dalil + Download</p>
           </div>
 
-          <div onclick="switchTab('ammu')" class="cursor-pointer glass-card p-4 sm:p-5 rounded-3xl border border-rose-200/70 shadow-sm hover:shadow-md active:scale-[0.99] transition">
+          <div onclick="switchTab('family_docs')" class="cursor-pointer glass-card p-4 sm:p-5 rounded-3xl border border-cyan-200/70 shadow-sm hover:shadow-md active:scale-[0.99] transition">
             <div class="flex items-center justify-between mb-1.5">
-              <span class="text-[11px] sm:text-xs font-extrabold text-rose-800 uppercase">Ammor Medicine</span>
+              <span class="text-[11px] sm:text-xs font-extrabold text-cyan-800 uppercase">Family Docs</span>
+              <span class="w-8 h-8 rounded-xl bg-cyan-100 text-cyan-700 flex items-center justify-center text-sm"><i class="fa-solid fa-users-rectangle"></i></span>
+            </div>
+            <p class="text-lg sm:text-2xl font-black text-cyan-700">${appData.familyDocuments.length} ti file</p>
+            <p class="text-[11px] text-slate-500 mt-1 truncate">NID / Birth / Passport</p>
+          </div>
+
+          <div onclick="switchTab('others')" class="cursor-pointer glass-card p-4 sm:p-5 rounded-3xl border border-indigo-200/70 shadow-sm hover:shadow-md active:scale-[0.99] transition">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-[11px] sm:text-xs font-extrabold text-indigo-800 uppercase">Others Hisab</span>
+              <span class="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-sm"><i class="fa-solid fa-layer-group"></i></span>
+            </div>
+            <p class="text-lg sm:text-2xl font-black text-indigo-700">${formatBDT(othersNetBal)}</p>
+            <p class="text-[11px] text-slate-500 mt-1 truncate">${appData.othersAccounts.length} ti Custom Khat</p>
+          </div>
+
+          <div onclick="switchTab('medicine')" class="cursor-pointer glass-card p-4 sm:p-5 rounded-3xl border border-rose-200/70 shadow-sm hover:shadow-md active:scale-[0.99] transition">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-[11px] sm:text-xs font-extrabold text-rose-800 uppercase">Medicine Hisab</span>
               <span class="w-8 h-8 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center text-sm"><i class="fa-solid fa-pills"></i></span>
             </div>
-            <p class="text-lg sm:text-2xl font-black text-rose-700">${formatBDT(am.totalDr)}</p>
-            <p class="text-[11px] text-slate-500 mt-1 truncate">তহবিল ব্যালেন্স: ${formatBDT(am.closingBal)}</p>
+            <p class="text-lg sm:text-2xl font-black text-rose-700">${formatBDT(med.totalDr)}</p>
+            <p class="text-[11px] text-slate-500 mt-1 truncate">Balance: ${formatBDT(med.closingBal)}</p>
           </div>
 
           <div onclick="switchTab('wife')" class="cursor-pointer glass-card p-4 sm:p-5 rounded-3xl border border-pink-200/70 shadow-sm hover:shadow-md active:scale-[0.99] transition">
@@ -942,27 +909,27 @@
 
           <div onclick="switchTab('settings')" class="cursor-pointer bg-gradient-to-br from-slate-900 to-emerald-950 text-white p-4 sm:p-5 rounded-3xl shadow-sm hover:shadow-md active:scale-[0.99] transition">
             <div class="flex items-center justify-between mb-1.5">
-              <span class="text-[11px] sm:text-xs font-extrabold text-emerald-400 uppercase">Cloud & Menu</span>
-              <span class="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm"><i class="fa-solid fa-shield-halved"></i></span>
+              <span class="text-[11px] sm:text-xs font-extrabold text-emerald-400 uppercase">Settings & Backup</span>
+              <span class="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm"><i class="fa-solid fa-sliders"></i></span>
             </div>
-            <p class="text-base sm:text-lg font-extrabold">সেটিংস ও ব্যাকআপ</p>
-            <p class="text-[11px] text-slate-300 mt-1 truncate">Firebase + Local + JSON</p>
+            <p class="text-base sm:text-lg font-extrabold">+ Custom Khat</p>
+            <p class="text-[11px] text-slate-300 mt-1 truncate">Others Hisab & UID Vault</p>
           </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
           <div class="lg:col-span-2 glass-card p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-sm">
             <div class="flex items-center justify-between mb-3">
-              <h3 class="font-extrabold text-slate-800 text-sm sm:text-base">ক্যাটাগরি ভিত্তিক খরচ চার্ট</h3>
-              <button onclick="switchTab('cashbook')" class="text-xs text-emerald-600 font-bold hover:underline">ক্যাশ বুক →</button>
+              <h3 class="font-extrabold text-slate-800 text-sm sm:text-base">Category-wise Khoroch Chart</h3>
+              <button onclick="switchTab('cashbook')" class="text-xs text-emerald-600 font-bold hover:underline">Cash Book →</button>
             </div>
             <div class="h-56 sm:h-64"><canvas id="cashChartCanvas"></canvas></div>
           </div>
 
           <div class="glass-card p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-sm">
-            <h3 class="font-extrabold text-slate-800 text-sm sm:text-base mb-3">সাম্প্রতিক লেনদেন</h3>
+            <h3 class="font-extrabold text-slate-800 text-sm sm:text-base mb-3">Samprotik Lenden</h3>
             <div class="space-y-2.5">
-              ${cb.rows.slice(-5).reverse().map(item => `
+              ${cb.rows.length ? cb.rows.slice(-5).reverse().map(item => `
                 <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50/90 border border-slate-200/70">
                   <div class="min-w-0 pr-2">
                     <p class="text-xs sm:text-sm font-bold text-slate-800 truncate">${item.desc}</p>
@@ -972,7 +939,7 @@
                     ${item.type === 'credit' ? '+' : '-'}${formatBDT(item.amount)}
                   </span>
                 </div>
-              `).join('')}
+              `).join('') : '<p class="text-xs text-slate-400 text-center py-8">Kono lenden nei. Upore + Joma ba - Khoroch diye shuru korun.</p>'}
             </div>
           </div>
         </div>
@@ -991,7 +958,7 @@
           data: {
             labels: Object.keys(catMap),
             datasets: [{
-              label: 'খরচ (৳)',
+              label: 'Khoroch (৳)',
               data: Object.values(catMap),
               backgroundColor: ['#10b981', '#0ea5e9', '#f59e0b', '#f43f5e', '#8b5cf6', '#ec4899'],
               borderRadius: 10
@@ -1002,6 +969,7 @@
       }, 50);
     }
 
+    // ==================== 2. PERSONAL CASH BOOK ====================
     function renderCashbook(container) {
       const f = appData.cashFilter;
       const todayStr = new Date().toISOString().split('T')[0];
@@ -1047,11 +1015,11 @@
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
             <div>
               <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Personal Cash Book</h2>
-              <p class="text-xs text-slate-500">জমা (Cr +), খরচ (Dr -) ও চলমান ব্যালেন্স</p>
+              <p class="text-xs text-slate-500">Joma (Cr +), Khoroch (Dr -) o Cholman Balance</p>
             </div>
             <div class="flex gap-2 no-print">
-              <button onclick="openCashModal('credit')" class="flex-1 sm:flex-none bg-emerald-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow">+ জমা (Cr)</button>
-              <button onclick="openCashModal('debit')" class="flex-1 sm:flex-none bg-rose-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow">- খরচ (Dr)</button>
+              <button onclick="openCashModal('credit')" class="flex-1 sm:flex-none bg-emerald-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow">+ Joma (Cr)</button>
+              <button onclick="openCashModal('debit')" class="flex-1 sm:flex-none bg-rose-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow">- Khoroch (Dr)</button>
             </div>
           </div>
 
@@ -1059,30 +1027,30 @@
             <div class="grid grid-cols-2 sm:grid-cols-6 gap-2">
               <input type="date" id="qDate" value="${todayStr}" required class="px-2.5 py-2 rounded-xl border border-slate-300 bg-white text-xs sm:text-sm" />
               <select id="qType" class="px-2.5 py-2 rounded-xl border border-slate-300 bg-white text-xs sm:text-sm font-bold">
-                <option value="credit">+ জমা (Cr)</option>
-                <option value="debit" selected>- খরচ (Dr)</option>
+                <option value="credit">+ Joma (Cr)</option>
+                <option value="debit" selected>- Khoroch (Dr)</option>
               </select>
-              <input type="text" id="qDesc" placeholder="বিবরণ লিখুন..." required class="col-span-2 px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs sm:text-sm" />
-              <input type="number" id="qAmount" placeholder="টাকা" min="1" step="any" required class="px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs sm:text-sm font-bold" />
+              <input type="text" id="qDesc" placeholder="Biboron likhun..." required class="col-span-2 px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs sm:text-sm" />
+              <input type="number" id="qAmount" placeholder="Taka" min="1" step="any" required class="px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs sm:text-sm font-bold" />
               <button type="submit" class="bg-slate-900 hover:bg-emerald-600 text-white font-bold py-2 px-3 rounded-xl text-xs sm:text-sm shadow">Add</button>
             </div>
           </form>
         </div>
 
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
-          <div class="glass-card p-3.5 rounded-2xl border border-slate-200"><p class="text-[11px] text-slate-500 font-bold">পূর্বের জের</p><p class="text-base sm:text-lg font-black text-slate-700 mt-0.5">${formatBDT(openingBalance)}</p></div>
-          <div class="bg-emerald-50/90 p-3.5 rounded-2xl border border-emerald-200"><p class="text-[11px] text-emerald-700 font-bold">মোট জমা (Cr +)</p><p class="text-base sm:text-lg font-black text-emerald-700 mt-0.5">${formatBDT(periodCr)}</p></div>
-          <div class="bg-rose-50/90 p-3.5 rounded-2xl border border-rose-200"><p class="text-[11px] text-rose-700 font-bold">মোট খরচ (Dr -)</p><p class="text-base sm:text-lg font-black text-rose-700 mt-0.5">${formatBDT(periodDr)}</p></div>
-          <div class="bg-slate-900 text-white p-3.5 rounded-2xl"><p class="text-[11px] text-emerald-300 font-bold">বর্তমান ব্যালেন্স</p><p class="text-base sm:text-lg font-black mt-0.5">${formatBDT(running)}</p></div>
+          <div class="glass-card p-3.5 rounded-2xl border border-slate-200"><p class="text-[11px] text-slate-500 font-bold">Purber Jer</p><p class="text-base sm:text-lg font-black text-slate-700 mt-0.5">${formatBDT(openingBalance)}</p></div>
+          <div class="bg-emerald-50/90 p-3.5 rounded-2xl border border-emerald-200"><p class="text-[11px] text-emerald-700 font-bold">Mot Joma (Cr +)</p><p class="text-base sm:text-lg font-black text-emerald-700 mt-0.5">${formatBDT(periodCr)}</p></div>
+          <div class="bg-rose-50/90 p-3.5 rounded-2xl border border-rose-200"><p class="text-[11px] text-rose-700 font-bold">Mot Khoroch (Dr -)</p><p class="text-base sm:text-lg font-black text-rose-700 mt-0.5">${formatBDT(periodDr)}</p></div>
+          <div class="bg-slate-900 text-white p-3.5 rounded-2xl"><p class="text-[11px] text-emerald-300 font-bold">Bortoman Balance</p><p class="text-base sm:text-lg font-black mt-0.5">${formatBDT(running)}</p></div>
         </div>
 
         <div class="glass-card p-3.5 rounded-2xl border border-slate-200 shadow-sm mb-4 no-print">
           <div class="flex items-center gap-1.5 overflow-x-auto pb-2 mb-2.5">
-            <button onclick="appData.cashFilter.mode='all';renderCurrentView()" class="px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 ${f.mode === 'all' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'}">সব তারিখ</button>
-            <button onclick="appData.cashFilter.mode='today';renderCurrentView()" class="px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 ${f.mode === 'today' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'}">আজকের</button>
-            <button onclick="appData.cashFilter.mode='single';renderCurrentView()" class="px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 ${f.mode === 'single' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'}">নির্দিষ্ট তারিখ</button>
-            <button onclick="appData.cashFilter.mode='range';renderCurrentView()" class="px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 ${f.mode === 'range' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'}">তারিখ রেঞ্জ</button>
-            <button onclick="appData.cashFilter.mode='month';renderCurrentView()" class="px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 ${f.mode === 'month' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'}">মাস অনুযায়ী</button>
+            <button onclick="appData.cashFilter.mode='all';renderCurrentView()" class="px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 ${f.mode === 'all' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'}">Sob Tarikh</button>
+            <button onclick="appData.cashFilter.mode='today';renderCurrentView()" class="px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 ${f.mode === 'today' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'}">Ajker</button>
+            <button onclick="appData.cashFilter.mode='single';renderCurrentView()" class="px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 ${f.mode === 'single' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'}">Nirdishto Tarikh</button>
+            <button onclick="appData.cashFilter.mode='range';renderCurrentView()" class="px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 ${f.mode === 'range' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'}">Tarikh Range</button>
+            <button onclick="appData.cashFilter.mode='month';renderCurrentView()" class="px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 ${f.mode === 'month' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'}">Mash Onujayi</button>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
             ${f.mode === 'single' ? `<input type="date" value="${f.singleDate}" onchange="appData.cashFilter.singleDate=this.value;renderCurrentView()" class="px-3 py-2 rounded-xl border border-slate-300 text-sm" />` : ''}
@@ -1091,11 +1059,10 @@
               <input type="date" value="${f.toDate}" onchange="appData.cashFilter.toDate=this.value;renderCurrentView()" class="px-3 py-2 rounded-xl border border-slate-300 text-sm" />
             ` : ''}
             ${f.mode === 'month' ? `<input type="month" value="${f.month}" onchange="appData.cashFilter.month=this.value;renderCurrentView()" class="px-3 py-2 rounded-xl border border-slate-300 text-sm" />` : ''}
-            <input type="text" value="${f.search}" oninput="appData.cashFilter.search=this.value;renderCurrentView()" placeholder="সার্চ করুন..." class="px-3 py-2 rounded-xl border border-slate-300 text-sm" />
+            <input type="text" value="${f.search}" oninput="appData.cashFilter.search=this.value;renderCurrentView()" placeholder="Search korun..." class="px-3 py-2 rounded-xl border border-slate-300 text-sm" />
           </div>
         </div>
 
-        <!-- Mobile Smart Cards -->
         <div class="md:hidden space-y-2.5 mb-4">
           ${rows.map(r => `
             <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs">
@@ -1119,22 +1086,21 @@
           `).join('')}
         </div>
 
-        <!-- Desktop Table -->
         <div class="hidden md:block bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
           <div class="overflow-x-auto">
             <table class="w-full text-sm text-left">
               <thead class="bg-slate-900 text-white text-xs uppercase">
                 <tr>
-                  <th class="py-3.5 px-4">তারিখ</th>
-                  <th class="py-3.5 px-4">বিবরণ ও মাধ্যম</th>
-                  <th class="py-3.5 px-4 text-right text-emerald-300">জমা (Cr +)</th>
-                  <th class="py-3.5 px-4 text-right text-rose-300">খরচ (Dr -)</th>
-                  <th class="py-3.5 px-4 text-right text-amber-300">ব্যালেন্স (Bal)</th>
+                  <th class="py-3.5 px-4">Tarikh</th>
+                  <th class="py-3.5 px-4">Biboron o Maddhom</th>
+                  <th class="py-3.5 px-4 text-right text-emerald-300">Joma (Cr +)</th>
+                  <th class="py-3.5 px-4 text-right text-rose-300">Khoroch (Dr -)</th>
+                  <th class="py-3.5 px-4 text-right text-amber-300">Balance (Bal)</th>
                   <th class="py-3.5 px-4 text-center no-print">Action</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-200">
-                ${startDateLimit ? `<tr class="bg-slate-100 font-bold"><td colspan="4" class="py-2 px-4">পূর্বের জের (Opening Balance)</td><td class="py-2 px-4 text-right">${formatBDT(openingBalance)}</td><td class="no-print"></td></tr>` : ''}
+                ${startDateLimit ? `<tr class="bg-slate-100 font-bold"><td colspan="4" class="py-2 px-4">Purber Jer (Opening Balance)</td><td class="py-2 px-4 text-right">${formatBDT(openingBalance)}</td><td class="no-print"></td></tr>` : ''}
                 ${rows.map(r => `
                   <tr class="hover:bg-slate-50">
                     <td class="py-3 px-4 whitespace-nowrap">${r.date}</td>
@@ -1151,7 +1117,7 @@
               </tbody>
               <tfoot class="bg-slate-100 font-extrabold border-t-2 border-slate-300">
                 <tr>
-                  <td colspan="2" class="py-3 px-4 text-right">মোট হিসাব:</td>
+                  <td colspan="2" class="py-3 px-4 text-right">Mot Hisab:</td>
                   <td class="py-3 px-4 text-right text-emerald-700">${formatBDT(periodCr)}</td>
                   <td class="py-3 px-4 text-right text-rose-700">${formatBDT(periodDr)}</td>
                   <td class="py-3 px-4 text-right">${formatBDT(running)}</td>
@@ -1170,12 +1136,12 @@
         id: 'cb_' + Date.now(),
         date: document.getElementById('qDate').value,
         type: document.getElementById('qType').value,
-        category: document.getElementById('qType').value === 'credit' ? 'সাধারণ জমা' : 'সাধারণ খরচ',
+        category: document.getElementById('qType').value === 'credit' ? 'Sadharon Joma' : 'Sadharon Khoroch',
         desc: document.getElementById('qDesc').value.trim(),
         method: 'Cash',
         amount: parseFloat(document.getElementById('qAmount').value)
       });
-      saveData(); showToast('এন্ট্রি যুক্ত ও সুরক্ষিত হয়েছে!'); renderCurrentView();
+      saveData(); showToast('Entry jukto o songrokkhito hoyeche!'); renderCurrentView();
     }
 
     function openCashModal(defaultType = 'debit', editId = null) {
@@ -1184,20 +1150,20 @@
       const today = new Date().toISOString().split('T')[0];
       const cats = type === 'credit' ? appData.settings.incomeCategories : appData.settings.expenseCategories;
 
-      document.getElementById('modalTitle').innerText = existing ? 'ক্যাশ বুক এডিট' : (type === 'credit' ? '+ নতুন জমা (Cr)' : '- নতুন খরচ (Dr)');
+      document.getElementById('modalTitle').innerText = existing ? 'Cash Book Edit' : (type === 'credit' ? '+ Notun Joma (Cr)' : '- Notun Khoroch (Dr)');
       document.getElementById('modalBody').innerHTML = `
         <form onsubmit="saveCashModal(event, '${editId || ''}')" class="space-y-4">
           <div class="grid grid-cols-2 gap-3">
-            <div><label class="block text-xs font-bold text-slate-600 mb-1">তারিখ</label><input type="date" id="mCashDate" value="${existing ? existing.date : today}" required class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm" /></div>
-            <div><label class="block text-xs font-bold text-slate-600 mb-1">ধরন</label><select id="mCashType" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm font-bold"><option value="credit" ${type === 'credit' ? 'selected' : ''}>+ জমা (Cr)</option><option value="debit" ${type === 'debit' ? 'selected' : ''}>- খরচ (Dr)</option></select></div>
+            <div><label class="block text-xs font-bold text-slate-600 mb-1">Tarikh</label><input type="date" id="mCashDate" value="${existing ? existing.date : today}" required class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm" /></div>
+            <div><label class="block text-xs font-bold text-slate-600 mb-1">Dhoron</label><select id="mCashType" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm font-bold"><option value="credit" ${type === 'credit' ? 'selected' : ''}>+ Joma (Cr)</option><option value="debit" ${type === 'debit' ? 'selected' : ''}>- Khoroch (Dr)</option></select></div>
           </div>
           <div class="grid grid-cols-2 gap-3">
-            <div><label class="block text-xs font-bold text-slate-600 mb-1">ক্যাটাগরি</label><select id="mCashCat" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm">${cats.map(c => `<option value="${c}" ${existing && existing.category === c ? 'selected' : ''}>${c}</option>`).join('')}</select></div>
-            <div><label class="block text-xs font-bold text-slate-600 mb-1">মাধ্যম</label><select id="mCashMethod" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm">${['Cash', 'bKash', 'Nagad', 'Bank'].map(m => `<option value="${m}" ${existing && existing.method === m ? 'selected' : ''}>${m}</option>`).join('')}</select></div>
+            <div><label class="block text-xs font-bold text-slate-600 mb-1">Category</label><select id="mCashCat" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm">${cats.map(c => `<option value="${c}" ${existing && existing.category === c ? 'selected' : ''}>${c}</option>`).join('')}</select></div>
+            <div><label class="block text-xs font-bold text-slate-600 mb-1">Maddhom</label><select id="mCashMethod" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm">${['Cash', 'bKash', 'Nagad', 'Bank'].map(m => `<option value="${m}" ${existing && existing.method === m ? 'selected' : ''}>${m}</option>`).join('')}</select></div>
           </div>
-          <div><label class="block text-xs font-bold text-slate-600 mb-1">বিবরণ</label><input type="text" id="mCashDesc" value="${existing ? existing.desc : ''}" required class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm" /></div>
-          <div><label class="block text-xs font-bold text-slate-600 mb-1">টাকা (৳)</label><input type="number" id="mCashAmount" value="${existing ? existing.amount : ''}" min="1" step="any" required class="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-lg font-extrabold" /></div>
-          <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-3 rounded-xl shadow">সংরক্ষণ করুন</button>
+          <div><label class="block text-xs font-bold text-slate-600 mb-1">Biboron</label><input type="text" id="mCashDesc" value="${existing ? existing.desc : ''}" required class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm" /></div>
+          <div><label class="block text-xs font-bold text-slate-600 mb-1">Taka (৳)</label><input type="number" id="mCashAmount" value="${existing ? existing.amount : ''}" min="1" step="any" required class="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-lg font-extrabold" /></div>
+          <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-3 rounded-xl shadow">Songrokkhon Korun</button>
         </form>
       `;
       openModal();
@@ -1218,128 +1184,222 @@
         const idx = appData.cashbook.findIndex(x => x.id === editId);
         if (idx !== -1) appData.cashbook[idx] = payload;
       } else appData.cashbook.push(payload);
-      saveData(); closeModal(); showToast('সংরক্ষিত হয়েছে!'); renderCurrentView();
+      saveData(); closeModal(); showToast('Songrokkhito hoyeche!'); renderCurrentView();
     }
 
     function deleteCashEntry(id) {
-      if (!confirm('মুছে ফেলতে চান?')) return;
+      if (!confirm('Muche felte chan?')) return;
       appData.cashbook = appData.cashbook.filter(x => x.id !== id);
       saveData(); renderCurrentView();
     }
 
-    function renderDocuments(container) {
-      const docs = selectedDocFolder === 'all' ? appData.documents : appData.documents.filter(d => d.folderId === selectedDocFolder);
+    // ==================== 3. LAND DOCUMENTS & 4. FAMILY DOCUMENTS (WITH DOWNLOAD) ====================
+    function renderDocuments(container, sectionType = 'land') {
+      const isFamily = sectionType === 'family';
+      const folders = isFamily ? appData.familyFolders : appData.docFolders;
+      const allDocs = isFamily ? appData.familyDocuments : appData.documents;
+      const activeFolder = isFamily ? selectedFamilyFolder : selectedDocFolder;
+      const docs = activeFolder === 'all' ? allDocs : allDocs.filter(d => d.folderId === activeFolder);
+
+      const headerTitle = isFamily ? 'Family Documents (NID / Birth / Passport)' : 'Land Documents (BS / RS / Dalil)';
+      const headerSub = isFamily ? 'Paribarik document folder onujayi songrokkhon, preview o download' : 'Jomir document folder onujayi songrokkhon, preview o download';
+      const badgeColor = isFamily ? 'bg-cyan-100 text-cyan-800' : 'bg-amber-100 text-amber-800';
+
       container.innerHTML = `
         <div class="glass-card p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-sm mb-5">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-            <div><h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Land Documents (BS / RS / Dalil)</h2><p class="text-xs text-slate-500">ফোল্ডার অনুযায়ী ডকুমেন্ট সংরক্ষণ ও Google Drive লিংক</p></div>
+            <div>
+              <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">${headerTitle}</h2>
+              <p class="text-xs text-slate-500">${headerSub}</p>
+            </div>
             <div class="flex gap-2 no-print">
-              <button onclick="openNewFolderModal()" class="flex-1 sm:flex-none bg-slate-800 text-white px-3.5 py-2 rounded-xl text-xs font-bold">+ ফোল্ডার</button>
-              <button onclick="openUploadDocModal()" class="flex-1 sm:flex-none bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-bold">+ আপলোড</button>
+              <button onclick="openNewFolderModal('${sectionType}')" class="flex-1 sm:flex-none bg-slate-800 text-white px-3.5 py-2 rounded-xl text-xs font-bold">+ Folder</button>
+              <button onclick="openUploadDocModal('${sectionType}')" class="flex-1 sm:flex-none bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-bold">+ Upload</button>
             </div>
           </div>
           <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
-            <button onclick="selectedDocFolder='all';renderCurrentView()" class="p-3 rounded-2xl border text-left ${selectedDocFolder === 'all' ? 'bg-amber-50 border-amber-400' : 'bg-slate-50'}"><p class="font-bold text-xs sm:text-sm">সকল ফাইল</p><p class="text-[11px] text-slate-500">${appData.documents.length} টি</p></button>
-            ${appData.docFolders.map(f => `<button onclick="selectedDocFolder='${f.id}';renderCurrentView()" class="p-3 rounded-2xl border text-left ${selectedDocFolder === f.id ? 'bg-emerald-50 border-emerald-500' : 'bg-slate-50'}"><p class="font-bold text-xs sm:text-sm truncate">${f.name}</p><p class="text-[11px] text-slate-500">${appData.documents.filter(d => d.folderId === f.id).length} টি</p></button>`).join('')}
+            <button onclick="selectDocFolderFilter('${sectionType}', 'all')" class="p-3 rounded-2xl border text-left ${activeFolder === 'all' ? 'bg-amber-50 border-amber-400' : 'bg-slate-50'}">
+              <p class="font-bold text-xs sm:text-sm">Sokol File</p>
+              <p class="text-[11px] text-slate-500">${allDocs.length} ti</p>
+            </button>
+            ${folders.map(f => `
+              <button onclick="selectDocFolderFilter('${sectionType}', '${f.id}')" class="p-3 rounded-2xl border text-left ${activeFolder === f.id ? 'bg-emerald-50 border-emerald-500' : 'bg-slate-50'}">
+                <p class="font-bold text-xs sm:text-sm truncate">${f.name}</p>
+                <p class="text-[11px] text-slate-500">${allDocs.filter(d => d.folderId === f.id).length} ti</p>
+              </button>
+            `).join('')}
           </div>
         </div>
+
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          ${docs.map(doc => {
-            const folder = appData.docFolders.find(f => f.id === doc.folderId);
+          ${docs.length ? docs.map(doc => {
+            const folder = folders.find(f => f.id === doc.folderId);
+            const safeDownloadName = (doc.fileName || (doc.title + '.pdf')).replace(/'/g, '');
             return `
-              <div class="glass-card p-4 rounded-2xl border border-slate-200 shadow-xs">
-                <div class="flex justify-between items-start mb-2">
-                  <span class="px-2.5 py-1 rounded-lg bg-amber-100 text-amber-800 text-xs font-bold">${folder ? folder.name : 'Doc'}</span>
-                  <button onclick="deleteDoc('${doc.id}')" class="text-slate-400 hover:text-rose-600 text-xs no-print"><i class="fa-solid fa-trash"></i></button>
+              <div class="glass-card p-4 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
+                <div>
+                  <div class="flex justify-between items-start mb-2">
+                    <span class="px-2.5 py-1 rounded-lg ${badgeColor} text-xs font-bold">${folder ? folder.name : 'Doc'}</span>
+                    <button onclick="deleteDoc('${sectionType}', '${doc.id}')" class="text-slate-400 hover:text-rose-600 text-xs no-print"><i class="fa-solid fa-trash"></i></button>
+                  </div>
+                  <h4 class="font-bold text-slate-900">${doc.title}</h4>
+                  <p class="text-xs text-slate-500 mt-1">No: ${doc.docNo || '-'} • ${doc.date}</p>
+                  ${doc.fileName ? `<p class="text-[11px] text-emerald-700 mt-1 truncate"><i class="fa-solid fa-paperclip"></i> ${doc.fileName}</p>` : ''}
                 </div>
-                <h4 class="font-bold text-slate-900">${doc.title}</h4>
-                <p class="text-xs text-slate-500 mt-1">নং: ${doc.docNo || '-'} • ${doc.date}</p>
-                <div class="mt-3 pt-3 border-t flex justify-between items-center no-print">
-                  ${doc.fileData ? `<button onclick="previewFile('${doc.fileData}', '${doc.title}')" class="text-xs bg-slate-100 px-3 py-1.5 rounded-lg font-bold">দেখুন</button>` : '<span></span>'}
-                  <a href="${doc.driveLink || 'https://drive.google.com'}" target="_blank" class="text-xs bg-emerald-600 text-white px-3 py-1.5 rounded-lg font-bold">Google Drive</a>
+                <div class="mt-3 pt-3 border-t flex flex-wrap gap-1.5 justify-between items-center no-print">
+                  <div class="flex gap-1.5">
+                    ${doc.fileData ? `
+                      <button onclick="previewStoredDoc('${sectionType}', '${doc.id}')" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-800 px-2.5 py-1.5 rounded-lg font-bold flex items-center gap-1">
+                        <i class="fa-solid fa-eye"></i> Dekhun
+                      </button>
+                      <button onclick="triggerDocDownload('${sectionType}', '${doc.id}')" class="text-xs bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded-lg font-bold flex items-center gap-1 shadow-2xs">
+                        <i class="fa-solid fa-download"></i> Download
+                      </button>
+                    ` : '<span class="text-[11px] text-slate-400">No local file</span>'}
+                  </div>
+                  ${doc.driveLink ? `<a href="${doc.driveLink}" target="_blank" class="text-xs bg-emerald-600 text-white px-2.5 py-1.5 rounded-lg font-bold">Drive</a>` : ''}
                 </div>
               </div>
             `;
-          }).join('')}
+          }).join('') : '<div class="col-span-full text-center py-10 text-xs text-slate-400 bg-white rounded-3xl border border-slate-200">Kono document upload kora hoyni. Upore "+ Upload" button theke add korun.</div>'}
         </div>
       `;
     }
 
-    function openNewFolderModal() {
-      document.getElementById('modalTitle').innerText = 'নতুন ফোল্ডার তৈরি করুন';
-      document.getElementById('modalBody').innerHTML = `<form onsubmit="createFolder(event)" class="space-y-4"><input type="text" id="newFolderName" required placeholder="ফোল্ডারের নাম..." class="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-sm" /><button type="submit" class="w-full bg-slate-900 text-white font-bold py-2.5 rounded-xl">তৈরি করুন</button></form>`;
-      openModal();
+    function selectDocFolderFilter(sectionType, folderId) {
+      if (sectionType === 'family') selectedFamilyFolder = folderId;
+      else selectedDocFolder = folderId;
+      renderCurrentView();
     }
 
-    function createFolder(e) {
-      e.preventDefault();
-      appData.docFolders.push({ id: 'f_' + Date.now(), name: document.getElementById('newFolderName').value.trim(), icon: 'fa-folder' });
-      saveData(); closeModal(); renderCurrentView();
-    }
-
-    function openUploadDocModal() {
-      const today = new Date().toISOString().split('T')[0];
-      document.getElementById('modalTitle').innerText = 'ডকুমেন্ট আপলোড করুন';
+    function openNewFolderModal(sectionType = 'land') {
+      document.getElementById('modalTitle').innerText = 'Notun Folder Toiri Korun';
       document.getElementById('modalBody').innerHTML = `
-        <form onsubmit="saveUploadedDoc(event)" class="space-y-3">
-          <select id="docFolderSelect" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm font-bold">${appData.docFolders.map(f => `<option value="${f.id}">${f.name}</option>`).join('')}</select>
-          <input type="text" id="docTitle" placeholder="ডকুমেন্টের শিরোনাম" required class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm" />
-          <div class="grid grid-cols-2 gap-2"><input type="text" id="docNo" placeholder="খতিয়ান / দলিল নং" class="px-3 py-2 rounded-xl border border-slate-300 text-sm" /><input type="date" id="docDate" value="${today}" class="px-3 py-2 rounded-xl border border-slate-300 text-sm" /></div>
-          <input type="file" id="docFileInput" accept="image/*,.pdf" class="w-full text-xs border rounded-xl p-2" />
-          <input type="url" id="docDriveUrl" placeholder="Google Drive Link (ঐচ্ছিক)" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm" />
-          <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-2.5 rounded-xl">সংরক্ষণ করুন</button>
+        <form onsubmit="createFolder(event, '${sectionType}')" class="space-y-4">
+          <input type="text" id="newFolderName" required placeholder="Folder-er naam..." class="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-sm" />
+          <button type="submit" class="w-full bg-slate-900 text-white font-bold py-2.5 rounded-xl">Toiri Korun</button>
         </form>
       `;
       openModal();
     }
 
-    function saveUploadedDoc(e) {
+    function createFolder(e, sectionType) {
+      e.preventDefault();
+      const targetList = sectionType === 'family' ? appData.familyFolders : appData.docFolders;
+      targetList.push({ id: 'fld_' + Date.now(), name: document.getElementById('newFolderName').value.trim(), icon: 'fa-folder' });
+      saveData(); closeModal(); renderCurrentView();
+    }
+
+    function openUploadDocModal(sectionType = 'land') {
+      const today = new Date().toISOString().split('T')[0];
+      const folders = sectionType === 'family' ? appData.familyFolders : appData.docFolders;
+      document.getElementById('modalTitle').innerText = sectionType === 'family' ? 'Family Document Upload' : 'Land Document Upload';
+      document.getElementById('modalBody').innerHTML = `
+        <form onsubmit="saveUploadedDoc(event, '${sectionType}')" class="space-y-3">
+          <select id="docFolderSelect" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm font-bold">${folders.map(f => `<option value="${f.id}">${f.name}</option>`).join('')}</select>
+          <input type="text" id="docTitle" placeholder="Document-er Shirsho (jemon: NID / Dalil)" required class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm" />
+          <div class="grid grid-cols-2 gap-2">
+            <input type="text" id="docNo" placeholder="Number / ID (Optional)" class="px-3 py-2 rounded-xl border border-slate-300 text-sm" />
+            <input type="date" id="docDate" value="${today}" class="px-3 py-2 rounded-xl border border-slate-300 text-sm" />
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-slate-600 mb-1">File Select Korun (Image / PDF — pore Download kora jabe)</label>
+            <input type="file" id="docFileInput" accept="image/*,.pdf" class="w-full text-xs border rounded-xl p-2" />
+          </div>
+          <input type="url" id="docDriveUrl" placeholder="Google Drive Link (Optional)" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm" />
+          <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-2.5 rounded-xl">Songrokkhon Korun</button>
+        </form>
+      `;
+      openModal();
+    }
+
+    function saveUploadedDoc(e, sectionType) {
       e.preventDefault();
       const file = document.getElementById('docFileInput').files[0];
+      const targetDocs = sectionType === 'family' ? appData.familyDocuments : appData.documents;
       const finish = (fileName, fileData) => {
-        appData.documents.unshift({
+        targetDocs.unshift({
           id: 'doc_' + Date.now(),
           folderId: document.getElementById('docFolderSelect').value,
           title: document.getElementById('docTitle').value.trim(),
           docNo: document.getElementById('docNo').value.trim(),
           date: document.getElementById('docDate').value,
-          driveLink: document.getElementById('docDriveUrl').value.trim() || 'https://drive.google.com',
-          fileName: fileName || 'doc.pdf',
+          driveLink: document.getElementById('docDriveUrl').value.trim(),
+          fileName: fileName || '',
           fileData: fileData || ''
         });
-        saveData(); closeModal(); renderCurrentView();
+        saveData(); closeModal(); showToast('Document songrokkhito hoyeche!'); renderCurrentView();
       };
       if (file) { const r = new FileReader(); r.onload = () => finish(file.name, r.result); r.readAsDataURL(file); }
       else finish('', '');
     }
 
-    function deleteDoc(id) {
-      if (!confirm('মুছে ফেলতে চান?')) return;
-      appData.documents = appData.documents.filter(d => d.id !== id);
+    function previewStoredDoc(sectionType, docId) {
+      const list = sectionType === 'family' ? appData.familyDocuments : appData.documents;
+      const doc = list.find(d => d.id === docId);
+      if (!doc || !doc.fileData) return;
+      previewFile(doc.fileData, doc.title, doc.fileName);
+    }
+
+    function triggerDocDownload(sectionType, docId) {
+      const list = sectionType === 'family' ? appData.familyDocuments : appData.documents;
+      const doc = list.find(d => d.id === docId);
+      if (!doc) return;
+      downloadStoredFile(doc.fileData, doc.fileName || (doc.title + '.pdf'));
+    }
+
+    function deleteDoc(sectionType, id) {
+      if (!confirm('Muche felte chan?')) return;
+      if (sectionType === 'family') appData.familyDocuments = appData.familyDocuments.filter(d => d.id !== id);
+      else appData.documents = appData.documents.filter(d => d.id !== id);
       saveData(); renderCurrentView();
     }
 
-    function renderLedgerTemplate(container, cfg) {
-      const { title, subtitle, positiveType, accentBtnDr, accentBtnCr, openModalFn, deleteFn, filterObj } = cfg;
-      const res = computeDoubleEntry(cfg.items, filterObj, { positiveType });
+    // ==================== 5. OTHERS HISAB (CUSTOMIZABLE LEDGERS) ====================
+    function renderOthersHisab(container) {
+      const accounts = appData.othersAccounts || [];
+      if (!accounts.length) {
+        appData.othersAccounts = [{ id: 'oth_general', name: 'General Others Hisab', positiveType: 'dr', entries: [] }];
+      }
+      if (!appData.othersAccounts.some(a => a.id === selectedOthersAccountId)) {
+        selectedOthersAccountId = appData.othersAccounts[0].id;
+      }
+      const activeAcc = appData.othersAccounts.find(a => a.id === selectedOthersAccountId);
+      const res = computeDoubleEntry(activeAcc.entries || [], ledgerFilters.others, { positiveType: activeAcc.positiveType || 'dr' });
 
       container.innerHTML = `
-        <div class="glass-card p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-sm mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div>
-            <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">${title}</h2>
-            <p class="text-xs text-slate-500">${subtitle}</p>
+        <div class="glass-card p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-sm mb-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+            <div>
+              <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">5. Others Hisab (${activeAcc.name})</h2>
+              <p class="text-xs text-slate-500">Nijer icche moto alada khata toiri korun (Settings ba ekhan theke)</p>
+            </div>
+            <div class="flex flex-wrap gap-2 no-print">
+              <button onclick="openAddOthersAccountModal()" class="bg-slate-900 text-white px-3 py-2 rounded-xl text-xs font-bold shadow">+ Notun Khat</button>
+              <button onclick="openOthersEntryModal('dr')" class="bg-indigo-600 text-white px-3 py-2 rounded-xl text-xs font-bold shadow">+ Dr</button>
+              <button onclick="openOthersEntryModal('cr')" class="bg-emerald-600 text-white px-3 py-2 rounded-xl text-xs font-bold shadow">- Cr</button>
+            </div>
           </div>
-          <div class="flex gap-2 no-print">
-            <button onclick="${openModalFn}('dr')" class="flex-1 sm:flex-none ${accentBtnDr} text-white px-3.5 py-2.5 rounded-xl text-xs font-bold shadow">+ Dr</button>
-            <button onclick="${openModalFn}('cr')" class="flex-1 sm:flex-none ${accentBtnCr} text-white px-3.5 py-2.5 rounded-xl text-xs font-bold shadow">- Cr</button>
+
+          <div class="mt-3 flex items-center gap-2 overflow-x-auto pb-1 no-print">
+            ${appData.othersAccounts.map(acc => `
+              <button onclick="selectedOthersAccountId='${acc.id}';renderCurrentView()"
+                class="px-3.5 py-2 rounded-xl text-xs font-extrabold shrink-0 border transition ${
+                  acc.id === selectedOthersAccountId
+                    ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
+                    : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                }">
+                ${acc.name} (${(acc.entries || []).length})
+              </button>
+            `).join('')}
           </div>
         </div>
 
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
-          <div class="glass-card p-3.5 rounded-2xl border border-slate-200"><p class="text-[11px] text-slate-500 font-bold">পূর্বের জের</p><p class="text-base sm:text-lg font-black text-slate-700">${formatBDT(res.openingBal)}</p></div>
-          <div class="bg-indigo-50/90 p-3.5 rounded-2xl border border-indigo-200"><p class="text-[11px] text-indigo-700 font-bold">মোট Dr +</p><p class="text-base sm:text-lg font-black text-indigo-800">${formatBDT(res.totalDr)}</p></div>
-          <div class="bg-emerald-50/90 p-3.5 rounded-2xl border border-emerald-200"><p class="text-[11px] text-emerald-700 font-bold">মোট Cr -</p><p class="text-base sm:text-lg font-black text-emerald-800">${formatBDT(res.totalCr)}</p></div>
-          <div class="bg-slate-900 text-white p-3.5 rounded-2xl"><p class="text-[11px] text-amber-300 font-bold">বর্তমান ব্যালেন্স</p><p class="text-base sm:text-lg font-black">${formatBDT(res.closingBal)}</p></div>
+          <div class="glass-card p-3.5 rounded-2xl border border-slate-200"><p class="text-[11px] text-slate-500 font-bold">Purber Jer</p><p class="text-base sm:text-lg font-black text-slate-700">${formatBDT(res.openingBal)}</p></div>
+          <div class="bg-indigo-50/90 p-3.5 rounded-2xl border border-indigo-200"><p class="text-[11px] text-indigo-700 font-bold">Mot Dr +</p><p class="text-base sm:text-lg font-black text-indigo-800">${formatBDT(res.totalDr)}</p></div>
+          <div class="bg-emerald-50/90 p-3.5 rounded-2xl border border-emerald-200"><p class="text-[11px] text-emerald-700 font-bold">Mot Cr -</p><p class="text-base sm:text-lg font-black text-emerald-800">${formatBDT(res.totalCr)}</p></div>
+          <div class="bg-slate-900 text-white p-3.5 rounded-2xl"><p class="text-[11px] text-amber-300 font-bold">Bortoman Balance</p><p class="text-base sm:text-lg font-black">${formatBDT(res.closingBal)}</p></div>
         </div>
 
         <div class="md:hidden space-y-2.5 mb-4">
@@ -1347,8 +1407,8 @@
             <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs">
               <div class="flex items-start justify-between gap-2">
                 <div class="min-w-0">
-                  <p class="text-sm font-extrabold text-slate-900">${r.landTitle ? `${r.landTitle} — ` : ''}${r.desc || r.medicine || ''}</p>
-                  <p class="text-[11px] text-slate-500 mt-0.5">${r.date} ${r.method ? `• ${r.method}` : ''} ${r.doctor ? `• ${r.doctor}` : ''}</p>
+                  <p class="text-sm font-extrabold text-slate-900">${r.desc || ''}</p>
+                  <p class="text-[11px] text-slate-500 mt-0.5">${r.date} ${r.method ? `• ${r.method}` : ''}</p>
                 </div>
                 <span class="text-xs sm:text-sm font-black shrink-0 ${r.dr > 0 ? 'text-indigo-600' : 'text-emerald-600'}">
                   ${r.dr > 0 ? 'Dr ' + formatBDT(r.dr) : 'Cr ' + formatBDT(r.cr)}
@@ -1357,8 +1417,8 @@
               <div class="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
                 <span class="font-bold text-slate-700">Bal: <span class="font-black text-slate-900">${formatBDT(r.bal)}</span></span>
                 <div class="flex gap-1.5 no-print">
-                  <button onclick="${openModalFn}('${r.type}', '${r.id}')" class="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-600 font-bold">Edit</button>
-                  <button onclick="${deleteFn}('${r.id}')" class="px-2.5 py-1 rounded-lg bg-rose-50 text-rose-600 font-bold">Del</button>
+                  <button onclick="openOthersEntryModal('${r.type}', '${r.id}')" class="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-600 font-bold">Edit</button>
+                  <button onclick="deleteOthersEntry('${r.id}')" class="px-2.5 py-1 rounded-lg bg-rose-50 text-rose-600 font-bold">Del</button>
                 </div>
               </div>
             </div>
@@ -1370,11 +1430,11 @@
             <table class="w-full text-sm text-left">
               <thead class="bg-slate-900 text-white text-xs uppercase">
                 <tr>
-                  <th class="py-3 px-4">তারিখ</th>
-                  <th class="py-3 px-4">বিবরণ</th>
+                  <th class="py-3 px-4">Tarikh</th>
+                  <th class="py-3 px-4">Biboron</th>
                   <th class="py-3 px-4 text-right text-indigo-300">Dr +</th>
                   <th class="py-3 px-4 text-right text-emerald-300">Cr -</th>
-                  <th class="py-3 px-4 text-right text-amber-300">ব্যালেন্স</th>
+                  <th class="py-3 px-4 text-right text-amber-300">Balance</th>
                   <th class="py-3 px-4 text-center no-print">Action</th>
                 </tr>
               </thead>
@@ -1382,13 +1442,13 @@
                 ${res.rows.map(r => `
                   <tr class="hover:bg-slate-50">
                     <td class="py-3 px-4 whitespace-nowrap">${r.date}</td>
-                    <td class="py-3 px-4 font-semibold">${r.landTitle ? `<b>${r.landTitle}</b> — ` : ''}${r.desc || r.medicine || ''} <span class="text-[11px] text-slate-500">${r.method || r.doctor || ''}</span></td>
+                    <td class="py-3 px-4 font-semibold">${r.desc || ''} <span class="text-[11px] text-slate-500">${r.method || ''}</span></td>
                     <td class="py-3 px-4 text-right font-bold text-indigo-600">${r.dr > 0 ? formatBDT(r.dr) : '-'}</td>
                     <td class="py-3 px-4 text-right font-bold text-emerald-600">${r.cr > 0 ? formatBDT(r.cr) : '-'}</td>
                     <td class="py-3 px-4 text-right font-extrabold">${formatBDT(r.bal)}</td>
                     <td class="py-3 px-4 text-center whitespace-nowrap no-print">
-                      <button onclick="${openModalFn}('${r.type}', '${r.id}')" class="p-1.5 rounded-lg bg-blue-50 text-blue-600 mr-1"><i class="fa-solid fa-pen-to-square"></i></button>
-                      <button onclick="${deleteFn}('${r.id}')" class="p-1.5 rounded-lg bg-rose-50 text-rose-600"><i class="fa-solid fa-trash"></i></button>
+                      <button onclick="openOthersEntryModal('${r.type}', '${r.id}')" class="p-1.5 rounded-lg bg-blue-50 text-blue-600 mr-1"><i class="fa-solid fa-pen-to-square"></i></button>
+                      <button onclick="deleteOthersEntry('${r.id}')" class="p-1.5 rounded-lg bg-rose-50 text-rose-600"><i class="fa-solid fa-trash"></i></button>
                     </td>
                   </tr>
                 `).join('')}
@@ -1399,112 +1459,122 @@
       `;
     }
 
-    function renderMokulLedger(container) {
-      renderLedgerTemplate(container, {
-        title: 'Mokul Vai AC — Smart Ledger',
-        subtitle: 'দিয়েছি (Dr +), পেয়েছি (Cr -), ব্যালেন্স',
-        items: appData.mokulLedger,
-        positiveType: 'dr',
-        accentBtnDr: 'bg-indigo-600',
-        accentBtnCr: 'bg-emerald-600',
-        openModalFn: 'openMokulModal',
-        deleteFn: 'deleteMokulItem',
-        filterObj: ledgerFilters.mokul
-      });
-    }
-
-    function openMokulModal(defaultType = 'dr', editId = null) {
-      const existing = editId ? appData.mokulLedger.find(x => x.id === editId) : null;
-      const type = existing ? existing.type : defaultType;
-      const today = new Date().toISOString().split('T')[0];
-      document.getElementById('modalTitle').innerText = existing ? 'মকুল ভাই লেজার এডিট' : 'Mokul Vai AC — নতুন এন্ট্রি';
+    function openAddOthersAccountModal() {
+      document.getElementById('modalTitle').innerText = 'Others Hisab-e Notun Khat Jukto Korun';
       document.getElementById('modalBody').innerHTML = `
-        <form onsubmit="saveMokulItem(event, '${editId || ''}')" class="space-y-4">
-          <div class="grid grid-cols-2 gap-3">
-            <input type="date" id="mkDate" value="${existing ? existing.date : today}" required class="px-3 py-2 rounded-xl border text-sm" />
-            <select id="mkType" class="px-3 py-2 rounded-xl border text-sm font-bold"><option value="dr" ${type === 'dr' ? 'selected' : ''}>দিয়েছি (Dr +)</option><option value="cr" ${type === 'cr' ? 'selected' : ''}>পেয়েছি (Cr -)</option></select>
+        <form onsubmit="saveNewOthersAccount(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Khater Naam (Icche moto naam din)</label>
+            <input type="text" id="newOthAccName" required placeholder="Jemon: Jaigar Hisab / Baki Khata / Bondhu AC" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm" />
           </div>
-          <select id="mkMethod" class="w-full px-3 py-2 rounded-xl border text-sm">${['Cash', 'bKash', 'Nagad', 'Bank'].map(m => `<option value="${m}" ${existing && existing.method === m ? 'selected' : ''}>${m}</option>`).join('')}</select>
-          <input type="text" id="mkDesc" value="${existing ? existing.desc : ''}" required placeholder="বিবরণ..." class="w-full px-3 py-2 rounded-xl border text-sm" />
-          <input type="number" id="mkAmt" value="${existing ? existing.amount : ''}" required min="1" step="any" placeholder="টাকা" class="w-full px-3 py-2.5 rounded-xl border text-lg font-bold" />
-          <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-2.5 rounded-xl">সংরক্ষণ করুন</button>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Hisaber Dhoron</label>
+            <select id="newOthAccType" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm font-bold">
+              <option value="dr">Paona / Khoroch Ledger (Dr + / Cr -)</option>
+              <option value="cr">Joma / Tohhobil Ledger (Cr + / Dr -)</option>
+            </select>
+          </div>
+          <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 rounded-xl shadow">+ Others Hisab-e Jukto Korun</button>
         </form>
       `;
       openModal();
     }
 
-    function saveMokulItem(e, editId) {
+    function saveNewOthersAccount(e) {
       e.preventDefault();
-      const payload = { id: editId || 'mk_' + Date.now(), date: document.getElementById('mkDate').value, type: document.getElementById('mkType').value, method: document.getElementById('mkMethod').value, desc: document.getElementById('mkDesc').value.trim(), amount: parseFloat(document.getElementById('mkAmt').value) };
-      if (editId) { const idx = appData.mokulLedger.findIndex(x => x.id === editId); if (idx !== -1) appData.mokulLedger[idx] = payload; }
-      else appData.mokulLedger.push(payload);
-      saveData(); closeModal(); renderCurrentView();
+      const name = document.getElementById('newOthAccName').value.trim();
+      const positiveType = document.getElementById('newOthAccType').value;
+      if (!name) return;
+      const newId = 'oth_' + Date.now();
+      appData.othersAccounts.push({ id: newId, name, positiveType, entries: [] });
+      selectedOthersAccountId = newId;
+      saveData(); closeModal(); showToast(`"${name}" jukto hoyeche!`); renderCurrentView();
     }
 
-    function deleteMokulItem(id) { if (!confirm('মুছে ফেলতে চান?')) return; appData.mokulLedger = appData.mokulLedger.filter(x => x.id !== id); saveData(); renderCurrentView(); }
-
-    function renderJaigaLedger(container) {
-      renderLedgerTemplate(container, {
-        title: 'Jaigar Hisab — Smart Ledger',
-        subtitle: 'মূল্য/খরচ (Dr +), পরিশোধ (Cr -), বকেয়া ব্যালেন্স',
-        items: appData.jaigaLedger,
-        positiveType: 'dr',
-        accentBtnDr: 'bg-amber-600',
-        accentBtnCr: 'bg-teal-600',
-        openModalFn: 'openJaigaLedgerModal',
-        deleteFn: 'deleteJaigaLedgerItem',
-        filterObj: ledgerFilters.jaiga
-      });
+    function deleteOthersAccount(accId) {
+      if (appData.othersAccounts.length <= 1) {
+        alert('Kompokkhe 1 ti khat rakhte hobe.');
+        return;
+      }
+      if (!confirm('Ei khat ebong er sob lenden muche felte chan?')) return;
+      appData.othersAccounts = appData.othersAccounts.filter(a => a.id !== accId);
+      if (selectedOthersAccountId === accId) selectedOthersAccountId = appData.othersAccounts[0].id;
+      saveData(); renderCurrentView();
     }
 
-    function openJaigaLedgerModal(defaultType = 'cr', editId = null) {
-      const existing = editId ? appData.jaigaLedger.find(x => x.id === editId) : null;
+    function openOthersEntryModal(defaultType = 'dr', editId = null) {
+      const activeAcc = appData.othersAccounts.find(a => a.id === selectedOthersAccountId);
+      if (!activeAcc) return;
+      const existing = editId ? activeAcc.entries.find(x => x.id === editId) : null;
       const type = existing ? existing.type : defaultType;
       const today = new Date().toISOString().split('T')[0];
-      document.getElementById('modalTitle').innerText = existing ? 'জায়গার এন্ট্রি এডিট' : 'Jaigar Hisab — নতুন এন্ট্রি';
+
+      document.getElementById('modalTitle').innerText = existing ? `${activeAcc.name} — Edit` : `${activeAcc.name} — Notun Entry`;
       document.getElementById('modalBody').innerHTML = `
-        <form onsubmit="saveJaigaLedgerItem(event, '${editId || ''}')" class="space-y-3">
+        <form onsubmit="saveOthersEntry(event, '${editId || ''}')" class="space-y-3">
           <div class="grid grid-cols-2 gap-3">
-            <input type="date" id="jglDate" value="${existing ? existing.date : today}" required class="px-3 py-2 rounded-xl border text-sm" />
-            <select id="jglType" class="px-3 py-2 rounded-xl border text-sm font-bold"><option value="dr" ${type === 'dr' ? 'selected' : ''}>মূল্য / খরচ (Dr +)</option><option value="cr" ${type === 'cr' ? 'selected' : ''}>পরিশোধ (Cr -)</option></select>
+            <input type="date" id="othDate" value="${existing ? existing.date : today}" required class="px-3 py-2 rounded-xl border text-sm" />
+            <select id="othType" class="px-3 py-2 rounded-xl border text-sm font-bold">
+              <option value="dr" ${type === 'dr' ? 'selected' : ''}>Dr (+)</option>
+              <option value="cr" ${type === 'cr' ? 'selected' : ''}>Cr (-)</option>
+            </select>
           </div>
-          <input type="text" id="jglLand" value="${existing ? existing.landTitle : ''}" required placeholder="জমির নাম ও পরিমাণ" class="w-full px-3 py-2 rounded-xl border text-sm" />
-          <input type="text" id="jglKhatian" value="${existing ? (existing.khatian || '') : ''}" placeholder="খতিয়ান / দাগ নং (ঐচ্ছিক)" class="w-full px-3 py-2 rounded-xl border text-sm" />
-          <input type="text" id="jglDesc" value="${existing ? existing.desc : ''}" required placeholder="বিবরণ..." class="w-full px-3 py-2 rounded-xl border text-sm" />
-          <input type="number" id="jglAmt" value="${existing ? existing.amount : ''}" required min="1" step="any" placeholder="টাকা" class="w-full px-3 py-2.5 rounded-xl border text-lg font-bold" />
-          <button type="submit" class="w-full bg-teal-600 text-white font-bold py-2.5 rounded-xl">সংরক্ষণ করুন</button>
+          <select id="othMethod" class="w-full px-3 py-2 rounded-xl border text-sm">${['Cash', 'bKash', 'Nagad', 'Bank'].map(m => `<option value="${m}" ${existing && existing.method === m ? 'selected' : ''}>${m}</option>`).join('')}</select>
+          <input type="text" id="othDesc" value="${existing ? existing.desc : ''}" required placeholder="Biboron..." class="w-full px-3 py-2 rounded-xl border text-sm" />
+          <input type="number" id="othAmt" value="${existing ? existing.amount : ''}" required min="1" step="any" placeholder="Taka" class="w-full px-3 py-2.5 rounded-xl border text-lg font-bold" />
+          <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-2.5 rounded-xl">Songrokkhon Korun</button>
         </form>
       `;
       openModal();
     }
 
-    function saveJaigaLedgerItem(e, editId) {
+    function saveOthersEntry(e, editId) {
       e.preventDefault();
-      const payload = { id: editId || 'jgl_' + Date.now(), date: document.getElementById('jglDate').value, type: document.getElementById('jglType').value, landTitle: document.getElementById('jglLand').value.trim(), khatian: document.getElementById('jglKhatian').value.trim(), desc: document.getElementById('jglDesc').value.trim(), amount: parseFloat(document.getElementById('jglAmt').value) };
-      if (editId) { const idx = appData.jaigaLedger.findIndex(x => x.id === editId); if (idx !== -1) appData.jaigaLedger[idx] = payload; }
-      else appData.jaigaLedger.push(payload);
+      const activeAcc = appData.othersAccounts.find(a => a.id === selectedOthersAccountId);
+      if (!activeAcc) return;
+      const payload = {
+        id: editId || 'oe_' + Date.now(),
+        date: document.getElementById('othDate').value,
+        type: document.getElementById('othType').value,
+        method: document.getElementById('othMethod').value,
+        desc: document.getElementById('othDesc').value.trim(),
+        amount: parseFloat(document.getElementById('othAmt').value)
+      };
+      if (editId) {
+        const idx = activeAcc.entries.findIndex(x => x.id === editId);
+        if (idx !== -1) activeAcc.entries[idx] = payload;
+      } else {
+        activeAcc.entries.push(payload);
+      }
       saveData(); closeModal(); renderCurrentView();
     }
 
-    function deleteJaigaLedgerItem(id) { if (!confirm('মুছে ফেলতে চান?')) return; appData.jaigaLedger = appData.jaigaLedger.filter(x => x.id !== id); saveData(); renderCurrentView(); }
+    function deleteOthersEntry(entryId) {
+      if (!confirm('Muche felte chan?')) return;
+      const activeAcc = appData.othersAccounts.find(a => a.id === selectedOthersAccountId);
+      if (!activeAcc) return;
+      activeAcc.entries = activeAcc.entries.filter(x => x.id !== entryId);
+      saveData(); renderCurrentView();
+    }
 
-    function renderAmmuMedicine(container) {
-      const f = ledgerFilters.ammu;
-      const res = computeDoubleEntry(appData.ammuMedicines, f, { positiveType: 'cr' });
+    // ==================== 6. MEDICINE HISAB (WITH PRESCRIPTION DOWNLOAD) ====================
+    function renderMedicineHisab(container) {
+      const f = ledgerFilters.medicine;
+      const res = computeDoubleEntry(appData.medicineEntries, f, { positiveType: 'cr' });
       container.innerHTML = `
         <div class="glass-card p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-sm mb-4 flex flex-wrap justify-between items-center gap-3">
-          <div><h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Ammor Medicine Hisab</h2><p class="text-xs text-slate-500">তহবিল জমা (Cr +), ওষুধ খরচ (Dr -) ও প্রেসক্রিপশন</p></div>
+          <div><h2 class="text-lg sm:text-xl font-extrabold text-slate-900">6. Medicine Hisab</h2><p class="text-xs text-slate-500">Tohhobil Joma (Cr +), Oshudh Khoroch (Dr -) o Prescription Download</p></div>
           <div class="flex flex-wrap gap-2 no-print">
-            <button onclick="openAmmuMedModal('cr')" class="bg-emerald-600 text-white px-3 py-2 rounded-xl text-xs font-bold shadow">+ তহবিল</button>
-            <button onclick="openAmmuMedModal('dr')" class="bg-rose-600 text-white px-3 py-2 rounded-xl text-xs font-bold shadow">- ওষুধ</button>
-            <button onclick="openPrescriptionModal()" class="bg-slate-900 text-white px-3 py-2 rounded-xl text-xs font-bold shadow">+ প্রেসক্রিপশন</button>
+            <button onclick="openMedicineModal('cr')" class="bg-emerald-600 text-white px-3 py-2 rounded-xl text-xs font-bold shadow">+ Tohhobil</button>
+            <button onclick="openMedicineModal('dr')" class="bg-rose-600 text-white px-3 py-2 rounded-xl text-xs font-bold shadow">- Oshudh</button>
+            <button onclick="openPrescriptionModal()" class="bg-slate-900 text-white px-3 py-2 rounded-xl text-xs font-bold shadow">+ Prescription</button>
           </div>
         </div>
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
-          <div class="glass-card p-3.5 rounded-2xl border border-slate-200"><p class="text-[11px] text-slate-500 font-bold">পূর্বের জের</p><p class="text-base sm:text-lg font-black">${formatBDT(res.openingBal)}</p></div>
-          <div class="bg-emerald-50 p-3.5 rounded-2xl border border-emerald-200"><p class="text-[11px] text-emerald-700 font-bold">মোট জমা</p><p class="text-base sm:text-lg font-black text-emerald-800">${formatBDT(res.totalCr)}</p></div>
-          <div class="bg-rose-50 p-3.5 rounded-2xl border border-rose-200"><p class="text-[11px] text-rose-700 font-bold">মোট খরচ</p><p class="text-base sm:text-lg font-black text-rose-800">${formatBDT(res.totalDr)}</p></div>
-          <div class="bg-slate-900 text-white p-3.5 rounded-2xl"><p class="text-[11px] text-amber-300 font-bold">ব্যালেন্স</p><p class="text-base sm:text-lg font-black">${formatBDT(res.closingBal)}</p></div>
+          <div class="glass-card p-3.5 rounded-2xl border border-slate-200"><p class="text-[11px] text-slate-500 font-bold">Purber Jer</p><p class="text-base sm:text-lg font-black">${formatBDT(res.openingBal)}</p></div>
+          <div class="bg-emerald-50 p-3.5 rounded-2xl border border-emerald-200"><p class="text-[11px] text-emerald-700 font-bold">Mot Joma</p><p class="text-base sm:text-lg font-black text-emerald-800">${formatBDT(res.totalCr)}</p></div>
+          <div class="bg-rose-50 p-3.5 rounded-2xl border border-rose-200"><p class="text-[11px] text-rose-700 font-bold">Mot Khoroch</p><p class="text-base sm:text-lg font-black text-rose-800">${formatBDT(res.totalDr)}</p></div>
+          <div class="bg-slate-900 text-white p-3.5 rounded-2xl"><p class="text-[11px] text-amber-300 font-bold">Balance</p><p class="text-base sm:text-lg font-black">${formatBDT(res.closingBal)}</p></div>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
           <div class="lg:col-span-2 space-y-2.5">
@@ -1516,19 +1586,22 @@
                 </div>
                 <div class="flex items-center gap-2 shrink-0 no-print">
                   <span class="text-sm font-black ${m.cr > 0 ? 'text-emerald-600' : 'text-rose-600'}">${m.cr > 0 ? '+' : '-'}${formatBDT(m.amount)}</span>
-                  <button onclick="openAmmuMedModal('${m.type}', '${m.id}')" class="p-1.5 rounded-lg bg-blue-50 text-blue-600 text-xs"><i class="fa-solid fa-pen"></i></button>
-                  <button onclick="deleteAmmuMed('${m.id}')" class="p-1.5 rounded-lg bg-rose-50 text-rose-600 text-xs"><i class="fa-solid fa-trash"></i></button>
+                  <button onclick="openMedicineModal('${m.type}', '${m.id}')" class="p-1.5 rounded-lg bg-blue-50 text-blue-600 text-xs"><i class="fa-solid fa-pen"></i></button>
+                  <button onclick="deleteMedicineItem('${m.id}')" class="p-1.5 rounded-lg bg-rose-50 text-rose-600 text-xs"><i class="fa-solid fa-trash"></i></button>
                 </div>
               </div>
             `).join('')}
           </div>
           <div class="glass-card p-4 rounded-2xl border border-slate-200 shadow-xs space-y-2.5">
-            <h3 class="font-bold text-slate-800 text-sm">প্রেসক্রিপশন (${appData.ammuPrescriptions.length})</h3>
-            ${appData.ammuPrescriptions.map(p => `
+            <h3 class="font-bold text-slate-800 text-sm">Prescription (${appData.medicinePrescriptions.length})</h3>
+            ${appData.medicinePrescriptions.map(p => `
               <div class="p-3 rounded-xl bg-slate-50 border flex justify-between items-center gap-2">
                 <div class="min-w-0"><p class="font-bold text-xs sm:text-sm truncate">${p.title}</p><p class="text-[11px] text-slate-500">${p.doctor || ''} • ${p.date}</p></div>
-                <div class="flex items-center gap-1.5 shrink-0 no-print">
-                  ${p.fileData ? `<button onclick="previewFile('${p.fileData}', '${p.title}')" class="text-xs bg-emerald-600 text-white px-2.5 py-1 rounded-lg font-bold">দেখুন</button>` : ''}
+                <div class="flex items-center gap-1 shrink-0 no-print">
+                  ${p.fileData ? `
+                    <button onclick="previewPrescription('${p.id}')" class="text-xs bg-emerald-600 text-white px-2 py-1 rounded-lg font-bold">Dekhun</button>
+                    <button onclick="downloadPrescription('${p.id}')" title="Download" class="text-xs bg-blue-600 text-white px-2 py-1 rounded-lg font-bold"><i class="fa-solid fa-download"></i></button>
+                  ` : ''}
                   <button onclick="deletePrescription('${p.id}')" class="text-rose-500 p-1"><i class="fa-solid fa-trash"></i></button>
                 </div>
               </div>
@@ -1538,40 +1611,40 @@
       `;
     }
 
-    function openAmmuMedModal(defaultType = 'dr', editId = null) {
-      const existing = editId ? appData.ammuMedicines.find(x => x.id === editId) : null;
+    function openMedicineModal(defaultType = 'dr', editId = null) {
+      const existing = editId ? appData.medicineEntries.find(x => x.id === editId) : null;
       const type = existing ? existing.type : defaultType;
       const today = new Date().toISOString().split('T')[0];
-      document.getElementById('modalTitle').innerText = existing ? 'মেডিসিন লেজার এডিট' : 'Ammor Medicine — নতুন এন্ট্রি';
+      document.getElementById('modalTitle').innerText = existing ? 'Medicine Ledger Edit' : 'Medicine Hisab — Notun Entry';
       document.getElementById('modalBody').innerHTML = `
-        <form onsubmit="saveAmmuMed(event, '${editId || ''}')" class="space-y-3">
+        <form onsubmit="saveMedicineItem(event, '${editId || ''}')" class="space-y-3">
           <div class="grid grid-cols-2 gap-3">
             <input type="date" id="amDate" value="${existing ? existing.date : today}" required class="px-3 py-2 rounded-xl border text-sm" />
-            <select id="amType" class="px-3 py-2 rounded-xl border text-sm font-bold"><option value="dr" ${type === 'dr' ? 'selected' : ''}>ওষুধ খরচ (Dr -)</option><option value="cr" ${type === 'cr' ? 'selected' : ''}>তহবিল জমা (Cr +)</option></select>
+            <select id="amType" class="px-3 py-2 rounded-xl border text-sm font-bold"><option value="dr" ${type === 'dr' ? 'selected' : ''}>Oshudh Khoroch (Dr -)</option><option value="cr" ${type === 'cr' ? 'selected' : ''}>Tohhobil Joma (Cr +)</option></select>
           </div>
-          <input type="text" id="amName" value="${existing ? existing.medicine : ''}" required placeholder="ওষুধ বা বিবরণের নাম" class="w-full px-3 py-2 rounded-xl border text-sm" />
-          <input type="text" id="amDoc" value="${existing ? (existing.doctor || '') : ''}" placeholder="ডাক্তারের নাম (ঐচ্ছিক)" class="w-full px-3 py-2 rounded-xl border text-sm" />
-          <input type="number" id="amAmt" value="${existing ? existing.amount : ''}" required min="1" step="any" placeholder="টাকা" class="w-full px-3 py-2.5 rounded-xl border text-lg font-bold" />
-          <button type="submit" class="w-full bg-rose-600 text-white font-bold py-2.5 rounded-xl">সংরক্ষণ করুন</button>
+          <input type="text" id="amName" value="${existing ? existing.medicine : ''}" required placeholder="Oshudh / Rogi / Biboroner naam" class="w-full px-3 py-2 rounded-xl border text-sm" />
+          <input type="text" id="amDoc" value="${existing ? (existing.doctor || '') : ''}" placeholder="Doctor-er naam (Optional)" class="w-full px-3 py-2 rounded-xl border text-sm" />
+          <input type="number" id="amAmt" value="${existing ? existing.amount : ''}" required min="1" step="any" placeholder="Taka" class="w-full px-3 py-2.5 rounded-xl border text-lg font-bold" />
+          <button type="submit" class="w-full bg-rose-600 text-white font-bold py-2.5 rounded-xl">Songrokkhon Korun</button>
         </form>
       `;
       openModal();
     }
 
-    function saveAmmuMed(e, editId) {
+    function saveMedicineItem(e, editId) {
       e.preventDefault();
-      const payload = { id: editId || 'am_' + Date.now(), date: document.getElementById('amDate').value, type: document.getElementById('amType').value, medicine: document.getElementById('amName').value.trim(), doctor: document.getElementById('amDoc').value.trim(), amount: parseFloat(document.getElementById('amAmt').value), note: '' };
-      if (editId) { const idx = appData.ammuMedicines.findIndex(x => x.id === editId); if (idx !== -1) appData.ammuMedicines[idx] = payload; }
-      else appData.ammuMedicines.push(payload);
+      const payload = { id: editId || 'med_' + Date.now(), date: document.getElementById('amDate').value, type: document.getElementById('amType').value, medicine: document.getElementById('amName').value.trim(), doctor: document.getElementById('amDoc').value.trim(), amount: parseFloat(document.getElementById('amAmt').value), note: '' };
+      if (editId) { const idx = appData.medicineEntries.findIndex(x => x.id === editId); if (idx !== -1) appData.medicineEntries[idx] = payload; }
+      else appData.medicineEntries.push(payload);
       saveData(); closeModal(); renderCurrentView();
     }
 
-    function deleteAmmuMed(id) { if (!confirm('মুছে ফেলতে চান?')) return; appData.ammuMedicines = appData.ammuMedicines.filter(x => x.id !== id); saveData(); renderCurrentView(); }
+    function deleteMedicineItem(id) { if (!confirm('Muche felte chan?')) return; appData.medicineEntries = appData.medicineEntries.filter(x => x.id !== id); saveData(); renderCurrentView(); }
 
     function openPrescriptionModal() {
       const today = new Date().toISOString().split('T')[0];
-      document.getElementById('modalTitle').innerText = 'প্রেসক্রিপশন আপলোড';
-      document.getElementById('modalBody').innerHTML = `<form onsubmit="savePrescription(event)" class="space-y-3"><input type="text" id="prTitle" required placeholder="প্রেসক্রিপশন শিরোনাম" class="w-full px-3 py-2 rounded-xl border text-sm" /><input type="text" id="prDoc" placeholder="ডাক্তারের নাম" class="w-full px-3 py-2 rounded-xl border text-sm" /><input type="date" id="prDate" value="${today}" class="w-full px-3 py-2 rounded-xl border text-sm" /><input type="file" id="prFile" accept="image/*,.pdf" required class="w-full text-xs border rounded-xl p-2" /><button type="submit" class="w-full bg-slate-900 text-white font-bold py-2.5 rounded-xl">আপলোড করুন</button></form>`;
+      document.getElementById('modalTitle').innerText = 'Prescription Upload';
+      document.getElementById('modalBody').innerHTML = `<form onsubmit="savePrescription(event)" class="space-y-3"><input type="text" id="prTitle" required placeholder="Prescription Shirsho" class="w-full px-3 py-2 rounded-xl border text-sm" /><input type="text" id="prDoc" placeholder="Doctor-er naam" class="w-full px-3 py-2 rounded-xl border text-sm" /><input type="date" id="prDate" value="${today}" class="w-full px-3 py-2 rounded-xl border text-sm" /><input type="file" id="prFile" accept="image/*,.pdf" required class="w-full text-xs border rounded-xl p-2" /><button type="submit" class="w-full bg-slate-900 text-white font-bold py-2.5 rounded-xl">Upload Korun</button></form>`;
       openModal();
     }
 
@@ -1579,38 +1652,72 @@
       e.preventDefault();
       const file = document.getElementById('prFile').files[0];
       const r = new FileReader();
-      r.onload = () => { appData.ammuPrescriptions.unshift({ id: 'pr_' + Date.now(), title: document.getElementById('prTitle').value.trim(), doctor: document.getElementById('prDoc').value.trim(), date: document.getElementById('prDate').value, fileName: file.name, fileData: r.result }); saveData(); closeModal(); renderCurrentView(); };
+      r.onload = () => { appData.medicinePrescriptions.unshift({ id: 'pr_' + Date.now(), title: document.getElementById('prTitle').value.trim(), doctor: document.getElementById('prDoc').value.trim(), date: document.getElementById('prDate').value, fileName: file.name, fileData: r.result }); saveData(); closeModal(); renderCurrentView(); };
       r.readAsDataURL(file);
     }
 
-    function deletePrescription(id) { if (!confirm('মুছে ফেলতে চান?')) return; appData.ammuPrescriptions = appData.ammuPrescriptions.filter(x => x.id !== id); saveData(); renderCurrentView(); }
+    function previewPrescription(id) {
+      const p = appData.medicinePrescriptions.find(x => x.id === id);
+      if (p && p.fileData) previewFile(p.fileData, p.title, p.fileName);
+    }
 
+    function downloadPrescription(id) {
+      const p = appData.medicinePrescriptions.find(x => x.id === id);
+      if (p) downloadStoredFile(p.fileData, p.fileName || (p.title + '.pdf'));
+    }
+
+    function deletePrescription(id) { if (!confirm('Muche felte chan?')) return; appData.medicinePrescriptions = appData.medicinePrescriptions.filter(x => x.id !== id); saveData(); renderCurrentView(); }
+
+    // ==================== 7. WIFE AC ====================
     function renderWifeLedger(container) {
-      renderLedgerTemplate(container, {
-        title: 'Wife AC — Smart Ledger',
-        subtitle: 'দিয়েছি (Dr +), পেয়েছি/ফেরত (Cr -), ব্যালেন্স',
-        items: appData.wifeLedger,
-        positiveType: 'dr',
-        accentBtnDr: 'bg-pink-600',
-        accentBtnCr: 'bg-emerald-600',
-        openModalFn: 'openWifeModal',
-        deleteFn: 'deleteWifeItem',
-        filterObj: ledgerFilters.wife
-      });
+      const res = computeDoubleEntry(appData.wifeLedger, ledgerFilters.wife, { positiveType: 'dr' });
+      container.innerHTML = `
+        <div class="glass-card p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-sm mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">7. Wife AC — Smart Ledger</h2>
+            <p class="text-xs text-slate-500">Diyeci (Dr +), Peyechi/Ferot (Cr -), Balance</p>
+          </div>
+          <div class="flex gap-2 no-print">
+            <button onclick="openWifeModal('dr')" class="flex-1 sm:flex-none bg-pink-600 text-white px-3.5 py-2.5 rounded-xl text-xs font-bold shadow">+ Dr</button>
+            <button onclick="openWifeModal('cr')" class="flex-1 sm:flex-none bg-emerald-600 text-white px-3.5 py-2.5 rounded-xl text-xs font-bold shadow">- Cr</button>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+          <div class="glass-card p-3.5 rounded-2xl border border-slate-200"><p class="text-[11px] text-slate-500 font-bold">Purber Jer</p><p class="text-base sm:text-lg font-black text-slate-700">${formatBDT(res.openingBal)}</p></div>
+          <div class="bg-pink-50/90 p-3.5 rounded-2xl border border-pink-200"><p class="text-[11px] text-pink-700 font-bold">Mot Dr +</p><p class="text-base sm:text-lg font-black text-pink-800">${formatBDT(res.totalDr)}</p></div>
+          <div class="bg-emerald-50/90 p-3.5 rounded-2xl border border-emerald-200"><p class="text-[11px] text-emerald-700 font-bold">Mot Cr -</p><p class="text-base sm:text-lg font-black text-emerald-800">${formatBDT(res.totalCr)}</p></div>
+          <div class="bg-slate-900 text-white p-3.5 rounded-2xl"><p class="text-[11px] text-amber-300 font-bold">Bortoman Balance</p><p class="text-base sm:text-lg font-black">${formatBDT(res.closingBal)}</p></div>
+        </div>
+        <div class="space-y-2.5">
+          ${res.rows.map(r => `
+            <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between gap-2">
+              <div class="min-w-0">
+                <p class="text-sm font-extrabold text-slate-900">${r.desc || ''}</p>
+                <p class="text-[11px] text-slate-500 mt-0.5">${r.date} • ${r.method || ''} • Bal: ${formatBDT(r.bal)}</p>
+              </div>
+              <div class="flex items-center gap-2 shrink-0 no-print">
+                <span class="text-xs sm:text-sm font-black ${r.dr > 0 ? 'text-pink-600' : 'text-emerald-600'}">${r.dr > 0 ? 'Dr ' + formatBDT(r.dr) : 'Cr ' + formatBDT(r.cr)}</span>
+                <button onclick="openWifeModal('${r.type}', '${r.id}')" class="p-1.5 rounded-lg bg-blue-50 text-blue-600 text-xs"><i class="fa-solid fa-pen"></i></button>
+                <button onclick="deleteWifeItem('${r.id}')" class="p-1.5 rounded-lg bg-rose-50 text-rose-600 text-xs"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
     }
 
     function openWifeModal(defaultType = 'dr', editId = null) {
       const existing = editId ? appData.wifeLedger.find(x => x.id === editId) : null;
       const type = existing ? existing.type : defaultType;
       const today = new Date().toISOString().split('T')[0];
-      document.getElementById('modalTitle').innerText = existing ? 'Wife AC লেজার এডিট' : 'Wife AC — নতুন এন্ট্রি';
+      document.getElementById('modalTitle').innerText = existing ? 'Wife AC Ledger Edit' : 'Wife AC — Notun Entry';
       document.getElementById('modalBody').innerHTML = `
         <form onsubmit="saveWifeItem(event, '${editId || ''}')" class="space-y-3">
-          <div class="grid grid-cols-2 gap-3"><input type="date" id="wDate" value="${existing ? existing.date : today}" required class="px-3 py-2 rounded-xl border text-sm" /><select id="wType" class="px-3 py-2 rounded-xl border text-sm font-bold"><option value="dr" ${type === 'dr' ? 'selected' : ''}>দিয়েছি (Dr +)</option><option value="cr" ${type === 'cr' ? 'selected' : ''}>পেয়েছি / ফেরত (Cr -)</option></select></div>
+          <div class="grid grid-cols-2 gap-3"><input type="date" id="wDate" value="${existing ? existing.date : today}" required class="px-3 py-2 rounded-xl border text-sm" /><select id="wType" class="px-3 py-2 rounded-xl border text-sm font-bold"><option value="dr" ${type === 'dr' ? 'selected' : ''}>Diyeci (Dr +)</option><option value="cr" ${type === 'cr' ? 'selected' : ''}>Peyechi / Ferot (Cr -)</option></select></div>
           <select id="wMethod" class="w-full px-3 py-2 rounded-xl border text-sm">${['Cash', 'bKash', 'Nagad', 'Bank'].map(m => `<option value="${m}" ${existing && existing.method === m ? 'selected' : ''}>${m}</option>`).join('')}</select>
-          <input type="text" id="wDesc" value="${existing ? existing.desc : ''}" required placeholder="বিবরণ" class="w-full px-3 py-2 rounded-xl border text-sm" />
-          <input type="number" id="wAmt" value="${existing ? existing.amount : ''}" required min="1" step="any" placeholder="টাকা" class="w-full px-3 py-2.5 rounded-xl border text-lg font-bold" />
-          <button type="submit" class="w-full bg-pink-600 text-white font-bold py-2.5 rounded-xl">সংরক্ষণ করুন</button>
+          <input type="text" id="wDesc" value="${existing ? existing.desc : ''}" required placeholder="Biboron" class="w-full px-3 py-2 rounded-xl border text-sm" />
+          <input type="number" id="wAmt" value="${existing ? existing.amount : ''}" required min="1" step="any" placeholder="Taka" class="w-full px-3 py-2.5 rounded-xl border text-lg font-bold" />
+          <button type="submit" class="w-full bg-pink-600 text-white font-bold py-2.5 rounded-xl">Songrokkhon Korun</button>
         </form>
       `;
       openModal();
@@ -1624,19 +1731,20 @@
       saveData(); closeModal(); renderCurrentView();
     }
 
-    function deleteWifeItem(id) { if (!confirm('মুছে ফেলতে চান?')) return; appData.wifeLedger = appData.wifeLedger.filter(x => x.id !== id); saveData(); renderCurrentView(); }
+    function deleteWifeItem(id) { if (!confirm('Muche felte chan?')) return; appData.wifeLedger = appData.wifeLedger.filter(x => x.id !== id); saveData(); renderCurrentView(); }
 
+    // ==================== 8. BANK ====================
     function renderBank(container) {
       const f = ledgerFilters.bank;
       const bankItems = selectedBankFilter === 'all' ? appData.bankLedger : appData.bankLedger.filter(x => x.bankId === selectedBankFilter);
       const res = computeDoubleEntry(bankItems, f, { positiveType: 'cr' });
       container.innerHTML = `
         <div class="glass-card p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-sm mb-4 flex flex-wrap justify-between items-center gap-3">
-          <div><h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Bank (DPS / FDR / SAVINGS)</h2><p class="text-xs text-slate-500">জমা (Cr +), উত্তোলন (Dr -) ও ব্যালেন্স</p></div>
+          <div><h2 class="text-lg sm:text-xl font-extrabold text-slate-900">8. Bank (DPS / FDR / SAVINGS)</h2><p class="text-xs text-slate-500">Joma (Cr +), Uttolon (Dr -) o Balance</p></div>
           <div class="flex flex-wrap gap-2 no-print">
-            <button onclick="openBankModal()" class="bg-slate-800 text-white px-3 py-2 rounded-xl text-xs font-bold">+ অ্যাকাউন্ট</button>
-            <button onclick="openBankLedgerModal('cr')" class="bg-emerald-600 text-white px-3 py-2 rounded-xl text-xs font-bold">+ জমা (Cr)</button>
-            <button onclick="openBankLedgerModal('dr')" class="bg-rose-600 text-white px-3 py-2 rounded-xl text-xs font-bold">- উত্তোলন (Dr)</button>
+            <button onclick="openBankModal()" class="bg-slate-800 text-white px-3 py-2 rounded-xl text-xs font-bold">+ Account</button>
+            <button onclick="openBankLedgerModal('cr')" class="bg-emerald-600 text-white px-3 py-2 rounded-xl text-xs font-bold">+ Joma (Cr)</button>
+            <button onclick="openBankLedgerModal('dr')" class="bg-rose-600 text-white px-3 py-2 rounded-xl text-xs font-bold">- Uttolon (Dr)</button>
           </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 mb-5">
@@ -1678,8 +1786,8 @@
     }
 
     function openBankModal() {
-      document.getElementById('modalTitle').innerText = 'নতুন ব্যাংক অ্যাকাউন্ট';
-      document.getElementById('modalBody').innerHTML = `<form onsubmit="saveBank(event)" class="space-y-3"><select id="bType" class="w-full px-3 py-2 rounded-xl border text-sm font-bold"><option value="SAVINGS">SAVINGS</option><option value="DPS">DPS</option><option value="FDR">FDR</option></select><input type="text" id="bName" required placeholder="ব্যাংকের নাম" class="w-full px-3 py-2 rounded-xl border text-sm" /><input type="text" id="bAcc" required placeholder="অ্যাকাউন্ট নম্বর" class="w-full px-3 py-2 rounded-xl border text-sm" /><input type="number" id="bBal" required placeholder="প্রারম্ভিক ব্যালেন্স (৳)" class="w-full px-3 py-2 rounded-xl border text-lg font-bold" /><button type="submit" class="w-full bg-blue-600 text-white font-bold py-2.5 rounded-xl">সংরক্ষণ</button></form>`;
+      document.getElementById('modalTitle').innerText = 'Notun Bank Account';
+      document.getElementById('modalBody').innerHTML = `<form onsubmit="saveBank(event)" class="space-y-3"><select id="bType" class="w-full px-3 py-2 rounded-xl border text-sm font-bold"><option value="SAVINGS">SAVINGS</option><option value="DPS">DPS</option><option value="FDR">FDR</option></select><input type="text" id="bName" required placeholder="Bank-er naam" class="w-full px-3 py-2 rounded-xl border text-sm" /><input type="text" id="bAcc" required placeholder="Account number" class="w-full px-3 py-2 rounded-xl border text-sm" /><input type="number" id="bBal" required placeholder="Proarombik Balance (৳)" class="w-full px-3 py-2 rounded-xl border text-lg font-bold" /><button type="submit" class="w-full bg-blue-600 text-white font-bold py-2.5 rounded-xl">Songrokkhon</button></form>`;
       openModal();
     }
 
@@ -1688,22 +1796,26 @@
       const newId = 'b_' + Date.now();
       const initBal = parseFloat(document.getElementById('bBal').value) || 0;
       appData.banks.push({ id: newId, type: document.getElementById('bType').value, bankName: document.getElementById('bName').value.trim(), accountNo: document.getElementById('bAcc').value.trim(), balance: initBal, installment: 0, maturityDate: '-' });
-      if (initBal > 0) appData.bankLedger.push({ id: 'bl_' + Date.now(), bankId: newId, date: new Date().toISOString().split('T')[0], type: 'cr', desc: 'অ্যাকাউন্ট ওপেনিং জমা', amount: initBal });
+      if (initBal > 0) appData.bankLedger.push({ id: 'bl_' + Date.now(), bankId: newId, date: new Date().toISOString().split('T')[0], type: 'cr', desc: 'Account opening joma', amount: initBal });
       saveData(); closeModal(); renderCurrentView();
     }
 
     function openBankLedgerModal(defaultType = 'cr', editId = null) {
+      if (!appData.banks.length) {
+        alert('Age "+ Account" button theke ontoto 1 ta bank account jukto korun.');
+        return;
+      }
       const existing = editId ? appData.bankLedger.find(x => x.id === editId) : null;
       const type = existing ? existing.type : defaultType;
       const today = new Date().toISOString().split('T')[0];
-      document.getElementById('modalTitle').innerText = existing ? 'ব্যাংক লেনদেন এডিট' : 'Bank Smart Ledger — নতুন এন্ট্রি';
+      document.getElementById('modalTitle').innerText = existing ? 'Bank Lenden Edit' : 'Bank Smart Ledger — Notun Entry';
       document.getElementById('modalBody').innerHTML = `
         <form onsubmit="saveBankLedgerItem(event, '${editId || ''}')" class="space-y-3">
           <select id="blBankId" required class="w-full px-3 py-2 rounded-xl border text-sm font-bold">${appData.banks.map(b => `<option value="${b.id}" ${existing && existing.bankId === b.id ? 'selected' : ''}>${b.bankName} (${b.type} - ${b.accountNo})</option>`).join('')}</select>
-          <div class="grid grid-cols-2 gap-3"><input type="date" id="blDate" value="${existing ? existing.date : today}" required class="px-3 py-2 rounded-xl border text-sm" /><select id="blType" class="px-3 py-2 rounded-xl border text-sm font-bold"><option value="cr" ${type === 'cr' ? 'selected' : ''}>ব্যাংকে জমা / কিস্তি (Cr +)</option><option value="dr" ${type === 'dr' ? 'selected' : ''}>উত্তোলন / চার্জ (Dr -)</option></select></div>
-          <input type="text" id="blDesc" value="${existing ? existing.desc : ''}" required placeholder="লেনদেনের বিবরণ..." class="w-full px-3 py-2 rounded-xl border text-sm" />
-          <input type="number" id="blAmt" value="${existing ? existing.amount : ''}" required min="1" step="any" placeholder="টাকা" class="w-full px-3 py-2.5 rounded-xl border text-lg font-bold" />
-          <button type="submit" class="w-full bg-blue-600 text-white font-bold py-2.5 rounded-xl">সংরক্ষণ করুন</button>
+          <div class="grid grid-cols-2 gap-3"><input type="date" id="blDate" value="${existing ? existing.date : today}" required class="px-3 py-2 rounded-xl border text-sm" /><select id="blType" class="px-3 py-2 rounded-xl border text-sm font-bold"><option value="cr" ${type === 'cr' ? 'selected' : ''}>Banke Joma / Kisti (Cr +)</option><option value="dr" ${type === 'dr' ? 'selected' : ''}>Uttolon / Charge (Dr -)</option></select></div>
+          <input type="text" id="blDesc" value="${existing ? existing.desc : ''}" required placeholder="Lenden-er biboron..." class="w-full px-3 py-2 rounded-xl border text-sm" />
+          <input type="number" id="blAmt" value="${existing ? existing.amount : ''}" required min="1" step="any" placeholder="Taka" class="w-full px-3 py-2.5 rounded-xl border text-lg font-bold" />
+          <button type="submit" class="w-full bg-blue-600 text-white font-bold py-2.5 rounded-xl">Songrokkhon Korun</button>
         </form>
       `;
       openModal();
@@ -1717,110 +1829,81 @@
       recalculateBankBalances(); saveData(); closeModal(); renderCurrentView();
     }
 
-    function deleteBankLedgerItem(id) { if (!confirm('মুছে ফেলতে চান?')) return; appData.bankLedger = appData.bankLedger.filter(x => x.id !== id); recalculateBankBalances(); saveData(); renderCurrentView(); }
+    function deleteBankLedgerItem(id) { if (!confirm('Muche felte chan?')) return; appData.bankLedger = appData.bankLedger.filter(x => x.id !== id); recalculateBankBalances(); saveData(); renderCurrentView(); }
 
-    function deleteBank(id) { if (!confirm('এই ব্যাংক অ্যাকাউন্ট ও এর লেনদেন মুছে ফেলতে চান?')) return; appData.banks = appData.banks.filter(b => b.id !== id); appData.bankLedger = appData.bankLedger.filter(x => x.bankId !== id); saveData(); renderCurrentView(); }
+    function deleteBank(id) { if (!confirm('Ei bank account o er lenden muche felte chan?')) return; appData.banks = appData.banks.filter(b => b.id !== id); appData.bankLedger = appData.bankLedger.filter(x => x.bankId !== id); saveData(); renderCurrentView(); }
 
+    // ==================== 9. SETTING PANEL (CUSTOMIZE OTHERS HISAB + UID BACKUP) ====================
     function renderSettings(container) {
-      const fb = getActiveFirebaseConfig();
+      const user = window.currentFirebaseUser || {};
       container.innerHTML = `
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
           <div class="glass-card p-5 rounded-3xl border shadow-xs">
-            <h2 class="text-lg font-extrabold mb-1">৩-ডট মেনু কাস্টমাইজেশন</h2>
-            <p class="text-xs text-slate-500 mb-4">নতুন অপশন যোগ করুন বা ডিলিট করুন</p>
-            <form onsubmit="addCustomTabFromForm(event)" class="flex gap-2 mb-4">
-              <input type="text" id="customOptionName" required placeholder="নতুন অপশনের নাম..." class="flex-1 px-3.5 py-2.5 rounded-xl border text-sm" />
-              <button type="submit" class="bg-emerald-600 text-white px-4 py-2.5 rounded-xl text-sm font-bold">+ যোগ</button>
+            <h2 class="text-lg font-extrabold mb-1">Others Hisab-e Customize Khat Jukto Korun</h2>
+            <p class="text-xs text-slate-500 mb-4">Apnar icche moto notun khat (jemon: Jaigar Hisab, Baki Khata, Dokan, Bondhu AC) toiri korun—egulo "5. Others Hisab" er moddhe jukto hobe</p>
+            <form onsubmit="addOthersAccountFromSettings(event)" class="space-y-2.5 mb-4 bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
+              <input type="text" id="settingsOthersName" required placeholder="Notun khater naam likhun..." class="w-full px-3.5 py-2.5 rounded-xl border bg-white text-sm" />
+              <div class="flex gap-2">
+                <select id="settingsOthersType" class="flex-1 px-3 py-2.5 rounded-xl border bg-white text-xs sm:text-sm font-bold">
+                  <option value="dr">Paona / Khoroch (Dr + / Cr -)</option>
+                  <option value="cr">Joma / Tohhobil (Cr + / Dr -)</option>
+                </select>
+                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-xl text-sm font-bold shrink-0">+ Jog Korun</button>
+              </div>
             </form>
             <div class="space-y-2">
-              ${appData.settings.customTabs.map(t => `<div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border"><span class="text-sm font-bold">${t.name}</span><button onclick="deleteCustomTab('${t.id}')" class="text-xs bg-rose-100 text-rose-700 px-2.5 py-1 rounded-lg font-bold">Delete</button></div>`).join('')}
+              ${appData.othersAccounts.map(acc => `
+                <div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 border">
+                  <div>
+                    <p class="text-sm font-bold text-slate-900">${acc.name}</p>
+                    <p class="text-[11px] text-slate-500">${(acc.entries || []).length} ti entry • ${acc.positiveType === 'cr' ? 'Joma Ledger' : 'Paona/Khoroch Ledger'}</p>
+                  </div>
+                  <div class="flex items-center gap-1.5">
+                    <button onclick="selectedOthersAccountId='${acc.id}';switchTab('others')" class="text-xs bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-lg font-bold">Open</button>
+                    ${appData.othersAccounts.length > 1 ? `<button onclick="deleteOthersAccount('${acc.id}')" class="text-xs bg-rose-100 text-rose-700 px-2.5 py-1 rounded-lg font-bold">Delete</button>` : ''}
+                  </div>
+                </div>
+              `).join('')}
             </div>
           </div>
-          <div class="glass-card p-5 rounded-3xl border shadow-xs space-y-3">
-            <h2 class="text-lg font-extrabold">Smart Cloud Sync (Firebase) & Backup</h2>
-            <p class="text-xs text-slate-500">Gmail: <b>${DEFAULT_USER_EMAIL}</b> • Project: <b>${fb.projectId}</b></p>
-            <input type="text" id="fbApiKey" value="${fb.apiKey || ''}" placeholder="Firebase apiKey" class="w-full px-3 py-2 rounded-xl border text-xs" />
-            <input type="text" id="fbAuthDomain" value="${fb.authDomain || ''}" placeholder="Firebase authDomain" class="w-full px-3 py-2 rounded-xl border text-xs" />
-            <input type="text" id="fbProjectId" value="${fb.projectId || ''}" placeholder="Firebase projectId" class="w-full px-3 py-2 rounded-xl border text-xs" />
-            <input type="text" id="fbAppId" value="${fb.appId || ''}" placeholder="Firebase appId" class="w-full px-3 py-2 rounded-xl border text-xs" />
-            <button onclick="saveFirebaseConfig()" class="w-full bg-slate-900 hover:bg-emerald-600 text-white py-2.5 rounded-xl text-xs font-bold">Firebase সেভ ও সিঙ্ক করুন</button>
-            <div class="pt-3 border-t flex flex-wrap gap-2">
-              <button onclick="exportBackupJSON()" class="bg-emerald-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold">JSON ব্যাকআপ</button>
-              <label class="bg-slate-200 text-slate-800 px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer">JSON রিস্টোর <input type="file" accept=".json" onchange="importBackupJSON(event)" class="hidden" /></label>
+
+          <div class="glass-card p-5 rounded-3xl border shadow-xs space-y-4">
+            <h2 class="text-lg font-extrabold">UID Security & Personal Backup</h2>
+            <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 text-xs space-y-1.5">
+              <p><span class="font-bold text-slate-600">Signed-in Gmail:</span> <span class="font-extrabold text-slate-900">${user.email || '-'}</span></p>
+              <p><span class="font-bold text-slate-600">Isolated Firebase UID:</span> <code class="bg-emerald-100 text-emerald-900 px-1.5 py-0.5 rounded font-mono">${activeUid || '-'}</code></p>
+              <p class="text-[11px] text-slate-500 pt-1">Apnar data shudhumatro ei UID-er odhine songrokkhito hocche; onno kono user-er sathe mix hobe na.</p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <button onclick="manualSyncNow()" class="bg-sky-600 text-white px-4 py-2.5 rounded-xl text-xs font-bold">Force Cloud Sync</button>
+              <button onclick="exportBackupJSON()" class="bg-emerald-600 text-white px-4 py-2.5 rounded-xl text-xs font-bold">JSON Backup</button>
+              <label class="bg-slate-200 text-slate-800 px-4 py-2.5 rounded-xl text-xs font-bold cursor-pointer">JSON Restore <input type="file" accept=".json" onchange="importBackupJSON(event)" class="hidden" /></label>
             </div>
           </div>
         </div>
       `;
     }
 
-    function addCustomTabFromForm(e) { e.preventDefault(); const inp = document.getElementById('customOptionName'); const name = inp.value.trim(); if (!name) return; quickAddPresetTab(name, 'fa-folder-plus'); inp.value = ''; }
-    function quickAddPresetTab(name, icon) { appData.settings.customTabs.push({ id: 'tab_' + Date.now(), name, icon, entries: [] }); isDropdownOpen = true; saveData(); renderSidebar(); showToast(`"${name}" যুক্ত হয়েছে!`); renderCurrentView(); }
-    function deleteCustomTab(id) { if (!confirm('ডিলিট করতে চান?')) return; appData.settings.customTabs = appData.settings.customTabs.filter(t => t.id !== id); if (currentTab === 'custom_' + id) currentTab = 'dashboard'; saveData(); renderSidebar(); renderCurrentView(); }
-
-    function renderCustomTab(container, customId) {
-      const tab = appData.settings.customTabs.find(t => t.id === customId);
-      if (!tab) return switchTab('dashboard');
-      renderLedgerTemplate(container, {
-        title: `${tab.name} — Smart Ledger`,
-        subtitle: 'জমা (Cr +), খরচ (Dr -) ও চলমান ব্যালেন্স',
-        items: tab.entries || [],
-        positiveType: 'cr',
-        accentBtnDr: 'bg-rose-600',
-        accentBtnCr: 'bg-emerald-600',
-        openModalFn: `openCustomEntryModalWithId_${customId}`,
-        deleteFn: `deleteCustomEntryWithId_${customId}`,
-        filterObj: ledgerFilters.custom
-      });
-    }
-
-    window.openCustomEntryModal = function(customId, defaultType = 'cr', editId = null) {
-      const tab = appData.settings.customTabs.find(t => t.id === customId);
-      const existing = (tab && editId) ? tab.entries.find(x => x.id === editId) : null;
-      const type = existing ? existing.type : defaultType;
-      const today = new Date().toISOString().split('T')[0];
-      document.getElementById('modalTitle').innerText = existing ? 'এন্ট্রি এডিট' : 'নতুন এন্ট্রি';
-      document.getElementById('modalBody').innerHTML = `<form onsubmit="saveCustomEntry(event, '${customId}', '${editId || ''}')" class="space-y-3"><div class="grid grid-cols-2 gap-3"><input type="date" id="ceDate" value="${existing ? existing.date : today}" required class="px-3 py-2 rounded-xl border text-sm" /><select id="ceType" class="px-3 py-2 rounded-xl border text-sm font-bold"><option value="cr" ${type === 'cr' ? 'selected' : ''}>জমা (Cr +)</option><option value="dr" ${type === 'dr' ? 'selected' : ''}>খরচ (Dr -)</option></select></div><input type="text" id="ceDesc" value="${existing ? existing.desc : ''}" required placeholder="বিবরণ" class="w-full px-3 py-2 rounded-xl border text-sm" /><input type="number" id="ceAmt" value="${existing ? existing.amount : ''}" required min="1" step="any" placeholder="টাকা" class="w-full px-3 py-2.5 rounded-xl border text-lg font-bold" /><button type="submit" class="w-full bg-emerald-600 text-white font-bold py-2.5 rounded-xl">সংরক্ষণ</button></form>`;
-      openModal();
-    };
-
-    (function bindCustomTabHelpers() {
-      const origRenderCustom = renderCustomTab;
-      renderCustomTab = function(container, customId) {
-        window[`openCustomEntryModalWithId_${customId}`] = (type, id) => openCustomEntryModal(customId, type, id || null);
-        window[`deleteCustomEntryWithId_${customId}`] = (entryId) => deleteCustomEntry(customId, entryId);
-        origRenderCustom(container, customId);
-      };
-    })();
-
-    function saveCustomEntry(e, customId, editId) {
+    function addOthersAccountFromSettings(e) {
       e.preventDefault();
-      const tab = appData.settings.customTabs.find(t => t.id === customId);
-      if (!tab) return;
-      const payload = { id: editId || 'ce_' + Date.now(), date: document.getElementById('ceDate').value, type: document.getElementById('ceType').value, desc: document.getElementById('ceDesc').value.trim(), amount: parseFloat(document.getElementById('ceAmt').value) };
-      if (editId) { const idx = tab.entries.findIndex(x => x.id === editId); if (idx !== -1) tab.entries[idx] = payload; }
-      else tab.entries.push(payload);
-      saveData(); closeModal(); renderCurrentView();
-    }
-
-    function deleteCustomEntry(customId, entryId) { if (!confirm('মুছে ফেলতে চান?')) return; const tab = appData.settings.customTabs.find(t => t.id === customId); if (!tab) return; tab.entries = tab.entries.filter(x => x.id !== entryId); saveData(); renderCurrentView(); }
-
-    async function saveFirebaseConfig() {
-      appData.settings.firebaseConfig = {
-        ...HARDCODED_FIREBASE_CONFIG,
-        apiKey: document.getElementById('fbApiKey').value.trim() || HARDCODED_FIREBASE_CONFIG.apiKey,
-        authDomain: document.getElementById('fbAuthDomain').value.trim() || HARDCODED_FIREBASE_CONFIG.authDomain,
-        projectId: document.getElementById('fbProjectId').value.trim() || HARDCODED_FIREBASE_CONFIG.projectId,
-        appId: document.getElementById('fbAppId').value.trim() || HARDCODED_FIREBASE_CONFIG.appId
-      };
-      await saveData();
-      await manualSyncNow();
+      const inp = document.getElementById('settingsOthersName');
+      const name = inp.value.trim();
+      const positiveType = document.getElementById('settingsOthersType').value;
+      if (!name) return;
+      const newId = 'oth_' + Date.now();
+      appData.othersAccounts.push({ id: newId, name, positiveType, entries: [] });
+      selectedOthersAccountId = newId;
+      inp.value = '';
+      saveData();
+      showToast(`"${name}" Others Hisab-e jukto hoyeche!`);
+      renderCurrentView();
     }
 
     function exportBackupJSON() {
       const blob = new Blob([JSON.stringify(appData, null, 2)], { type: 'application/json' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = `Personal_Hisab_Smart_Backup_${new Date().toISOString().split('T')[0]}.json`;
+      a.download = `Personal_Hisab_${(activeUid || 'user').slice(0, 6)}_${new Date().toISOString().split('T')[0]}.json`;
       a.click();
     }
 
@@ -1832,8 +1915,8 @@
         try {
           appData = mergeWithDefaults(JSON.parse(r.result));
           await saveData(); renderSidebar(); renderCurrentView();
-          showToast('ব্যাকআপ সফলভাবে রিস্টোর ও সুরক্ষিত হয়েছে!');
-        } catch (err) { alert('সঠিক JSON ফাইল দিন।'); }
+          showToast('Backup apnar UID vault-e restore hoyeche!');
+        } catch (err) { alert('Sothik JSON file din.'); }
       };
       r.readAsText(file);
     }
@@ -1841,17 +1924,24 @@
     function openModal() { const mb = document.getElementById('modalBackdrop'); mb.classList.remove('hidden'); mb.classList.add('flex'); }
     function closeModal() { const mb = document.getElementById('modalBackdrop'); mb.classList.add('hidden'); mb.classList.remove('flex'); }
 
-    function previewFile(dataUrl, title) {
+    function previewFile(dataUrl, title, fileName = '') {
       document.getElementById('modalTitle').innerText = title;
       const isPdf = dataUrl.startsWith('data:application/pdf');
-      document.getElementById('modalBody').innerHTML = isPdf ? `<iframe src="${dataUrl}" class="w-full h-[65vh] rounded-xl border"></iframe>` : `<img src="${dataUrl}" class="w-full rounded-xl border shadow" alt="${title}" />`;
+      const safeName = (fileName || title || 'document').replace(/'/g, '');
+      document.getElementById('modalBody').innerHTML = `
+        <div class="space-y-3">
+          ${isPdf ? `<iframe src="${dataUrl}" class="w-full h-[60vh] rounded-xl border"></iframe>` : `<img src="${dataUrl}" class="w-full rounded-xl border shadow" alt="${title}" />`}
+          <button onclick="downloadStoredFile('${dataUrl}', '${safeName}')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 shadow">
+            <i class="fa-solid fa-download"></i> File Download Korun
+          </button>
+        </div>
+      `;
       openModal();
     }
 
-    document.getElementById('todayDateText').innerText = new Date().toLocaleDateString('bn-BD', {
+    document.getElementById('todayDateText').innerText = new Date().toLocaleDateString('en-GB', {
       weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
     });
-    checkAuth();
     renderSidebar();
     renderCurrentView();
   </script>
